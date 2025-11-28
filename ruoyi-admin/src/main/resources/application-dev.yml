@@ -1,8 +1,8 @@
 --- # 监控中心配置
 spring.boot.admin.client:
   # 增加客户端开关
-  enabled: true
-  url: http://localhost:9090/admin
+  enabled: false
+  url: http://localhost:19090/admin
   instance:
     service-host-type: IP
     metadata:
@@ -13,7 +13,7 @@ spring.boot.admin.client:
 
 --- # snail-job 配置
 snail-job:
-  enabled: true
+  enabled: false
   # 需要在 SnailJob 后台组管理创建对应名称的组,然后创建任务的时候选择对应的组,才能正确分派任务
   group: "ruoyi_group"
   # SnailJob 接入验证令牌 详见 script/sql/ry_job.sql `sj_group_config` 表
@@ -24,12 +24,25 @@ snail-job:
   # 命名空间UUID 详见 script/sql/ry_job.sql `sj_namespace`表`unique_id`字段
   namespace: ${spring.profiles.active}
   # 随主应用端口漂移
-  port: 2${server.port}
+  port: 18081
   # 客户端ip指定
   host:
 
 --- # 数据源配置
 spring:
+  flyway:
+    enabled: true
+    clean-disabled: true                  # 删除指定 schema 下的所有 table, 生产务必禁掉
+    # 需要 flyway 管控的 schema list, 缺省的话, 使用spring.datasource.url 配置的 schema,
+    # 可以指定多个schema, 但仅会在第一个schema下建立 metadata 表, 也仅在第一个schema应用migration sql 脚本.
+    # 但flyway Clean 命令会依次在这些schema下都执行一遍. 所以 确保生产 spring.flyway.clean-disabled 为 true
+    schemas: merchant_nearby
+    locations: classpath:merchant/migrations # SQL 脚本的目录,多个路径使用逗号分隔 默认值 classpath:db/migration
+    table: flyway_schema_history                # metadata 版本控制信息表 默认 flyway_schema_history
+    baseline-on-migrate: true                   # 最开始已经存在表结构，且不存在 flyway_schema_history 表时需要设置为 true
+    baseline-version: 1                         # 指定 baseline 的版本号,默认值为 1, 低于该版本号的 SQL 文件, migrate 时会被忽略
+    out-of-order: false                         # 是否允许不按顺序迁移 开发建议 true  生产建议 false
+    fail-on-missing-locations: true             # 校验路径下是否存在 sql 文件
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     # 动态数据源文档 https://www.kancloud.cn/tracy5546/dynamic-datasource/content
@@ -47,7 +60,7 @@ spring:
           driverClassName: com.mysql.cj.jdbc.Driver
           # jdbc 所有参数配置参考 https://lionli.blog.csdn.net/article/details/122018562
           # rewriteBatchedStatements=true 批处理优化 大幅提升批量插入更新删除性能(对数据库有性能损耗 使用批量操作应考虑性能问题)
-          url: jdbc:mysql://localhost:3306/ry-vue?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&autoReconnect=true&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
+          url: jdbc:mysql://localhost:3306/merchant_nearby?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&autoReconnect=true&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
           username: root
           password: root
 #        # 从库数据源
@@ -102,7 +115,7 @@ spring.data:
     # 数据库索引
     database: 0
     # redis 密码必须配置
-    password: ruoyi123
+    # password: ruoyi123
     # 连接超时时间
     timeout: 10s
     # 是否开启ssl

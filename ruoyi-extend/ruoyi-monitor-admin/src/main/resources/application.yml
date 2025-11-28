@@ -1,5 +1,5 @@
 server:
-  port: 9090
+  port: 19090
 spring:
   application:
     name: ruoyi-monitor-admin
@@ -41,7 +41,7 @@ spring.boot.admin.client:
   # 增加客户端开关
   enabled: true
   # 设置 Spring Boot Admin Server 地址
-  url: http://localhost:9090/admin
+  url: http://localhost:19090/admin
   instance:
     service-host-type: IP
     metadata:

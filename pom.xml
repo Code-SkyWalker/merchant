@@ -49,6 +49,9 @@
         <anyline.version>8.7.2-20250603</anyline.version>
         <!-- 工作流配置 -->
         <warm-flow.version>1.8.2</warm-flow.version>
+        <!-- 类型转换 -->
+        <mapstruct.version>1.6.3</mapstruct.version>
+        <pagehelper.version>2.1.0</pagehelper.version>
 
         <!-- 插件版本 -->
         <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
@@ -99,6 +102,18 @@
     <!-- 依赖声明 -->
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.dromara.merchant</groupId>
+                <artifactId>ruoyi-merchant-nearby-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
 
             <!-- SpringBoot的依赖配置-->
             <dependency>
@@ -212,6 +227,13 @@
                 <artifactId>mybatis-plus-annotation</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.version}</version>
+            </dependency>
+
 
             <!-- sql性能分析插件 -->
             <dependency>
@@ -341,12 +363,6 @@
             <dependency>
                 <groupId>org.dromara</groupId>
                 <artifactId>ruoyi-generator</artifactId>
-                <version>${revision}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.dromara</groupId>
-                <artifactId>ruoyi-demo</artifactId>
                 <version>${revision}</version>
             </dependency>
 
