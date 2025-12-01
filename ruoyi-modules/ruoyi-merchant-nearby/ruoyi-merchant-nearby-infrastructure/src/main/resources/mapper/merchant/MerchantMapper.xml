@@ -71,21 +71,22 @@
         select
         <include refid="Base_Column_List"/>
         from tb_merchant
-        where merchant_id = #{merchantId,jdbcType=BIGINT}
+        where merchant_id = #{merchantId}
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         <!--@mbg.generated-->
         delete from tb_merchant
-        where merchant_id = #{merchantId,jdbcType=BIGINT}
+        where merchant_id = #{merchantId}
     </delete>
 
-    <insert id="insertSelective" keyColumn="merchant_id" keyProperty="merchantId"
-            parameterType="org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantDO"
-            useGeneratedKeys="true">
+    <insert id="insertOrUpdateSelective" parameterType="org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantDO">
         <!--@mbg.generated-->
         insert into tb_merchant
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="merchantId != null">
+                merchant_id,
+            </if>
             <if test="tenantId != null">
                 tenant_id,
             </if>
@@ -161,211 +162,215 @@
             <if test="joinTime != null">
                 join_time,
             </if>
+            <if test="createDept != null">
+                create_dept,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
             <if test="createTime != null">
                 create_time,
+            </if>
+            <if test="updateBy != null">
+                update_by,
             </if>
             <if test="updateTime != null">
                 update_time,
             </if>
         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="merchantId != null">
+                #{merchantId,jdbcType=BIGINT},
+            </if>
             <if test="tenantId != null">
-                #{tenantId},
+                #{tenantId,jdbcType=VARCHAR},
             </if>
             <if test="merchantCode != null">
-                #{merchantCode},
+                #{merchantCode,jdbcType=VARCHAR},
             </if>
             <if test="merchantName != null">
-                #{merchantName},
+                #{merchantName,jdbcType=VARCHAR},
             </if>
             <if test="merchantType != null">
-                #{merchantType},
+                #{merchantType,jdbcType=VARCHAR},
             </if>
             <if test="status != null">
-                #{status},
+                #{status,jdbcType=VARCHAR},
             </if>
             <if test="level != null">
-                #{level},
+                #{level,jdbcType=VARCHAR},
             </if>
             <if test="legalPerson != null">
-                #{legalPerson},
+                #{legalPerson,jdbcType=VARCHAR},
             </if>
             <if test="legalPersonIdNumber != null">
-                #{legalPersonIdNumber},
+                #{legalPersonIdNumber,jdbcType=VARCHAR},
             </if>
             <if test="legalPersonIdFront != null">
-                #{legalPersonIdFront},
+                #{legalPersonIdFront,jdbcType=VARCHAR},
             </if>
             <if test="legalPersonIdBack != null">
-                #{legalPersonIdBack},
+                #{legalPersonIdBack,jdbcType=VARCHAR},
             </if>
             <if test="businessLicense != null">
-                #{businessLicense},
+                #{businessLicense,jdbcType=VARCHAR},
             </if>
             <if test="contactPerson != null">
-                #{contactPerson},
+                #{contactPerson,jdbcType=VARCHAR},
             </if>
             <if test="contactPhone != null">
-                #{contactPhone},
+                #{contactPhone,jdbcType=VARCHAR},
             </if>
             <if test="contactEmail != null">
-                #{contactEmail},
+                #{contactEmail,jdbcType=VARCHAR},
             </if>
             <if test="preciseLocation != null">
-                #{preciseLocation},
+                #{preciseLocation,jdbcType=VARCHAR},
             </if>
             <if test="address != null">
-                #{address},
+                #{address,jdbcType=VARCHAR},
             </if>
             <if test="outerPicture != null">
-                #{outerPicture},
+                #{outerPicture,jdbcType=VARCHAR},
             </if>
             <if test="innerPicture != null">
-                #{innerPicture},
+                #{innerPicture,jdbcType=VARCHAR},
             </if>
             <if test="logo != null">
-                #{logo},
+                #{logo,jdbcType=VARCHAR},
             </if>
             <if test="description != null">
-                #{description},
+                #{description,jdbcType=LONGVARCHAR},
             </if>
             <if test="depositAmount != null">
-                #{depositAmount},
+                #{depositAmount,jdbcType=DECIMAL},
             </if>
             <if test="settlementCycle != null">
-                #{settlementCycle},
+                #{settlementCycle,jdbcType=INTEGER},
             </if>
             <if test="certified != null">
-                #{certified},
+                #{certified,jdbcType=BOOLEAN},
             </if>
             <if test="certifiedTime != null">
-                #{certifiedTime},
+                #{certifiedTime,jdbcType=TIMESTAMP},
             </if>
             <if test="joinTime != null">
-                #{joinTime},
+                #{joinTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createDept != null">
+                #{createDept,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=BIGINT},
             </if>
             <if test="createTime != null">
-                #{createTime},
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=BIGINT},
             </if>
             <if test="updateTime != null">
-                #{updateTime},
+                #{updateTime,jdbcType=TIMESTAMP},
             </if>
         </trim>
         on duplicate key update
-        merchant_name = #{merchantName},
-        merchant_type = #{merchantType},
-        `status` = #{status},
-        `level` = #{level},
-        legal_person = #{legalPerson},
-        legal_person_id_number = #{legalPersonIdNumber},
-        legal_person_id_front = #{legalPersonIdFront},
-        legal_person_id_back = #{legalPersonIdBack},
-        business_license = #{businessLicense},
-        contact_person = #{contactPerson},
-        contact_phone = #{contactPhone},
-        contact_email = #{contactEmail},
-        precise_location = #{preciseLocation},
-        address = #{address},
-        outer_picture = #{outerPicture},
-        inner_picture = #{innerPicture},
-        logo = #{logo},
-        description = #{description},
-        deposit_amount = #{depositAmount},
-        settlement_cycle = #{settlementCycle},
-        certified = #{certified},
-        certified_time = #{certifiedTime},
-        join_time = #{joinTime}
-    </insert>
-
-    <update id="updateByPrimaryKeySelective"
-            parameterType="org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantDO">
-        <!--@mbg.generated-->
-        update tb_merchant
-        <set>
+        <trim suffixOverrides=",">
+            <if test="merchantId != null">
+                merchant_id = #{merchantId,jdbcType=BIGINT},
+            </if>
             <if test="tenantId != null">
-                tenant_id = #{tenantId},
+                tenant_id = #{tenantId,jdbcType=VARCHAR},
             </if>
             <if test="merchantCode != null">
-                merchant_code = #{merchantCode},
+                merchant_code = #{merchantCode,jdbcType=VARCHAR},
             </if>
             <if test="merchantName != null">
-                merchant_name = #{merchantName},
+                merchant_name = #{merchantName,jdbcType=VARCHAR},
             </if>
             <if test="merchantType != null">
-                merchant_type = #{merchantType},
+                merchant_type = #{merchantType,jdbcType=VARCHAR},
             </if>
             <if test="status != null">
-                `status` = #{status},
+                `status` = #{status,jdbcType=VARCHAR},
             </if>
             <if test="level != null">
-                `level` = #{level},
+                `level` = #{level,jdbcType=VARCHAR},
             </if>
             <if test="legalPerson != null">
-                legal_person = #{legalPerson},
+                legal_person = #{legalPerson,jdbcType=VARCHAR},
             </if>
             <if test="legalPersonIdNumber != null">
-                legal_person_id_number = #{legalPersonIdNumber},
+                legal_person_id_number = #{legalPersonIdNumber,jdbcType=VARCHAR},
             </if>
             <if test="legalPersonIdFront != null">
-                legal_person_id_front = #{legalPersonIdFront},
+                legal_person_id_front = #{legalPersonIdFront,jdbcType=VARCHAR},
             </if>
             <if test="legalPersonIdBack != null">
-                legal_person_id_back = #{legalPersonIdBack},
+                legal_person_id_back = #{legalPersonIdBack,jdbcType=VARCHAR},
             </if>
             <if test="businessLicense != null">
-                business_license = #{businessLicense},
+                business_license = #{businessLicense,jdbcType=VARCHAR},
             </if>
             <if test="contactPerson != null">
-                contact_person = #{contactPerson},
+                contact_person = #{contactPerson,jdbcType=VARCHAR},
             </if>
             <if test="contactPhone != null">
-                contact_phone = #{contactPhone},
+                contact_phone = #{contactPhone,jdbcType=VARCHAR},
             </if>
             <if test="contactEmail != null">
-                contact_email = #{contactEmail},
+                contact_email = #{contactEmail,jdbcType=VARCHAR},
             </if>
             <if test="preciseLocation != null">
-                precise_location = #{preciseLocation},
+                precise_location = #{preciseLocation,jdbcType=VARCHAR},
             </if>
             <if test="address != null">
-                address = #{address},
+                address = #{address,jdbcType=VARCHAR},
             </if>
             <if test="outerPicture != null">
-                outer_picture = #{outerPicture},
+                outer_picture = #{outerPicture,jdbcType=VARCHAR},
             </if>
             <if test="innerPicture != null">
-                inner_picture = #{innerPicture},
+                inner_picture = #{innerPicture,jdbcType=VARCHAR},
             </if>
             <if test="logo != null">
-                logo = #{logo},
+                logo = #{logo,jdbcType=VARCHAR},
             </if>
             <if test="description != null">
-                description = #{description},
+                description = #{description,jdbcType=LONGVARCHAR},
             </if>
             <if test="depositAmount != null">
-                deposit_amount = #{depositAmount},
+                deposit_amount = #{depositAmount,jdbcType=DECIMAL},
             </if>
             <if test="settlementCycle != null">
-                settlement_cycle = #{settlementCycle},
+                settlement_cycle = #{settlementCycle,jdbcType=INTEGER},
             </if>
             <if test="certified != null">
-                certified = #{certified},
+                certified = #{certified,jdbcType=BOOLEAN},
             </if>
             <if test="certifiedTime != null">
-                certified_time = #{certifiedTime},
+                certified_time = #{certifiedTime,jdbcType=TIMESTAMP},
             </if>
             <if test="joinTime != null">
-                join_time = #{joinTime},
+                join_time = #{joinTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createDept != null">
+                create_dept = #{createDept,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=BIGINT},
             </if>
             <if test="createTime != null">
-                create_time = #{createTime},
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=BIGINT},
             </if>
             <if test="updateTime != null">
-                update_time = #{updateTime},
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
-        </set>
-        where merchant_id = #{merchantId,jdbcType=BIGINT}
-    </update>
+        </trim>
+    </insert>
 
     <select id="selectPages" resultMap="BaseResultMap">
         select

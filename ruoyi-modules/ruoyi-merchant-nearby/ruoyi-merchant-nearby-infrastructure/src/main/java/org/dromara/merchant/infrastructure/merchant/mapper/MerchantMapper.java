@@ -14,11 +14,9 @@ public interface MerchantMapper {
 
     int deleteByPrimaryKey(Long merchantId);
 
-    int insertSelective(MerchantDO record);
+    int insertOrUpdateSelective(MerchantDO record);
 
     MerchantDO selectByPrimaryKey(Long merchantId);
-
-    int updateByPrimaryKeySelective(MerchantDO record);
 
     Page<MerchantDO> selectPages(@Param("qry") MerchantPageQry qry, @Param("page") Page<MerchantDO> page);
 

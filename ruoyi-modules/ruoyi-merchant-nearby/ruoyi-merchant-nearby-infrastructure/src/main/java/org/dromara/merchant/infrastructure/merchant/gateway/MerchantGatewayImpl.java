@@ -27,12 +27,7 @@ public class MerchantGatewayImpl implements IMerchantGateway {
      * @return 是否保存成功
      */
     public boolean save(Merchant merchant) {
-        MerchantDO merchantDO = convertor.toMerchantDO(merchant);
-        if (merchant.getMerchantId() == null) {
-            return mapper.insertSelective(merchantDO) > 0;
-        } else {
-            return mapper.updateByPrimaryKeySelective(merchantDO) > 0;
-        }
+        return mapper.insertOrUpdateSelective(convertor.toMerchantDO(merchant)) > 0;
     }
 
     /**

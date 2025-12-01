@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>org.dromara.merchant</groupId>
-    <artifactId>ruoyi-merchant-nearby-parent</artifactId>
+    <artifactId>ruoyi-merchant-nearby</artifactId>
     <packaging>pom</packaging>
     <name>ruoyi-merchant-nearby</name>
 
