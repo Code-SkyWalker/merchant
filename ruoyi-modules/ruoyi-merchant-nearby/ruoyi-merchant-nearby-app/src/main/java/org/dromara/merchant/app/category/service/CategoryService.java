@@ -1,8 +1,9 @@
-package org.dromara.merchant.app.category;
+package org.dromara.merchant.app.category.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.mybatis.core.page.PageQuery;
+import org.dromara.merchant.app.category.ICategoryService;
 import org.dromara.merchant.app.category.executor.*;
 import org.dromara.merchant.app.category.executor.query.CategoryDetailQryExecutor;
 import org.dromara.merchant.app.category.executor.query.CategoryPageQryExecutor;

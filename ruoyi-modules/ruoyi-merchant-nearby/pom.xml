@@ -76,6 +76,12 @@
             <!--Project modules End-->
 
             <dependency>
+                <groupId>org.dromara</groupId>
+                <artifactId>ruoyi-common-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>com.alibaba.cola</groupId>
                 <artifactId>cola-components-bom</artifactId>
                 <version>${cola.components.version}</version>

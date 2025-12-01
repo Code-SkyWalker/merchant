@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dromara.merchant.infrastructure.merchant.mapper.MerchantMapper">
+    <resultMap id="BaseResultMap" type="org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantDO">
+        <!--@mbg.generated-->
+        <!--@Table tb_merchant-->
+        <id column="merchant_id" jdbcType="BIGINT" property="merchantId"/>
+        <result column="tenant_id" jdbcType="VARCHAR" property="tenantId"/>
+        <result column="merchant_code" jdbcType="VARCHAR" property="merchantCode"/>
+        <result column="merchant_name" jdbcType="VARCHAR" property="merchantName"/>
+        <result column="merchant_type" jdbcType="VARCHAR" property="merchantType"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="level" jdbcType="VARCHAR" property="level"/>
+        <result column="legal_person" jdbcType="VARCHAR" property="legalPerson"/>
+        <result column="legal_person_id_number" jdbcType="VARCHAR" property="legalPersonIdNumber"/>
+        <result column="legal_person_id_front" jdbcType="VARCHAR" property="legalPersonIdFront"/>
+        <result column="legal_person_id_back" jdbcType="VARCHAR" property="legalPersonIdBack"/>
+        <result column="business_license" jdbcType="VARCHAR" property="businessLicense"/>
+        <result column="contact_person" jdbcType="VARCHAR" property="contactPerson"/>
+        <result column="contact_phone" jdbcType="VARCHAR" property="contactPhone"/>
+        <result column="contact_email" jdbcType="VARCHAR" property="contactEmail"/>
+        <result column="precise_location" jdbcType="VARCHAR" property="preciseLocation"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="outer_picture" jdbcType="VARCHAR" property="outerPicture"/>
+        <result column="inner_picture" jdbcType="VARCHAR" property="innerPicture"/>
+        <result column="logo" jdbcType="VARCHAR" property="logo"/>
+        <result column="description" jdbcType="LONGVARCHAR" property="description"/>
+        <result column="deposit_amount" jdbcType="DECIMAL" property="depositAmount"/>
+        <result column="settlement_cycle" jdbcType="INTEGER" property="settlementCycle"/>
+        <result column="certified" jdbcType="TINYINT" property="certified"/>
+        <result column="certified_time" jdbcType="TIMESTAMP" property="certifiedTime"/>
+        <result column="join_time" jdbcType="TIMESTAMP" property="joinTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        merchant_id,
+        tenant_id,
+        merchant_code,
+        merchant_name,
+        merchant_type,
+        `status`,
+        `level`,
+        legal_person,
+        legal_person_id_number,
+        legal_person_id_front,
+        legal_person_id_back,
+        business_license,
+        contact_person,
+        contact_phone,
+        contact_email,
+        precise_location,
+        address,
+        outer_picture,
+        inner_picture,
+        logo,
+        description,
+        deposit_amount,
+        settlement_cycle,
+        certified,
+        certified_time,
+        join_time,
+        create_time,
+        update_time
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from tb_merchant
+        where merchant_id = #{merchantId,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        <!--@mbg.generated-->
+        delete from tb_merchant
+        where merchant_id = #{merchantId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insertSelective" keyColumn="merchant_id" keyProperty="merchantId"
+            parameterType="org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantDO"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into tb_merchant
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tenantId != null">
+                tenant_id,
+            </if>
+            <if test="merchantCode != null">
+                merchant_code,
+            </if>
+            <if test="merchantName != null">
+                merchant_name,
+            </if>
+            <if test="merchantType != null">
+                merchant_type,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="level != null">
+                `level`,
+            </if>
+            <if test="legalPerson != null">
+                legal_person,
+            </if>
+            <if test="legalPersonIdNumber != null">
+                legal_person_id_number,
+            </if>
+            <if test="legalPersonIdFront != null">
+                legal_person_id_front,
+            </if>
+            <if test="legalPersonIdBack != null">
+                legal_person_id_back,
+            </if>
+            <if test="businessLicense != null">
+                business_license,
+            </if>
+            <if test="contactPerson != null">
+                contact_person,
+            </if>
+            <if test="contactPhone != null">
+                contact_phone,
+            </if>
+            <if test="contactEmail != null">
+                contact_email,
+            </if>
+            <if test="preciseLocation != null">
+                precise_location,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="outerPicture != null">
+                outer_picture,
+            </if>
+            <if test="innerPicture != null">
+                inner_picture,
+            </if>
+            <if test="logo != null">
+                logo,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="depositAmount != null">
+                deposit_amount,
+            </if>
+            <if test="settlementCycle != null">
+                settlement_cycle,
+            </if>
+            <if test="certified != null">
+                certified,
+            </if>
+            <if test="certifiedTime != null">
+                certified_time,
+            </if>
+            <if test="joinTime != null">
+                join_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tenantId != null">
+                #{tenantId},
+            </if>
+            <if test="merchantCode != null">
+                #{merchantCode},
+            </if>
+            <if test="merchantName != null">
+                #{merchantName},
+            </if>
+            <if test="merchantType != null">
+                #{merchantType},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="level != null">
+                #{level},
+            </if>
+            <if test="legalPerson != null">
+                #{legalPerson},
+            </if>
+            <if test="legalPersonIdNumber != null">
+                #{legalPersonIdNumber},
+            </if>
+            <if test="legalPersonIdFront != null">
+                #{legalPersonIdFront},
+            </if>
+            <if test="legalPersonIdBack != null">
+                #{legalPersonIdBack},
+            </if>
+            <if test="businessLicense != null">
+                #{businessLicense},
+            </if>
+            <if test="contactPerson != null">
+                #{contactPerson},
+            </if>
+            <if test="contactPhone != null">
+                #{contactPhone},
+            </if>
+            <if test="contactEmail != null">
+                #{contactEmail},
+            </if>
+            <if test="preciseLocation != null">
+                #{preciseLocation},
+            </if>
+            <if test="address != null">
+                #{address},
+            </if>
+            <if test="outerPicture != null">
+                #{outerPicture},
+            </if>
+            <if test="innerPicture != null">
+                #{innerPicture},
+            </if>
+            <if test="logo != null">
+                #{logo},
+            </if>
+            <if test="description != null">
+                #{description},
+            </if>
+            <if test="depositAmount != null">
+                #{depositAmount},
+            </if>
+            <if test="settlementCycle != null">
+                #{settlementCycle},
+            </if>
+            <if test="certified != null">
+                #{certified},
+            </if>
+            <if test="certifiedTime != null">
+                #{certifiedTime},
+            </if>
+            <if test="joinTime != null">
+                #{joinTime},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+        </trim>
+        on duplicate key update
+        merchant_name = #{merchantName},
+        merchant_type = #{merchantType},
+        `status` = #{status},
+        `level` = #{level},
+        legal_person = #{legalPerson},
+        legal_person_id_number = #{legalPersonIdNumber},
+        legal_person_id_front = #{legalPersonIdFront},
+        legal_person_id_back = #{legalPersonIdBack},
+        business_license = #{businessLicense},
+        contact_person = #{contactPerson},
+        contact_phone = #{contactPhone},
+        contact_email = #{contactEmail},
+        precise_location = #{preciseLocation},
+        address = #{address},
+        outer_picture = #{outerPicture},
+        inner_picture = #{innerPicture},
+        logo = #{logo},
+        description = #{description},
+        deposit_amount = #{depositAmount},
+        settlement_cycle = #{settlementCycle},
+        certified = #{certified},
+        certified_time = #{certifiedTime},
+        join_time = #{joinTime}
+    </insert>
+
+    <update id="updateByPrimaryKeySelective"
+            parameterType="org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantDO">
+        <!--@mbg.generated-->
+        update tb_merchant
+        <set>
+            <if test="tenantId != null">
+                tenant_id = #{tenantId},
+            </if>
+            <if test="merchantCode != null">
+                merchant_code = #{merchantCode},
+            </if>
+            <if test="merchantName != null">
+                merchant_name = #{merchantName},
+            </if>
+            <if test="merchantType != null">
+                merchant_type = #{merchantType},
+            </if>
+            <if test="status != null">
+                `status` = #{status},
+            </if>
+            <if test="level != null">
+                `level` = #{level},
+            </if>
+            <if test="legalPerson != null">
+                legal_person = #{legalPerson},
+            </if>
+            <if test="legalPersonIdNumber != null">
+                legal_person_id_number = #{legalPersonIdNumber},
+            </if>
+            <if test="legalPersonIdFront != null">
+                legal_person_id_front = #{legalPersonIdFront},
+            </if>
+            <if test="legalPersonIdBack != null">
+                legal_person_id_back = #{legalPersonIdBack},
+            </if>
+            <if test="businessLicense != null">
+                business_license = #{businessLicense},
+            </if>
+            <if test="contactPerson != null">
+                contact_person = #{contactPerson},
+            </if>
+            <if test="contactPhone != null">
+                contact_phone = #{contactPhone},
+            </if>
+            <if test="contactEmail != null">
+                contact_email = #{contactEmail},
+            </if>
+            <if test="preciseLocation != null">
+                precise_location = #{preciseLocation},
+            </if>
+            <if test="address != null">
+                address = #{address},
+            </if>
+            <if test="outerPicture != null">
+                outer_picture = #{outerPicture},
+            </if>
+            <if test="innerPicture != null">
+                inner_picture = #{innerPicture},
+            </if>
+            <if test="logo != null">
+                logo = #{logo},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="depositAmount != null">
+                deposit_amount = #{depositAmount},
+            </if>
+            <if test="settlementCycle != null">
+                settlement_cycle = #{settlementCycle},
+            </if>
+            <if test="certified != null">
+                certified = #{certified},
+            </if>
+            <if test="certifiedTime != null">
+                certified_time = #{certifiedTime},
+            </if>
+            <if test="joinTime != null">
+                join_time = #{joinTime},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where merchant_id = #{merchantId,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectPages" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_merchant
+        <where>
+            <if test="qry.merchantName != null and qry.merchantName != ''">
+                and merchant_name like concat('%', #{qry.merchantName}, '%')
+            </if>
+            <if test="qry.merchantCode != null and qry.merchantCode != ''">
+                and merchant_code = #{qry.merchantCode}
+            </if>
+            <if test="qry.status != null">
+                and `status` = #{qry.status}
+            </if>
+            <if test="qry.certified != null">
+                and certified = #{qry.certified}
+            </if>
+        </where>
+    </select>
+</mapper>

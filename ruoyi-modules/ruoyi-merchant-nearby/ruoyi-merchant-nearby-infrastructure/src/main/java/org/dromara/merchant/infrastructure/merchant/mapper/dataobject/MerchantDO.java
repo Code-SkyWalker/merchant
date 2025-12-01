@@ -1,25 +1,29 @@
-package org.dromara.merchant.domain.merchant.model;
+package org.dromara.merchant.infrastructure.merchant.mapper.dataobject;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.experimental.Accessors;
-import org.dromara.common.core.utils.SnowflakeIdGenerator;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import org.dromara.common.mybatis.core.domain.BaseEntity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * @Description 商户实体 代表平台中的一个商户(卖家)
+ * @Description 商户DO对象
  * @Author Code Skywalker
- * @Date 2025/11/24 17:42
+ * @Date 2025/12/1 15:30
  */
 @Data
-@Accessors(chain = true)
-public class Merchant {
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+public class MerchantDO extends BaseEntity {
 
     /**
      * 商户ID
      */
-    private Long merchantId = SnowflakeIdGenerator.generateId();
+    private Long merchantId;
 
     /**
      * 租户ID
@@ -29,7 +33,7 @@ public class Merchant {
     /**
      * 商户编码
      */
-    private String merchantCode = "MERCHANT#" + this.merchantId;
+    private String merchantCode;
 
     /**
      * 商户名称
@@ -39,17 +43,17 @@ public class Merchant {
     /**
      * 商户类型
      */
-    private MerchantType merchantType;
+    private String merchantType;
 
     /**
      * 商户状态
      */
-    private MerchantStatus status;
+    private String status;
 
     /**
      * 商户等级
      */
-    private MerchantLevel level;
+    private String level;
 
     /**
      * 法人姓名
@@ -146,52 +150,4 @@ public class Merchant {
      */
     private LocalDateTime joinTime;
 
-    /**
-     * 创建时间
-     */
-    private LocalDateTime createTime;
-
-    /**
-     * 更新时间
-     */
-    private LocalDateTime updateTime;
-
-    /**
-     * 激活商户
-     */
-    public void activate() {
-        this.status = MerchantStatus.ACTIVE;
-    }
-
-    /**
-     * 禁用商户
-     */
-    public void disable() {
-        this.status = MerchantStatus.DISABLED;
-    }
-
-    /**
-     * 认证商户
-     */
-    public void certify() {
-        this.certified = true;
-        this.certifiedTime = LocalDateTime.now();
-        this.joinTime = LocalDateTime.now();
-    }
-
-    /**
-     * 检查商户是否可用
-     */
-    public boolean isAvailable() {
-        return status == MerchantStatus.ACTIVE && Boolean.TRUE.equals(certified);
-    }
-
-    /**
-     * 升级商户等级
-     */
-    public void upgradeLevel(MerchantLevel newLevel) {
-        if (newLevel.ordinal() > this.level.ordinal()) {
-            this.level = newLevel;
-        }
-    }
 }

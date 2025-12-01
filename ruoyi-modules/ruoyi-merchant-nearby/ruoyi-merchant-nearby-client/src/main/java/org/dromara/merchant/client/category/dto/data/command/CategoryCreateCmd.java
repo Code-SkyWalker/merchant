@@ -14,7 +14,6 @@ import org.dromara.merchant.client.Command;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryCreateCmd implements Command {
-    private String tenantId;
     private String parentId;
     private String categoryName;
     private String categoryImage;

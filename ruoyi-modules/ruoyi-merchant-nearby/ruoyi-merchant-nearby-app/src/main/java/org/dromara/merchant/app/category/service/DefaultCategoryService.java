@@ -1,8 +1,9 @@
-package org.dromara.merchant.app.category;
+package org.dromara.merchant.app.category.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.mybatis.core.page.PageQuery;
+import org.dromara.merchant.app.category.IDefaultCategoryService;
 import org.dromara.merchant.app.category.executor.*;
 import org.dromara.merchant.app.category.executor.query.DefaultCategoryDetailQryExecutor;
 import org.dromara.merchant.app.category.executor.query.DefaultCategoryPageQryExecutor;
@@ -11,8 +12,6 @@ import org.dromara.merchant.client.category.dto.data.command.DefaultCategoryCrea
 import org.dromara.merchant.client.category.dto.data.command.DefaultCategoryModifyCmd;
 import org.dromara.merchant.client.category.dto.data.command.DefaultCategoryPageQry;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * @Description TODO

@@ -8,13 +8,15 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * @Description 商户实体 代表平台中的一个商户(卖家)
+ * @Description 商户审批实体
  * @Author Code Skywalker
- * @Date 2025/11/24 17:42
+ * @Date 2025/12/1 16:30
  */
 @Data
 @Accessors(chain = true)
-public class Merchant {
+public class MerchantCertify {
+
+    private Long approvalId;
 
     /**
      * 商户ID
@@ -39,17 +41,17 @@ public class Merchant {
     /**
      * 商户类型
      */
-    private MerchantType merchantType;
+    private String merchantType;
 
     /**
      * 商户状态
      */
-    private MerchantStatus status;
+    private String status;
 
     /**
      * 商户等级
      */
-    private MerchantLevel level;
+    private String level;
 
     /**
      * 法人姓名
@@ -132,7 +134,12 @@ public class Merchant {
     private Integer settlementCycle;
 
     /**
-     * 认证状态
+     * 审批类型: 0入驻审批 1修改审批
+     */
+    private Integer certifiedType;
+
+    /**
+     * 认证状态 (0:未认证, 1:已认证)
      */
     private Boolean certified;
 
@@ -147,6 +154,21 @@ public class Merchant {
     private LocalDateTime joinTime;
 
     /**
+     * 审批状态 (PENDING:待审批, APPROVED:审批通过, REJECTED:审批拒绝)
+     */
+    private String approvalStatus;
+
+    /**
+     * 审批意见
+     */
+    private String approvalComment;
+
+    /**
+     * 审批时间
+     */
+    private LocalDateTime approvalTime;
+
+    /**
      * 创建时间
      */
     private LocalDateTime createTime;
@@ -155,43 +177,4 @@ public class Merchant {
      * 更新时间
      */
     private LocalDateTime updateTime;
-
-    /**
-     * 激活商户
-     */
-    public void activate() {
-        this.status = MerchantStatus.ACTIVE;
-    }
-
-    /**
-     * 禁用商户
-     */
-    public void disable() {
-        this.status = MerchantStatus.DISABLED;
-    }
-
-    /**
-     * 认证商户
-     */
-    public void certify() {
-        this.certified = true;
-        this.certifiedTime = LocalDateTime.now();
-        this.joinTime = LocalDateTime.now();
-    }
-
-    /**
-     * 检查商户是否可用
-     */
-    public boolean isAvailable() {
-        return status == MerchantStatus.ACTIVE && Boolean.TRUE.equals(certified);
-    }
-
-    /**
-     * 升级商户等级
-     */
-    public void upgradeLevel(MerchantLevel newLevel) {
-        if (newLevel.ordinal() > this.level.ordinal()) {
-            this.level = newLevel;
-        }
-    }
 }

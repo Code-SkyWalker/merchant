@@ -13,6 +13,13 @@
     <name>ruoyi-merchant-nearby-domain</name>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.dromara</groupId>
+            <artifactId>ruoyi-common-core</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.dromara.merchant</groupId>
             <artifactId>ruoyi-merchant-nearby-client</artifactId>

@@ -9,7 +9,6 @@ import org.dromara.merchant.client.category.dto.data.command.CategoryCreateCmd;
 import org.dromara.merchant.client.category.dto.data.command.CategoryModifyCmd;
 import org.dromara.merchant.client.category.dto.data.command.CategoryPageQry;
 
-import java.util.List;
 
 /**
  * @Description TODO

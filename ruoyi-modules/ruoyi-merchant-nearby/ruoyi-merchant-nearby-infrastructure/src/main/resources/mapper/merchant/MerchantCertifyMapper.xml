@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dromara.merchant.infrastructure.merchant.mapper.MerchantCertifyMapper">
+    <resultMap id="BaseResultMap"
+               type="org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantCertifyDO">
+        <!--@mbg.generated-->
+        <!--@Table tb_merchant_certify-->
+        <id column="approval_id" jdbcType="BIGINT" property="approvalId"/>
+        <result column="merchant_id" jdbcType="BIGINT" property="merchantId"/>
+        <result column="tenant_id" jdbcType="VARCHAR" property="tenantId"/>
+        <result column="merchant_code" jdbcType="VARCHAR" property="merchantCode"/>
+        <result column="merchant_name" jdbcType="VARCHAR" property="merchantName"/>
+        <result column="merchant_type" jdbcType="VARCHAR" property="merchantType"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="level" jdbcType="VARCHAR" property="level"/>
+        <result column="legal_person" jdbcType="VARCHAR" property="legalPerson"/>
+        <result column="legal_person_id_number" jdbcType="VARCHAR" property="legalPersonIdNumber"/>
+        <result column="legal_person_id_front" jdbcType="VARCHAR" property="legalPersonIdFront"/>
+        <result column="legal_person_id_back" jdbcType="VARCHAR" property="legalPersonIdBack"/>
+        <result column="business_license" jdbcType="VARCHAR" property="businessLicense"/>
+        <result column="contact_person" jdbcType="VARCHAR" property="contactPerson"/>
+        <result column="contact_phone" jdbcType="VARCHAR" property="contactPhone"/>
+        <result column="contact_email" jdbcType="VARCHAR" property="contactEmail"/>
+        <result column="precise_location" jdbcType="VARCHAR" property="preciseLocation"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="outer_picture" jdbcType="VARCHAR" property="outerPicture"/>
+        <result column="inner_picture" jdbcType="VARCHAR" property="innerPicture"/>
+        <result column="logo" jdbcType="VARCHAR" property="logo"/>
+        <result column="description" jdbcType="LONGVARCHAR" property="description"/>
+        <result column="join_time" jdbcType="TIMESTAMP" property="joinTime"/>
+        <result column="certified" jdbcType="BOOLEAN" property="certified"/>
+        <result column="certified_type" jdbcType="CHAR" property="certifiedType"/>
+        <result column="certified_time" jdbcType="TIMESTAMP" property="certifiedTime"/>
+        <result column="approval_status" jdbcType="VARCHAR" property="approvalStatus"/>
+        <result column="approval_comment" jdbcType="VARCHAR" property="approvalComment"/>
+        <result column="approval_time" jdbcType="TIMESTAMP" property="approvalTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        approval_id,
+        merchant_id,
+        tenant_id,
+        merchant_code,
+        merchant_name,
+        merchant_type,
+        `status`,
+        `level`,
+        legal_person,
+        legal_person_id_number,
+        legal_person_id_front,
+        legal_person_id_back,
+        business_license,
+        contact_person,
+        contact_phone,
+        contact_email,
+        precise_location,
+        address,
+        outer_picture,
+        inner_picture,
+        logo,
+        description,
+        join_time,
+        certified,
+        certified_type,
+        certified_time,
+        approval_status,
+        approval_comment,
+        approval_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from tb_merchant_certify
+        where approval_id = #{approvalId}
+    </select>
+    <select id="selectByMerchantId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_merchant_certify
+        where merchant_id = #{merchantId}
+    </select>
+    <select id="selectByApprovalStatus" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_merchant_certify
+        where approval_status = #{approvalStatus}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        <!--@mbg.generated-->
+        delete
+        from tb_merchant_certify
+        where approval_id = #{approvalId}
+    </delete>
+    <insert id="insertSelective" keyColumn="merchant_id" keyProperty="merchantId"
+            parameterType="org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantCertifyDO"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into tb_merchant_certify
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="merchantId != null">
+                merchant_id,
+            </if>
+            <if test="tenantId != null">
+                tenant_id,
+            </if>
+            <if test="merchantCode != null">
+                merchant_code,
+            </if>
+            <if test="merchantName != null">
+                merchant_name,
+            </if>
+            <if test="merchantType != null">
+                merchant_type,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="level != null">
+                `level`,
+            </if>
+            <if test="legalPerson != null">
+                legal_person,
+            </if>
+            <if test="legalPersonIdNumber != null">
+                legal_person_id_number,
+            </if>
+            <if test="legalPersonIdFront != null">
+                legal_person_id_front,
+            </if>
+            <if test="legalPersonIdBack != null">
+                legal_person_id_back,
+            </if>
+            <if test="businessLicense != null">
+                business_license,
+            </if>
+            <if test="contactPerson != null">
+                contact_person,
+            </if>
+            <if test="contactPhone != null">
+                contact_phone,
+            </if>
+            <if test="contactEmail != null">
+                contact_email,
+            </if>
+            <if test="preciseLocation != null">
+                precise_location,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="outerPicture != null">
+                outer_picture,
+            </if>
+            <if test="innerPicture != null">
+                inner_picture,
+            </if>
+            <if test="logo != null">
+                logo,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="joinTime != null">
+                join_time,
+            </if>
+            <if test="certified != null">
+                certified,
+            </if>
+            <if test="certifiedType != null">
+                certified_type,
+            </if>
+            <if test="certifiedTime != null">
+                certified_time,
+            </if>
+            <if test="approvalStatus != null">
+                approval_status,
+            </if>
+            <if test="approvalComment != null">
+                approval_comment,
+            </if>
+            <if test="approvalTime != null">
+                approval_time,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDept != null">
+                create_dept,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="merchantId != null">
+                #{merchantId,jdbcType=BIGINT},
+            </if>
+            <if test="tenantId != null">
+                #{tenantId,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantCode != null">
+                #{merchantCode,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantName != null">
+                #{merchantName,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantType != null">
+                #{merchantType,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="legalPerson != null">
+                #{legalPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="legalPersonIdNumber != null">
+                #{legalPersonIdNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="legalPersonIdFront != null">
+                #{legalPersonIdFront,jdbcType=VARCHAR},
+            </if>
+            <if test="legalPersonIdBack != null">
+                #{legalPersonIdBack,jdbcType=VARCHAR},
+            </if>
+            <if test="businessLicense != null">
+                #{businessLicense,jdbcType=VARCHAR},
+            </if>
+            <if test="contactPerson != null">
+                #{contactPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="contactPhone != null">
+                #{contactPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="contactEmail != null">
+                #{contactEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="preciseLocation != null">
+                #{preciseLocation,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="outerPicture != null">
+                #{outerPicture,jdbcType=VARCHAR},
+            </if>
+            <if test="innerPicture != null">
+                #{innerPicture,jdbcType=VARCHAR},
+            </if>
+            <if test="logo != null">
+                #{logo,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="joinTime != null">
+                #{joinTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="certified != null">
+                #{certified,jdbcType=BOOLEAN},
+            </if>
+            <if test="certifiedType != null">
+                #{certifiedType,jdbcType=CHAR},
+            </if>
+            <if test="certifiedTime != null">
+                #{certifiedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="approvalStatus != null">
+                #{approvalStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="approvalComment != null">
+                #{approvalComment,jdbcType=VARCHAR},
+            </if>
+            <if test="approvalTime != null">
+                #{approvalTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                #{createBy},
+            </if>
+            <if test="createDept != null">
+                #{createDept},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective"
+            parameterType="org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantCertifyDO">
+        <!--@mbg.generated-->
+        update tb_merchant_certify
+        <set>
+            <if test="merchantId != null">
+                merchant_id = #{merchantId,jdbcType=VARCHAR},
+            </if>
+            <if test="tenantId != null">
+                tenant_id = #{tenantId,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantCode != null">
+                merchant_code = #{merchantCode,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantName != null">
+                merchant_name = #{merchantName,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantType != null">
+                merchant_type = #{merchantType,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                `level` = #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="legalPerson != null">
+                legal_person = #{legalPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="legalPersonIdNumber != null">
+                legal_person_id_number = #{legalPersonIdNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="legalPersonIdFront != null">
+                legal_person_id_front = #{legalPersonIdFront,jdbcType=VARCHAR},
+            </if>
+            <if test="legalPersonIdBack != null">
+                legal_person_id_back = #{legalPersonIdBack,jdbcType=VARCHAR},
+            </if>
+            <if test="businessLicense != null">
+                business_license = #{businessLicense,jdbcType=VARCHAR},
+            </if>
+            <if test="contactPerson != null">
+                contact_person = #{contactPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="contactPhone != null">
+                contact_phone = #{contactPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="contactEmail != null">
+                contact_email = #{contactEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="preciseLocation != null">
+                precise_location = #{preciseLocation,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="outerPicture != null">
+                outer_picture = #{outerPicture,jdbcType=VARCHAR},
+            </if>
+            <if test="innerPicture != null">
+                inner_picture = #{innerPicture,jdbcType=VARCHAR},
+            </if>
+            <if test="logo != null">
+                logo = #{logo,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="joinTime != null">
+                join_time = #{joinTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="certified != null">
+                certified = #{certified,jdbcType=BOOLEAN},
+            </if>
+            <if test="certifiedType != null">
+                certified_type = #{certifiedType,jdbcType=CHAR},
+            </if>
+            <if test="certifiedTime != null">
+                certified_time = #{certifiedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="approvalStatus != null">
+                approval_status = #{approvalStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="approvalComment != null">
+                approval_comment = #{approvalComment,jdbcType=VARCHAR},
+            </if>
+            <if test="approvalTime != null">
+                approval_time = #{approvalTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="createDept != null">
+                create_dept = #{createDept},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+        </set>
+        where approval_id = #{approvalId,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectPages" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_merchant_certify
+        <where>
+            <choose>
+                <when test="qry.merchantName != null and qry.merchantName != ''">
+                    and merchant_name like concat('%', #{qry.merchantName}, '%')
+                </when>
+                <when test="qry.certifiedType != null">
+                    and certified_type = #{qry.certifiedType}
+                </when>
+                <when test="qry.approvalStatus != null">
+                    and approval_status = #{qry.approvalStatus}
+                </when>
+            </choose>
+        </where>
+    </select>
+</mapper>

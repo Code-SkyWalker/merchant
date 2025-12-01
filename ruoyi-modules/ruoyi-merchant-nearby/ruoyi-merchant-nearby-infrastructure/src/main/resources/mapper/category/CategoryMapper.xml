@@ -41,9 +41,6 @@
         <!--@mbg.generated-->
         insert into tb_shop_category
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="tenantId != null">
-                user_subordinate,
-            </if>
             <if test="parentId != null">
                 parent_id,
             </if>
@@ -70,9 +67,6 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="tenantId != null">
-                #{tenantId,jdbcType=INTEGER},
-            </if>
             <if test="parentId != null">
                 #{parentId,jdbcType=BIGINT},
             </if>
