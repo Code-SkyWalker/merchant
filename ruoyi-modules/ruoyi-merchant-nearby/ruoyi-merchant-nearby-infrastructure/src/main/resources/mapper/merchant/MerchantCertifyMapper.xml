@@ -28,12 +28,15 @@
         <result column="logo" jdbcType="VARCHAR" property="logo"/>
         <result column="description" jdbcType="LONGVARCHAR" property="description"/>
         <result column="join_time" jdbcType="TIMESTAMP" property="joinTime"/>
-        <result column="certified" jdbcType="BOOLEAN" property="certified"/>
         <result column="certified_type" jdbcType="CHAR" property="certifiedType"/>
-        <result column="certified_time" jdbcType="TIMESTAMP" property="certifiedTime"/>
         <result column="approval_status" jdbcType="VARCHAR" property="approvalStatus"/>
         <result column="approval_comment" jdbcType="VARCHAR" property="approvalComment"/>
         <result column="approval_time" jdbcType="TIMESTAMP" property="approvalTime"/>
+        <result column="create_dept" jdbcType="BIGINT" property="createDept"/>
+        <result column="create_by" jdbcType="BIGINT" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_by" jdbcType="BIGINT" property="updateBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
@@ -60,12 +63,15 @@
         logo,
         description,
         join_time,
-        certified,
         certified_type,
-        certified_time,
         approval_status,
         approval_comment,
-        approval_time
+        approval_time,
+        create_dept,
+        create_by,
+        create_time,
+        update_by,
+        update_time
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         <!--@mbg.generated-->
@@ -79,12 +85,6 @@
         <include refid="Base_Column_List"/>
         from tb_merchant_certify
         where merchant_id = #{merchantId}
-    </select>
-    <select id="selectByApprovalStatus" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from tb_merchant_certify
-        where approval_status = #{approvalStatus}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         <!--@mbg.generated-->
@@ -164,14 +164,8 @@
             <if test="joinTime != null">
                 join_time,
             </if>
-            <if test="certified != null">
-                certified,
-            </if>
             <if test="certifiedType != null">
                 certified_type,
-            </if>
-            <if test="certifiedTime != null">
-                certified_time,
             </if>
             <if test="approvalStatus != null">
                 approval_status,
@@ -259,14 +253,8 @@
             <if test="joinTime != null">
                 #{joinTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="certified != null">
-                #{certified,jdbcType=BOOLEAN},
-            </if>
             <if test="certifiedType != null">
                 #{certifiedType,jdbcType=CHAR},
-            </if>
-            <if test="certifiedTime != null">
-                #{certifiedTime,jdbcType=TIMESTAMP},
             </if>
             <if test="approvalStatus != null">
                 #{approvalStatus,jdbcType=VARCHAR},
@@ -359,14 +347,8 @@
             <if test="joinTime != null">
                 join_time = #{joinTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="certified != null">
-                certified = #{certified,jdbcType=BOOLEAN},
-            </if>
             <if test="certifiedType != null">
                 certified_type = #{certifiedType,jdbcType=CHAR},
-            </if>
-            <if test="certifiedTime != null">
-                certified_time = #{certifiedTime,jdbcType=TIMESTAMP},
             </if>
             <if test="approvalStatus != null">
                 approval_status = #{approvalStatus,jdbcType=VARCHAR},

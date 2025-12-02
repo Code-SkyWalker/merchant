@@ -1,8 +1,12 @@
 package org.dromara.merchant.domain.merchant.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.dromara.common.core.utils.SnowflakeIdGenerator;
+import org.dromara.common.mybatis.core.domain.BaseEntity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -13,8 +17,11 @@ import java.time.LocalDateTime;
  * @Date 2025/12/1 16:30
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Accessors(chain = true)
-public class MerchantCertify {
+@EqualsAndHashCode(callSuper = true)
+public class MerchantCertify extends BaseEntity {
 
     private Long approvalId;
 
@@ -139,16 +146,6 @@ public class MerchantCertify {
     private Integer certifiedType;
 
     /**
-     * 认证状态 (0:未认证, 1:已认证)
-     */
-    private Boolean certified;
-
-    /**
-     * 认证时间
-     */
-    private LocalDateTime certifiedTime;
-
-    /**
      * 入驻时间
      */
     private LocalDateTime joinTime;
@@ -169,12 +166,25 @@ public class MerchantCertify {
     private LocalDateTime approvalTime;
 
     /**
-     * 创建时间
+     * 认证商户
      */
-    private LocalDateTime createTime;
+    public void approvalPass() {
+        this.approvalTime = LocalDateTime.now();
+        this.approvalComment = "审批通过";
+        this.approvalStatus = "APPROVED";
+        if (this.certifiedType == 0) {
+            this.joinTime = LocalDateTime.now();
+        }
+
+    }
 
     /**
-     * 更新时间
+     * 认证商户
      */
-    private LocalDateTime updateTime;
+    public void approvalFail(String approvalComment) {
+        this.approvalTime = LocalDateTime.now();
+        this.approvalComment = approvalComment;
+        this.approvalStatus = "REJECTED";
+    }
+
 }

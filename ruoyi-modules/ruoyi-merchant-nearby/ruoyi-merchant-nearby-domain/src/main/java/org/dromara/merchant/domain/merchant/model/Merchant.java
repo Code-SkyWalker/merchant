@@ -1,8 +1,12 @@
 package org.dromara.merchant.domain.merchant.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.dromara.common.core.utils.SnowflakeIdGenerator;
+import org.dromara.common.mybatis.core.domain.BaseEntity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -13,8 +17,11 @@ import java.time.LocalDateTime;
  * @Date 2025/11/24 17:42
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Accessors(chain = true)
-public class Merchant {
+@EqualsAndHashCode(callSuper = true)
+public class Merchant extends BaseEntity {
 
     /**
      * 商户ID
@@ -147,16 +154,6 @@ public class Merchant {
     private LocalDateTime joinTime;
 
     /**
-     * 创建时间
-     */
-    private LocalDateTime createTime;
-
-    /**
-     * 更新时间
-     */
-    private LocalDateTime updateTime;
-
-    /**
      * 激活商户
      */
     public void activate() {
@@ -175,6 +172,7 @@ public class Merchant {
      */
     public void certify() {
         this.certified = true;
+        this.activate();
         this.certifiedTime = LocalDateTime.now();
         this.joinTime = LocalDateTime.now();
     }

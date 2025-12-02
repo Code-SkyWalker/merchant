@@ -10,7 +10,7 @@ import org.apache.ibatis.reflection.SystemMetaObject;
 import org.dromara.common.mybatis.core.domain.BaseEntity;
 import org.dromara.common.satoken.utils.LoginHelper;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Properties;
 
 /**
@@ -87,7 +87,7 @@ public class AutoFillInterceptor implements Interceptor {
      * @param metaObject 元对象
      */
     private void handleInsertFill(BaseEntity baseEntity, MetaObject metaObject) {
-        Date now = new Date();
+        LocalDateTime now = LocalDateTime.now();
 
         // 填充创建时间（如果为空）
         if (baseEntity.getCreateTime() == null) {
@@ -129,7 +129,7 @@ public class AutoFillInterceptor implements Interceptor {
      * @param metaObject 元对象
      */
     private void handleUpdateFill(BaseEntity baseEntity, MetaObject metaObject) {
-        Date now = new Date();
+        LocalDateTime now = LocalDateTime.now();
 
         // 填充更新时间
         baseEntity.setUpdateTime(now);

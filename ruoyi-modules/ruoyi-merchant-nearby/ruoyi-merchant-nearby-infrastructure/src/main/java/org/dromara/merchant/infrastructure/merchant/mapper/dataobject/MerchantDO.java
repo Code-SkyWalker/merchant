@@ -1,12 +1,25 @@
 package org.dromara.merchant.infrastructure.merchant.mapper.dataobject;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import org.dromara.common.mybatis.core.domain.BaseEntity;
+
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
- * 商户表
+ * @Description 商户DO对象
+ * @Author Code Skywalker
+ * @Date 2025/12/1 15:30
  */
-public class MerchantDO {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+public class MerchantDO extends BaseEntity {
+
     /**
      * 商户ID
      */
@@ -130,283 +143,11 @@ public class MerchantDO {
     /**
      * 认证时间
      */
-    private Date certifiedTime;
+    private LocalDateTime certifiedTime;
 
     /**
      * 入驻时间
      */
-    private Date joinTime;
+    private LocalDateTime joinTime;
 
-    /**
-     * 创建部门
-     */
-    private Long createDept;
-
-    /**
-     * 创建人
-     */
-    private Long createBy;
-
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 修改人
-     */
-    private Long updateBy;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
-
-    public Long getMerchantId() {
-        return merchantId;
-    }
-
-    public void setMerchantId(Long merchantId) {
-        this.merchantId = merchantId;
-    }
-
-    public String getTenantId() {
-        return tenantId;
-    }
-
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
-    }
-
-    public String getMerchantCode() {
-        return merchantCode;
-    }
-
-    public void setMerchantCode(String merchantCode) {
-        this.merchantCode = merchantCode;
-    }
-
-    public String getMerchantName() {
-        return merchantName;
-    }
-
-    public void setMerchantName(String merchantName) {
-        this.merchantName = merchantName;
-    }
-
-    public String getMerchantType() {
-        return merchantType;
-    }
-
-    public void setMerchantType(String merchantType) {
-        this.merchantType = merchantType;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
-    }
-
-    public String getLegalPerson() {
-        return legalPerson;
-    }
-
-    public void setLegalPerson(String legalPerson) {
-        this.legalPerson = legalPerson;
-    }
-
-    public String getLegalPersonIdNumber() {
-        return legalPersonIdNumber;
-    }
-
-    public void setLegalPersonIdNumber(String legalPersonIdNumber) {
-        this.legalPersonIdNumber = legalPersonIdNumber;
-    }
-
-    public String getLegalPersonIdFront() {
-        return legalPersonIdFront;
-    }
-
-    public void setLegalPersonIdFront(String legalPersonIdFront) {
-        this.legalPersonIdFront = legalPersonIdFront;
-    }
-
-    public String getLegalPersonIdBack() {
-        return legalPersonIdBack;
-    }
-
-    public void setLegalPersonIdBack(String legalPersonIdBack) {
-        this.legalPersonIdBack = legalPersonIdBack;
-    }
-
-    public String getBusinessLicense() {
-        return businessLicense;
-    }
-
-    public void setBusinessLicense(String businessLicense) {
-        this.businessLicense = businessLicense;
-    }
-
-    public String getContactPerson() {
-        return contactPerson;
-    }
-
-    public void setContactPerson(String contactPerson) {
-        this.contactPerson = contactPerson;
-    }
-
-    public String getContactPhone() {
-        return contactPhone;
-    }
-
-    public void setContactPhone(String contactPhone) {
-        this.contactPhone = contactPhone;
-    }
-
-    public String getContactEmail() {
-        return contactEmail;
-    }
-
-    public void setContactEmail(String contactEmail) {
-        this.contactEmail = contactEmail;
-    }
-
-    public String getPreciseLocation() {
-        return preciseLocation;
-    }
-
-    public void setPreciseLocation(String preciseLocation) {
-        this.preciseLocation = preciseLocation;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getOuterPicture() {
-        return outerPicture;
-    }
-
-    public void setOuterPicture(String outerPicture) {
-        this.outerPicture = outerPicture;
-    }
-
-    public String getInnerPicture() {
-        return innerPicture;
-    }
-
-    public void setInnerPicture(String innerPicture) {
-        this.innerPicture = innerPicture;
-    }
-
-    public String getLogo() {
-        return logo;
-    }
-
-    public void setLogo(String logo) {
-        this.logo = logo;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public BigDecimal getDepositAmount() {
-        return depositAmount;
-    }
-
-    public void setDepositAmount(BigDecimal depositAmount) {
-        this.depositAmount = depositAmount;
-    }
-
-    public Integer getSettlementCycle() {
-        return settlementCycle;
-    }
-
-    public void setSettlementCycle(Integer settlementCycle) {
-        this.settlementCycle = settlementCycle;
-    }
-
-    public Boolean getCertified() {
-        return certified;
-    }
-
-    public void setCertified(Boolean certified) {
-        this.certified = certified;
-    }
-
-    public Date getCertifiedTime() {
-        return certifiedTime;
-    }
-
-    public void setCertifiedTime(Date certifiedTime) {
-        this.certifiedTime = certifiedTime;
-    }
-
-    public Date getJoinTime() {
-        return joinTime;
-    }
-
-    public void setJoinTime(Date joinTime) {
-        this.joinTime = joinTime;
-    }
-
-    public Long getCreateDept() {
-        return createDept;
-    }
-
-    public void setCreateDept(Long createDept) {
-        this.createDept = createDept;
-    }
-
-    public Long getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(Long createBy) {
-        this.createBy = createBy;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getUpdateBy() {
-        return updateBy;
-    }
-
-    public void setUpdateBy(Long updateBy) {
-        this.updateBy = updateBy;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
 }

@@ -71,7 +71,7 @@ public class MerchantCertifyGateway implements IMerchantCertifyGateway {
     @Override
     public boolean updateApprovalStatus(Long approvalId, String approvalStatus, String approvalComment) {
         MerchantCertifyDO merchantCertifyDO = new MerchantCertifyDO();
-        merchantCertifyDO.setMerchantId(approvalId);
+        merchantCertifyDO.setApprovalId(approvalId);
         merchantCertifyDO.setApprovalStatus(approvalStatus);
         merchantCertifyDO.setApprovalComment(approvalComment);
         return mapper.updateByPrimaryKeySelective(merchantCertifyDO) > 0;

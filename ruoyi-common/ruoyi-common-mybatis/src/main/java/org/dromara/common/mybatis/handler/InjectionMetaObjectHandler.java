@@ -11,6 +11,7 @@ import org.dromara.common.core.utils.ObjectUtils;
 import org.dromara.common.mybatis.core.domain.BaseEntity;
 import org.dromara.common.satoken.utils.LoginHelper;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -37,7 +38,7 @@ public class InjectionMetaObjectHandler implements MetaObjectHandler {
         try {
             if (ObjectUtil.isNotNull(metaObject) && metaObject.getOriginalObject() instanceof BaseEntity baseEntity) {
                 // 获取当前时间作为创建时间和更新时间，如果创建时间不为空，则使用创建时间，否则使用当前时间
-                Date current = ObjectUtils.notNull(baseEntity.getCreateTime(), new Date());
+                LocalDateTime current = ObjectUtils.notNull(baseEntity.getCreateTime(), LocalDateTime.now());
                 baseEntity.setCreateTime(current);
                 baseEntity.setUpdateTime(current);
 
@@ -77,7 +78,7 @@ public class InjectionMetaObjectHandler implements MetaObjectHandler {
         try {
             if (ObjectUtil.isNotNull(metaObject) && metaObject.getOriginalObject() instanceof BaseEntity baseEntity) {
                 // 获取当前时间作为更新时间，无论原始对象中的更新时间是否为空都填充
-                Date current = new Date();
+                LocalDateTime current = LocalDateTime.now();
                 baseEntity.setUpdateTime(current);
 
                 // 获取当前登录用户的ID，并填充更新人信息

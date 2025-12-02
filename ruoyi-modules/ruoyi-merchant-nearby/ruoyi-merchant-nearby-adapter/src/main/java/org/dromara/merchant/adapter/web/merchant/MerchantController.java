@@ -30,7 +30,7 @@ public class MerchantController {
      * @return 商家信息
      */
     @GetMapping("/{merchantId}")
-    public R<MerchantCO> queryById(Long merchantId) {
+    public R<MerchantCO> queryById(@PathVariable Long merchantId) {
         MerchantCO merchantCO = this.merchantService.queryById(merchantId);
         return R.ok(merchantCO);
     }

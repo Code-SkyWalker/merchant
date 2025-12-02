@@ -2,6 +2,8 @@ package org.dromara.merchant.client.merchant.dto.data.command;
 
 import lombok.Data;
 
+import java.util.List;
+
 
 /**
  * @Description 创建商户审批命令
@@ -10,6 +12,11 @@ import lombok.Data;
  */
 @Data
 public class MerchantCertifyCreateCmd {
+
+    /**
+     * 商户ID
+     */
+    private Long merchantId;
 
     /**
      * 商户名称
@@ -102,7 +109,13 @@ public class MerchantCertifyCreateCmd {
     private String description;
 
     /**
-     * 审批类型: 0入驻审批 1修改审批
+     * 审批类型: 0入驻审批 1修改审批 2提货卡审批 3退出审批
      */
     private Integer certifiedType;
+
+
+    /**
+     * 商户分类
+     */
+    private List<Long> categoryIds;
 }

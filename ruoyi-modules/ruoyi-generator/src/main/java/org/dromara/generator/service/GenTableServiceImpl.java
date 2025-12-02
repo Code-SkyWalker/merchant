@@ -44,6 +44,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -162,8 +164,12 @@ public class GenTableServiceImpl implements IGenTableService {
                 gen.setTableName(x.getName());
                 gen.setTableComment(x.getComment());
                 // postgresql的表元数据没有创建时间这个东西(好奇葩) 只能new Date代替
-                gen.setCreateTime(ObjectUtil.defaultIfNull(x.getCreateTime(), new Date()));
-                gen.setUpdateTime(x.getUpdateTime());
+                gen.setCreateTime(x.getCreateTime() == null ? LocalDateTime.now() : x.getCreateTime().toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime());
+                gen.setUpdateTime(x.getUpdateTime() == null ? LocalDateTime.now() : x.getUpdateTime().toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime());
                 return gen;
             }).sorted(Comparator.comparing(GenTable::getCreateTime).reversed())
             .toList();
@@ -199,8 +205,12 @@ public class GenTableServiceImpl implements IGenTableService {
             gen.setDataName(dataName);
             gen.setTableName(x.getName());
             gen.setTableComment(x.getComment());
-            gen.setCreateTime(x.getCreateTime());
-            gen.setUpdateTime(x.getUpdateTime());
+            gen.setCreateTime(x.getCreateTime().toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime());
+            gen.setUpdateTime(x.getUpdateTime().toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime());
             return gen;
         }).toList();
     }

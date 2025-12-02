@@ -134,19 +134,9 @@ public class MerchantCertifyDO extends BaseEntity {
     private LocalDateTime joinTime;
 
     /**
-     * 认证状态 (0:未认证, 1:已认证)
-     */
-    private Boolean certified;
-
-    /**
      * 审批类型: 0入驻审批 1修改审批
      */
     private Integer certifiedType;
-
-    /**
-     * 认证时间
-     */
-    private LocalDateTime certifiedTime;
 
     /**
      * 审批状态: PENDING待审批 APPROVED审批通过 REJECTED审批拒绝
