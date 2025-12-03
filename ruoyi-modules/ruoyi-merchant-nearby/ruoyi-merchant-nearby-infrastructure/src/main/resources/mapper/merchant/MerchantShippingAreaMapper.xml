@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dromara.merchant.infrastructure.merchant.mapper.MerchantShippingAreaMapper">
+
+    <resultMap type="org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantShippingAreaDO" id="BaseResultMap">
+        <result property="areaId" column="area_id"/>
+        <result property="templateId" column="template_id"/>
+        <result property="tenantId" column="tenant_id"/>
+        <result property="adCode" column="adcode"/>
+        <result property="baseWeightQuantityVolume" column="base_weight_quantity_volume"/>
+        <result property="baseFee" column="base_fee"/>
+        <result property="additionalWeightQuantityVolume" column="additional_weight_quantity_volume"/>
+        <result property="additionalFee" column="additional_fee"/>
+        <result property="sort" column="sort"/>
+        <result property="createDept" column="create_dept"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        area_id,
+        template_id,
+        tenant_id,
+        adcode,
+        base_weight_quantity_volume,
+        base_fee,
+        additional_weight_quantity_volume,
+        additional_fee,
+        sort,
+        create_dept,
+        create_by,
+        create_time,
+        update_by,
+        update_time
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_merchant_shipping_area
+        where area_id = #{areaId}
+    </select>
+
+    <insert id="insertOrUpdateSelective" parameterType="org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantShippingAreaDO">
+        insert into tb_merchant_shipping_area
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="areaId != null">
+                area_id,
+            </if>
+            <if test="templateId != null">
+                template_id,
+            </if>
+            <if test="adCode != null">
+                adcode,
+            </if>
+            <if test="baseWeightQuantityVolume != null">
+                base_weight_quantity_volume,
+            </if>
+            <if test="baseFee != null">
+                base_fee,
+            </if>
+            <if test="additionalWeightQuantityVolume != null">
+                additional_weight_quantity_volume,
+            </if>
+            <if test="additionalFee != null">
+                additional_fee,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="createDept != null">
+                create_dept,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="areaId != null">
+                #{areaId},
+            </if>
+            <if test="templateId != null">
+                #{templateId},
+            </if>
+            <if test="adCode != null">
+                #{adCode},
+            </if>
+            <if test="baseWeightQuantityVolume != null">
+                #{baseWeightQuantityVolume},
+            </if>
+            <if test="baseFee != null">
+                #{baseFee},
+            </if>
+            <if test="additionalWeightQuantityVolume != null">
+                #{additionalWeightQuantityVolume},
+            </if>
+            <if test="additionalFee != null">
+                #{additionalFee},
+            </if>
+            <if test="sort != null">
+                #{sort},
+            </if>
+            <if test="createDept != null">
+                #{createDept},
+            </if>
+            <if test="createBy != null">
+                #{createBy},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+        </trim>
+        on duplicate key update
+        <trim suffixOverrides=",">
+            <if test="templateId != null">
+                template_id = #{templateId},
+            </if>
+            <if test="adCode != null">
+                adcode = #{templateId},
+            </if>
+            <if test="baseWeightQuantityVolume != null">
+                base_weight_quantity_volume = #{baseWeightQuantityVolume},
+            </if>
+            <if test="baseFee != null">
+                base_fee = #{baseFee},
+            </if>
+            <if test="additionalWeightQuantityVolume != null">
+                additional_weight_quantity_volume = #{additionalWeightQuantityVolume},
+            </if>
+            <if test="additionalFee != null">
+                additional_fee = #{additionalFee},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            <if test="createDept != null">
+                create_dept = #{createDept},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteByPrimaryKey" parameterType="long">
+        delete from tb_merchant_shipping_area where area_id = #{areaId}
+    </delete>
+
+    <select id="selectByTemplateId" parameterType="long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_merchant_shipping_area
+        where template_id = #{templateId}
+        order by sort desc
+    </select>
+
+    <delete id="deleteByTemplateId" parameterType="long">
+        delete from tb_merchant_shipping_area where template_id = #{templateId}
+    </delete>
+
+<!--auto generated by MybatisCodeHelper on 2025-12-03-->
+    <insert id="batchInsertOrUpdate">
+        INSERT INTO tb_merchant_shipping_area(area_id,
+                                              template_id,
+                                              tenant_id,
+                                              adcode,
+                                              base_weight_quantity_volume,
+                                              base_fee,
+                                              additional_weight_quantity_volume,
+                                              additional_fee,
+                                              sort,
+                                              create_dept,
+                                              create_by,
+                                              create_time,
+                                              update_by,
+                                              update_time)VALUES
+        <foreach collection="areas" item="element" index="index" separator=",">
+            (#{element.areaId},
+             #{element.templateId},
+             #{element.tenantId},
+             #{element.adCode},
+             #{element.baseWeightQuantityVolume},
+             #{element.baseFee},
+             #{element.additionalWeightQuantityVolume},
+             #{element.additionalFee},
+             #{element.sort},
+             #{element.createDept},
+             #{element.createBy},
+             #{element.createTime},
+             #{element.updateBy},
+             #{element.updateTime})
+        </foreach>
+        on duplicate key update area_id=values(area_id),
+                                template_id=values(template_id),
+                                tenant_id=values(tenant_id),
+                                adcode=values(adcode),
+                                base_weight_quantity_volume=values(base_weight_quantity_volume),
+                                base_fee=values(base_fee),
+                                additional_weight_quantity_volume=values(additional_weight_quantity_volume),
+                                additional_fee=values(additional_fee),
+                                sort=values(sort),
+                                create_dept=values(create_dept),
+                                create_by=values(create_by),
+                                create_time=values(create_time),
+                                update_by=values(update_by),
+                                update_time=values(update_time)
+    </insert>
+
+    <delete id="deleteByPrimaryKeys">
+        delete from tb_merchant_shipping_area
+        <where>
+            <choose>
+                <when test="areaIds != null and areaIds.size() != 0">
+                    area_id in
+                    <foreach item="item" index="index" collection="areaIds" separator="," open="(" close=")">
+                        #{item}
+                    </foreach>
+                </when>
+                <otherwise>
+                    1=0
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+</mapper>

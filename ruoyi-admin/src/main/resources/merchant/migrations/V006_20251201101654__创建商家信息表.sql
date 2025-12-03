@@ -8,7 +8,7 @@ CREATE TABLE `tb_merchant` (
   `status` varchar(20) NOT NULL DEFAULT 'PENDING' COMMENT '商户状态 (PENDING:待审核, ACTIVE:激活, REPOSE:休眠, DISABLED:禁用, FROZEN:冻结)',
   `level` varchar(20) NOT NULL DEFAULT 'NORMAL' COMMENT '商户等级 (NORMAL:普通商户, SILVER:银牌商户, GOLD:金牌商户, DIAMOND:钻石商户)',
   `legal_person` varchar(50) DEFAULT NULL COMMENT '法人姓名',
-  `legal_person_id_number` varchar(18) DEFAULT NULL COMMENT '法人身份证号',
+  `legal_person_id_number` varchar(128) DEFAULT NULL COMMENT '法人身份证号',
   `legal_person_id_front` varchar(255) DEFAULT NULL COMMENT '法人身份证国徽面照片',
   `legal_person_id_back` varchar(255) DEFAULT NULL COMMENT '法人身份证人像面照片',
   `business_license` varchar(255) DEFAULT NULL COMMENT '营业执照',

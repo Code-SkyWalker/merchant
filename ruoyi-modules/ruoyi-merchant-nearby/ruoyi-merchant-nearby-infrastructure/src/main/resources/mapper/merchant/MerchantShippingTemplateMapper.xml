@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dromara.merchant.infrastructure.merchant.mapper.MerchantShippingTemplateMapper">
+
+    <resultMap type="org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantShippingTemplateDO" id="BaseResultMap">
+        <result property="templateId" column="template_id"/>
+        <result property="merchantId" column="merchant_id"/>
+        <result property="tenantId" column="tenant_id"/>
+        <result property="templateName" column="template_name"/>
+        <result property="billingMethod" column="billing_method"/>
+        <result property="isDefault" column="is_default"/>
+        <result property="status" column="status"/>
+        <result property="sort" column="sort"/>
+        <result property="description" column="description"/>
+        <result property="createDept" column="create_dept"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        template_id,
+        merchant_id,
+        tenant_id,
+        template_name,
+        billing_method,
+        is_default,
+        status,
+        sort,
+        description,
+        create_dept,
+        create_by,
+        create_time,
+        update_by,
+        update_time
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_merchant_shipping_template
+        where template_id = #{templateId}
+    </select>
+
+    <insert id="insertOrUpdateSelective" parameterType="org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantShippingTemplateDO">
+        insert into tb_merchant_shipping_template
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="templateId != null">
+                template_id,
+            </if>
+            <if test="merchantId != null">
+                merchant_id,
+            </if>
+            <if test="templateName != null">
+                template_name,
+            </if>
+            <if test="billingMethod != null">
+                billing_method,
+            </if>
+            <if test="isDefault != null">
+                is_default,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="createDept != null">
+                create_dept,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="templateId != null">
+                #{templateId},
+            </if>
+            <if test="merchantId != null">
+                #{merchantId},
+            </if>
+            <if test="templateName != null">
+                #{templateName},
+            </if>
+            <if test="billingMethod != null">
+                #{billingMethod},
+            </if>
+            <if test="isDefault != null">
+                #{isDefault},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="sort != null">
+                #{sort},
+            </if>
+            <if test="description != null">
+                #{description},
+            </if>
+            <if test="createDept != null">
+                #{createDept},
+            </if>
+            <if test="createBy != null">
+                #{createBy},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+        </trim>
+        on duplicate key update
+        <trim suffixOverrides=",">
+            <if test="merchantId != null">
+                merchant_id = #{merchantId},
+            </if>
+            <if test="templateName != null">
+                template_name = #{templateName},
+            </if>
+            <if test="billingMethod != null">
+                billing_method = #{billingMethod},
+            </if>
+            <if test="isDefault != null">
+                is_default = #{isDefault},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="createDept != null">
+                create_dept = #{createDept},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteByPrimaryKey" parameterType="long">
+        delete from tb_merchant_shipping_template where template_id = #{templateId}
+    </delete>
+
+    <select id="selectPages" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_merchant_shipping_template
+        <where>
+            <if test="qry.templateName != null and qry.templateName != ''">
+                and template_name like concat('%', #{qry.templateName}, '%')
+            </if>
+            <if test="qry.merchantId != null">
+                and merchant_id = #{qry.merchantId}
+            </if>
+            <if test="qry.status != null and qry.status != ''">
+                and status = #{qry.status}
+            </if>
+        </where>
+        order by sort asc, create_time desc
+    </select>
+
+    <select id="selectByMerchantId" parameterType="long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_merchant_shipping_template
+        where merchant_id = #{merchantId}
+        order by sort asc
+    </select>
+
+    <select id="selectByMerchantIdAndIsDefault" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_merchant_shipping_template
+        where merchant_id = #{merchantId} and is_default = #{isDefault}
+    </select>
+
+    <update id="cancelDefaultByMerchantId" parameterType="long">
+        update tb_merchant_shipping_template set is_default = 0 where merchant_id = #{merchantId}
+    </update>
+
+</mapper>
