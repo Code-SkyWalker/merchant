@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.dromara.merchant.client.merchant.dto.data.clientobject.MerchantShippingAreaCO;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantShippingAreaCreateCmd;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantShippingAreaModifyCmd;
-import org.dromara.merchant.domain.merchant.model.MerchantShippingArea;
+import org.dromara.merchant.domain.merchant.model.delivery.MerchantShippingArea;
 import org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantShippingAreaDO;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;

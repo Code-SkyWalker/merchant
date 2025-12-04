@@ -3,6 +3,7 @@ package org.dromara.merchant.infrastructure.merchant.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.dromara.common.mybatis.core.mapper.BaseMapperPlus;
 import org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantCategoryDO;
 
 public interface MerchantCategoryMapper {

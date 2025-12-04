@@ -1,8 +1,8 @@
 //package org.dromara.merchant.app.merchant.service;
 //
 //import lombok.RequiredArgsConstructor;
-//import org.dromara.merchant.domain.merchant.model.BillingMethod;
-//import org.dromara.merchant.domain.merchant.model.MerchantShippingTemplate;
+//import org.dromara.merchant.domain.merchant.model.delivery.BillingMethod;
+//import org.dromara.merchant.domain.merchant.model.delivery.MerchantShippingTemplate;
 //import org.springframework.stereotype.Service;
 //
 //import java.math.BigDecimal;

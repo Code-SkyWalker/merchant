@@ -1,5 +1,6 @@
 package org.dromara.merchant.infrastructure.merchant.mapper.dataobject;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,6 +16,7 @@ import org.dromara.common.mybatis.core.domain.BaseEntity;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@TableName("tb_merchant_category")
 public class MerchantCategoryDO extends BaseEntity {
     /**
      * 商户ID

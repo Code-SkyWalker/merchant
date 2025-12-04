@@ -1,4 +1,4 @@
-package org.dromara.merchant.domain.merchant.model;
+package org.dromara.merchant.domain.merchant.model.delivery;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,10 +6,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.dromara.common.core.utils.SnowflakeIdGenerator;
-import org.dromara.common.mybatis.core.domain.BaseEntity;
+import org.dromara.common.tenant.core.TenantEntity;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * @Description 商户配送区域及运费实体
@@ -21,22 +20,17 @@ import java.util.List;
 @AllArgsConstructor
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class MerchantShippingArea extends BaseEntity {
+public class MerchantShippingArea extends TenantEntity {
 
     /**
      * 配送区域ID
      */
-    private Long areaId;
+    private Long areaId = SnowflakeIdGenerator.generateId();
 
     /**
      * 运费模板ID
      */
     private Long templateId;
-
-    /**
-     * 租户ID
-     */
-    private String tenantId;
 
     /**
      * 区划代码集合

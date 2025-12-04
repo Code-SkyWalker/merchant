@@ -1,6 +1,9 @@
 package org.dromara.merchant.infrastructure.merchant.mapper.dataobject;
 
 import java.time.LocalDateTime;
+
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,11 +19,13 @@ import org.dromara.common.mybatis.core.domain.BaseEntity;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@TableName("tb_merchant_certify")
 public class MerchantCertifyDO extends BaseEntity {
 
     /**
      * 审批ID
      */
+    @TableId
     private Long approvalId;
 
     /**

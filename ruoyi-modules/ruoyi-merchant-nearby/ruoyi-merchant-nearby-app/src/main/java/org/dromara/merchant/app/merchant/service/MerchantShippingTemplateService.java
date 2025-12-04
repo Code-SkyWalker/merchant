@@ -36,15 +36,14 @@ public class MerchantShippingTemplateService implements IMerchantShippingTemplat
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean create(MerchantShippingTemplateCreateCmd cmd) {
+    public Long create(MerchantShippingTemplateCreateCmd cmd) {
 
         // 创建商户运费模板
         Long createdTemplateId = createExecutor.execute(cmd);
 
         // 创建商户配送区域
-        boolean createAreas = areaCreateExecutor.execute(cmd.getAreas());
-
-        return createAreas;
+        areaCreateExecutor.execute(cmd.getAreas(), createdTemplateId);
+        return createdTemplateId;
     }
 
     @Transactional(rollbackFor = Exception.class)

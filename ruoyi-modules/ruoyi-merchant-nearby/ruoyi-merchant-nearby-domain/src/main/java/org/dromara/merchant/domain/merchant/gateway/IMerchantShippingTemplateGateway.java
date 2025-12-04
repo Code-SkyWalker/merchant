@@ -1,6 +1,6 @@
 package org.dromara.merchant.domain.merchant.gateway;
 
-import org.dromara.merchant.domain.merchant.model.MerchantShippingTemplate;
+import org.dromara.merchant.domain.merchant.model.delivery.MerchantShippingTemplate;
 
 /**
  * @Description 商户运费模板网关接口

@@ -7,7 +7,7 @@ import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantShippingTemplateCreateCmd;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantShippingTemplateModifyCmd;
-import org.dromara.merchant.domain.merchant.model.MerchantShippingTemplate;
+import org.dromara.merchant.domain.merchant.model.delivery.MerchantShippingTemplate;
 import org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantShippingTemplateDO;
 
 /**

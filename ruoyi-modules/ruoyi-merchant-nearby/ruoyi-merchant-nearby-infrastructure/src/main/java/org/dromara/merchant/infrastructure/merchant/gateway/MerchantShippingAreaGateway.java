@@ -2,7 +2,7 @@ package org.dromara.merchant.infrastructure.merchant.gateway;
 
 import lombok.RequiredArgsConstructor;
 import org.dromara.merchant.domain.merchant.gateway.IMerchantShippingAreaGateway;
-import org.dromara.merchant.domain.merchant.model.MerchantShippingArea;
+import org.dromara.merchant.domain.merchant.model.delivery.MerchantShippingArea;
 import org.dromara.merchant.infrastructure.merchant.converter.MerchantShippingAreaConvertor;
 import org.dromara.merchant.infrastructure.merchant.mapper.MerchantShippingAreaMapper;
 import org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantShippingAreaDO;
@@ -25,12 +25,13 @@ public class MerchantShippingAreaGateway implements IMerchantShippingAreaGateway
     @Override
     public boolean save(MerchantShippingArea area) {
         MerchantShippingAreaDO areaDO = convertor.toMerchantShippingAreaDO(area);
-        return mapper.insertOrUpdateSelective(areaDO) > 0;
+        return mapper.insertOrUpdate(areaDO);
     }
 
     @Override
     public boolean batchSave(List<MerchantShippingArea> areas) {
-        return mapper.batchInsertOrUpdate(convertor.toMerchantShippingAreaDO(areas)) > 0;
+        List<MerchantShippingAreaDO> merchantShippingAreaDO = convertor.toMerchantShippingAreaDO(areas);
+        return mapper.insertBatch(merchantShippingAreaDO);
     }
 
     @Override

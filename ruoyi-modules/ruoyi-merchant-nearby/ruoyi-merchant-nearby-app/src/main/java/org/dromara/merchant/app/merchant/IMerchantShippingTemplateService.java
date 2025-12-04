@@ -18,9 +18,9 @@ public interface IMerchantShippingTemplateService {
      * 创建商户运费模板
      *
      * @param cmd 创建命令
-     * @return 是否创建成功
+     * @return 创建的模板ID
      */
-    boolean create(MerchantShippingTemplateCreateCmd cmd);
+    Long create(MerchantShippingTemplateCreateCmd cmd);
 
     /**
      * 修改商户运费模板

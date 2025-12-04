@@ -1,5 +1,8 @@
 package org.dromara.merchant.infrastructure.merchant.mapper.dataobject;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,11 +21,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@TableName("tb_merchant_shipping_area")
 public class MerchantShippingAreaDO extends BaseEntity {
 
     /**
      * 配送区域ID
      */
+    @TableId
     private Long areaId;
 
     /**
@@ -38,6 +43,7 @@ public class MerchantShippingAreaDO extends BaseEntity {
     /**
      * 区划代码集合
      */
+    @TableField("adcode")
     private String adCode;
 
     /**

@@ -11,6 +11,8 @@ import org.dromara.common.mybatis.core.domain.BaseEntity;
 import org.dromara.common.satoken.utils.LoginHelper;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -64,8 +66,7 @@ public class AutoFillInterceptor implements Interceptor {
         try {
             // 如果参数对象是BaseEntity的实例
             if (parameter instanceof BaseEntity baseEntity) {
-                // 创建MetaObject
-
+                // 处理单个BaseEntity对象
                 MetaObject metaObject = SystemMetaObject.forObject(parameter);
 
                 // 根据SQL命令类型进行不同的填充处理
@@ -74,7 +75,24 @@ public class AutoFillInterceptor implements Interceptor {
                 } else if (sqlCommandType == SqlCommandType.UPDATE) {
                     handleUpdateFill(baseEntity, metaObject);
                 }
+            } else if (parameter instanceof Map<?, ?> map) {
+                // 处理Map类型参数（MyBatis多参数情况）
+                for (Map.Entry<?, ?> entry : map.entrySet()) {
+                    Object value = entry.getValue();
+                    if (value instanceof List<?> list) {
+                        // 处理List类型参数
+                        for (Object item : list) {
+                            if (item instanceof BaseEntity) {
+                                handleParameter(item, sqlCommandType);
+                            }
+                        }
+                    } else if (value instanceof BaseEntity) {
+                        // 处理单个BaseEntity对象
+                        handleParameter(value, sqlCommandType);
+                    }
+                }
             }
+
         } catch (Exception e) {
             log.warn("自动填充失败: {}", e.getMessage());
         }

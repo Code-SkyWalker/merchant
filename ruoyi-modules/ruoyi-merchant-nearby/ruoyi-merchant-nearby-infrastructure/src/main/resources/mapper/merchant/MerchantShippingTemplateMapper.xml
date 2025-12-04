@@ -54,6 +54,9 @@
             <if test="merchantId != null">
                 merchant_id,
             </if>
+            <if test="tenantId != null">
+                tenant_id,
+            </if>
             <if test="templateName != null">
                 template_name,
             </if>
@@ -94,6 +97,9 @@
             </if>
             <if test="merchantId != null">
                 #{merchantId},
+            </if>
+            <if test="tenantId != null">
+                #{templateId},
             </if>
             <if test="templateName != null">
                 #{templateName},

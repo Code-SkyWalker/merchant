@@ -3,7 +3,6 @@ package org.dromara.merchant.adapter.web.merchant;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.domain.R;
-import org.dromara.common.core.utils.StringUtils;
 import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.common.mybatis.core.page.TableDataInfo;
 import org.dromara.common.log.annotation.Log;
@@ -46,11 +45,11 @@ public class MerchantShippingTemplateController {
     /**
      * 创建运费模板
      * @param cmd 创建参数
-     * @return 是否创建成功
+     * @return 创建的模板ID
      */
     @PostMapping
     @Log(title = "商户运费模板", businessType = BusinessType.INSERT)
-    public R<Boolean> create(@RequestBody MerchantShippingTemplateCreateCmd cmd) {
+    public R<Long> create(@RequestBody MerchantShippingTemplateCreateCmd cmd) {
         return R.ok(this.merchantShippingTemplateService.create(cmd));
     }
 

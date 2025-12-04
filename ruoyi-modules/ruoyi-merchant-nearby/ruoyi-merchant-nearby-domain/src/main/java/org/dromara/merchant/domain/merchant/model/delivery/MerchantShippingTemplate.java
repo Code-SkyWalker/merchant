@@ -1,4 +1,4 @@
-package org.dromara.merchant.domain.merchant.model;
+package org.dromara.merchant.domain.merchant.model.delivery;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

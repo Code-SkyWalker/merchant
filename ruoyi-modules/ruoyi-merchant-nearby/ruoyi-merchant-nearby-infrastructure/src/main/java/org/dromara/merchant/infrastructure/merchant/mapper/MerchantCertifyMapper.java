@@ -3,6 +3,7 @@ package org.dromara.merchant.infrastructure.merchant.mapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.dromara.common.mybatis.core.mapper.BaseMapperPlus;
 import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantCertifyPageQry;
 import org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantCertifyDO;
@@ -15,7 +16,7 @@ import java.util.List;
  * @Date 2025/12/1 16:30
  */
 @Mapper
-public interface MerchantCertifyMapper {
+public interface MerchantCertifyMapper extends BaseMapperPlus<MerchantCertifyDO, MerchantCertifyDO> {
 
     /**
      * 根据主键删除商户审批信息

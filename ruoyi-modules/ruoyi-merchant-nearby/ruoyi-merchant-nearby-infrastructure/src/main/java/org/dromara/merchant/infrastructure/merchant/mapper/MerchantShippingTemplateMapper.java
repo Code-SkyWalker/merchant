@@ -2,6 +2,7 @@ package org.dromara.merchant.infrastructure.merchant.mapper;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
+import org.dromara.common.mybatis.core.mapper.BaseMapperPlus;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantShippingTemplatePageQry;
 import org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantShippingTemplateDO;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * @Author Code Skywalker
  * @Date 2025/12/3 15:30
  */
-public interface MerchantShippingTemplateMapper {
+public interface MerchantShippingTemplateMapper extends BaseMapperPlus<MerchantShippingTemplateDO, MerchantShippingTemplateDO> {
 
     int deleteByPrimaryKey(Long templateId);
 

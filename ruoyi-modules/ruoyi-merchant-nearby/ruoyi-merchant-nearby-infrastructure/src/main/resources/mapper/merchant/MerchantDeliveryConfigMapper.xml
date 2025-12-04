@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dromara.merchant.infrastructure.merchant.mapper.MerchantDeliveryConfigMapper">
+  <resultMap id="BaseResultMap" type="org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantDeliveryConfigDO">
+    <!--@mbg.generated-->
+    <!--@Table tb_merchant_delivery_config-->
+    <id column="delivery_id" property="deliveryId" />
+    <result column="merchant_id" property="merchantId" />
+    <result column="delivery_method" property="deliveryMethod" />
+    <result column="name" property="name" />
+    <result column="relation_id" property="relationId" />
+    <result column="delivery_config" property="deliveryConfig" />
+    <result column="tenant_id" property="tenantId" />
+    <result column="create_dept" property="createDept" />
+    <result column="create_by" property="createBy" />
+    <result column="create_time" property="createTime" />
+    <result column="update_by" property="updateBy" />
+    <result column="update_time" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    delivery_id, merchant_id, delivery_method, `name`, relation_id, delivery_config,
+    tenant_id, create_dept, create_by, create_time, update_by, update_time
+  </sql>
+</mapper>

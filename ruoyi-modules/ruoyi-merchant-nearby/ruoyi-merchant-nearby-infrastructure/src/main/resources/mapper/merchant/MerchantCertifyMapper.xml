@@ -185,6 +185,12 @@
             <if test="updateBy != null">
                 update_by,
             </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="merchantId != null">
@@ -273,6 +279,12 @@
             </if>
             <if test="updateBy != null">
                 #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
             </if>
         </trim>
     </insert>
@@ -367,6 +379,9 @@
             </if>
             <if test="updateBy != null">
                 update_by = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
         </set>
         where approval_id = #{approvalId,jdbcType=BIGINT}

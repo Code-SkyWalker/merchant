@@ -1,5 +1,7 @@
 package org.dromara.merchant.infrastructure.merchant.mapper.dataobject;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,11 +20,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@TableName("tb_merchant")
 public class MerchantDO extends BaseEntity {
 
     /**
      * 商户ID
      */
+    @TableId
     private Long merchantId;
 
     /**

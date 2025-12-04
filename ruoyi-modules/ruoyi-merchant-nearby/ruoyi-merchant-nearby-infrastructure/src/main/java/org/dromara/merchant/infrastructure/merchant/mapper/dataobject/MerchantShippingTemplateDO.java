@@ -1,10 +1,13 @@
 package org.dromara.merchant.infrastructure.merchant.mapper.dataobject;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.dromara.common.mybatis.core.domain.BaseEntity;
+import org.dromara.common.tenant.core.TenantEntity;
 
 import java.math.BigDecimal;
 
@@ -17,11 +20,13 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class MerchantShippingTemplateDO extends BaseEntity {
+@TableName("tb_merchant_shipping_template")
+public class MerchantShippingTemplateDO extends TenantEntity {
 
     /**
      * 运费模板ID
      */
+    @TableId
     private Long templateId;
 
     /**

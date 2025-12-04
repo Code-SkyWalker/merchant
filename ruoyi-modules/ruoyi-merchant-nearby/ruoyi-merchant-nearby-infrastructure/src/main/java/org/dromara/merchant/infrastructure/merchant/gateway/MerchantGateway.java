@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class MerchantGatewayImpl implements IMerchantGateway {
+public class MerchantGateway implements IMerchantGateway {
 
     private final MerchantMapper mapper;
     private final MerchantConvertor convertor;
@@ -27,7 +27,7 @@ public class MerchantGatewayImpl implements IMerchantGateway {
      * @return 是否保存成功
      */
     public boolean save(Merchant merchant) {
-        return mapper.insertOrUpdateSelective(convertor.toMerchantDO(merchant)) > 0;
+        return mapper.insertOrUpdate(convertor.toMerchantDO(merchant));
     }
 
     /**

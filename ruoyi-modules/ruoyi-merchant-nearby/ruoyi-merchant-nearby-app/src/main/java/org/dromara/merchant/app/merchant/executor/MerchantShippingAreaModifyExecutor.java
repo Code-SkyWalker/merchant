@@ -3,7 +3,7 @@ package org.dromara.merchant.app.merchant.executor;
 import lombok.RequiredArgsConstructor;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantShippingAreaModifyCmd;
 import org.dromara.merchant.domain.merchant.gateway.IMerchantShippingAreaGateway;
-import org.dromara.merchant.domain.merchant.model.MerchantShippingArea;
+import org.dromara.merchant.domain.merchant.model.delivery.MerchantShippingArea;
 import org.dromara.merchant.infrastructure.merchant.converter.MerchantShippingAreaConvertor;
 import org.springframework.stereotype.Component;
 

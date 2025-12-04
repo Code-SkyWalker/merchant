@@ -2,7 +2,7 @@ package org.dromara.merchant.infrastructure.merchant.gateway;
 
 import lombok.RequiredArgsConstructor;
 import org.dromara.merchant.domain.merchant.gateway.IMerchantShippingTemplateGateway;
-import org.dromara.merchant.domain.merchant.model.MerchantShippingTemplate;
+import org.dromara.merchant.domain.merchant.model.delivery.MerchantShippingTemplate;
 import org.dromara.merchant.infrastructure.merchant.converter.MerchantShippingTemplateConvertor;
 import org.dromara.merchant.infrastructure.merchant.mapper.MerchantShippingTemplateMapper;
 import org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantShippingTemplateDO;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class MerchantShippingTemplateGatewayImpl implements IMerchantShippingTemplateGateway {
+public class MerchantShippingTemplateGateway implements IMerchantShippingTemplateGateway {
 
     private final MerchantShippingTemplateMapper mapper;
     private final MerchantShippingTemplateConvertor convertor;
@@ -27,7 +27,8 @@ public class MerchantShippingTemplateGatewayImpl implements IMerchantShippingTem
      * @return 是否保存成功
      */
     public boolean save(MerchantShippingTemplate template) {
-        return mapper.insertOrUpdateSelective(convertor.toMerchantShippingTemplateDO(template)) > 0;
+        MerchantShippingTemplateDO templateDO = convertor.toMerchantShippingTemplateDO(template);
+        return mapper.insertOrUpdate(templateDO);
     }
 
     /**

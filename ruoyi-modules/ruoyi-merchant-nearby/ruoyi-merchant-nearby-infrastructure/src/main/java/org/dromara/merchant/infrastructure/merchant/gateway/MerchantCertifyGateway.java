@@ -30,11 +30,7 @@ public class MerchantCertifyGateway implements IMerchantCertifyGateway {
     @Override
     public boolean save(MerchantCertify merchantCertify) {
         MerchantCertifyDO merchantCertifyDO = convertor.toMerchantCertifyDO(merchantCertify);
-        if (merchantCertify.getApprovalId() == null) {
-            return mapper.insertSelective(merchantCertifyDO) > 0;
-        } else {
-            return mapper.updateByPrimaryKeySelective(merchantCertifyDO) > 0;
-        }
+        return mapper.insertOrUpdate(merchantCertifyDO);
     }
 
     /**
