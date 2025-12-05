@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.merchant.client.merchant.dto.data.clientobject.MerchantCertifyCO;
-import org.dromara.merchant.client.merchant.dto.data.command.MerchantCertifyPageQry;
+import org.dromara.merchant.client.merchant.dto.data.command.query.MerchantCertifyPageQry;
 import org.dromara.merchant.infrastructure.merchant.converter.MerchantCertifyConvertor;
 import org.dromara.merchant.infrastructure.merchant.mapper.MerchantCertifyMapper;
 import org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantCertifyDO;

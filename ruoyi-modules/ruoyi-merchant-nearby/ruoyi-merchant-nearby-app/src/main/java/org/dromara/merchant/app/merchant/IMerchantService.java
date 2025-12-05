@@ -5,7 +5,7 @@ import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.merchant.client.merchant.dto.data.clientobject.MerchantCO;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantCreateCmd;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantModifyCmd;
-import org.dromara.merchant.client.merchant.dto.data.command.MerchantPageQry;
+import org.dromara.merchant.client.merchant.dto.data.command.query.MerchantPageQry;
 
 /**
  * @Description 商户服务接口

@@ -41,7 +41,7 @@ public class MerchantCertifyGateway implements IMerchantCertifyGateway {
      */
     @Override
     public MerchantCertify findById(Long approvalId) {
-        MerchantCertifyDO merchantCertifyDO = this.mapper.selectByPrimaryKey(approvalId);
+        MerchantCertifyDO merchantCertifyDO = this.mapper.selectById(approvalId);
         return this.convertor.toMerchantCertifyEntity(merchantCertifyDO);
     }
 
@@ -53,7 +53,7 @@ public class MerchantCertifyGateway implements IMerchantCertifyGateway {
      */
     @Override
     public boolean deleteByPrimaryKey(Long approvalId) {
-        return mapper.deleteByPrimaryKey(approvalId) > 0;
+        return mapper.deleteById(approvalId) > 0;
     }
 
     /**

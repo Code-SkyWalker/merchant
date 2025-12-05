@@ -10,7 +10,7 @@ import org.dromara.merchant.client.merchant.dto.data.clientobject.MerchantCertif
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantCertifyApprovalCmd;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantCertifyCreateCmd;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantCertifyModifyCmd;
-import org.dromara.merchant.client.merchant.dto.data.command.MerchantCertifyPageQry;
+import org.dromara.merchant.client.merchant.dto.data.command.query.MerchantCertifyPageQry;
 import org.springframework.web.bind.annotation.*;
 
 /**

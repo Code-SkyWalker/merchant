@@ -37,8 +37,8 @@ public class MerchantGateway implements IMerchantGateway {
      * @return 商户实体
      */
     public Merchant findById(Long merchantId) {
-        MerchantDO merchantDO = mapper.selectByPrimaryKey(merchantId);
-        return merchantDO == null ? null : convertor.toMerchantEntity(merchantDO);
+        MerchantDO merchantDO = mapper.selectById(merchantId);
+        return convertor.toMerchantEntity(merchantDO);
     }
 
     /**
@@ -48,7 +48,7 @@ public class MerchantGateway implements IMerchantGateway {
      * @return 是否删除成功
      */
     public boolean deleteById(Long merchantId) {
-        return mapper.deleteByPrimaryKey(merchantId) > 0;
+        return mapper.deleteById(merchantId) > 0;
     }
 
 }

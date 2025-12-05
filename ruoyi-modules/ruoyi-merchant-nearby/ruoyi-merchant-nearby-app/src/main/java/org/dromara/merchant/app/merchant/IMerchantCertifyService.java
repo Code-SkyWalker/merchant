@@ -5,7 +5,7 @@ import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.merchant.client.merchant.dto.data.clientobject.MerchantCertifyCO;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantCertifyCreateCmd;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantCertifyModifyCmd;
-import org.dromara.merchant.client.merchant.dto.data.command.MerchantCertifyPageQry;
+import org.dromara.merchant.client.merchant.dto.data.command.query.MerchantCertifyPageQry;
 
 /**
  * @Description 商户审批应用服务接口

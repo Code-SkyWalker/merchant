@@ -20,7 +20,7 @@ public class MerchantDetailQryExecutor {
     private final MerchantConvertor convertor;
 
     public MerchantCO execute(Long merchantId) {
-        MerchantDO merchant = mapper.selectByPrimaryKey(merchantId);
+        MerchantDO merchant = mapper.selectById(merchantId);
         return this.convertor.toMerchantCO(merchant);
     }
 

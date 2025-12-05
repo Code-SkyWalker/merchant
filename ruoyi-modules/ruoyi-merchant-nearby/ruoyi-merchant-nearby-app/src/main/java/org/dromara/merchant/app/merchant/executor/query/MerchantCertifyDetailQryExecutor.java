@@ -20,7 +20,7 @@ public class MerchantCertifyDetailQryExecutor {
     private final MerchantCertifyConvertor convertor;
 
     public MerchantCertifyCO execute(Long approvalId) {
-        MerchantCertifyDO certifyDO = mapper.selectByPrimaryKey(approvalId);
+        MerchantCertifyDO certifyDO = mapper.selectById(approvalId);
         return this.convertor.toMerchantCertifyCO(certifyDO);
     }
 

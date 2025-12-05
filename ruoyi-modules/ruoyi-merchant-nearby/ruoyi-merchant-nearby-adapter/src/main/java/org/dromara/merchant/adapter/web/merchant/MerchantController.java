@@ -9,7 +9,7 @@ import org.dromara.merchant.app.merchant.IMerchantService;
 import org.dromara.merchant.client.merchant.dto.data.clientobject.MerchantCO;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantCreateCmd;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantModifyCmd;
-import org.dromara.merchant.client.merchant.dto.data.command.MerchantPageQry;
+import org.dromara.merchant.client.merchant.dto.data.command.query.MerchantPageQry;
 import org.springframework.web.bind.annotation.*;
 
 /**
