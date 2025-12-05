@@ -3,6 +3,7 @@ package org.dromara.merchant.domain.merchant.model.delivery;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import cn.hutool.json.JSONObject;
 
 import java.math.BigDecimal;
 
@@ -24,7 +25,7 @@ public class DeliveryConfigLocal implements DeliveryConfig {
 
     @Override
     public String toJson() {
-        return "";
+        return new JSONObject(this).toString();
     }
 
     @Data

@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeliveryConfigLocal {
+public class DeliveryConfigLocal implements DeliveryConfig {
 
     private String preciseLocation;
 
@@ -24,8 +24,6 @@ public class DeliveryConfigLocal {
 
 
     @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
     public static class LocalDeliveryFeeConfig {
         private BigDecimal startingAmount;
         private BigDecimal baseFee;

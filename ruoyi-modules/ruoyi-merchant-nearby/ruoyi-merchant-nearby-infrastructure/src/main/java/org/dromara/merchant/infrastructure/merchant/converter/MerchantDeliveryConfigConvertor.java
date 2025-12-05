@@ -98,20 +98,22 @@ public interface MerchantDeliveryConfigConvertor {
             return;
         }
 
+        // 使用JSON序列化/反序列化来转换客户端对象到领域对象
         DeliveryConfig deliveryConfig = null;
+        JSONObject jsonObject = new JSONObject(source.getDeliveryConfig());
 
         switch (method) {
             case EXPRESS_DELIVERY:
-                deliveryConfig = (DeliveryConfigExpress) source.getDeliveryConfig();
+                deliveryConfig = jsonObject.toBean(DeliveryConfigExpress.class);
                 break;
             case LOCAL_DELIVERY:
-                deliveryConfig = (DeliveryConfigLocal) source.getDeliveryConfig();
+                deliveryConfig = jsonObject.toBean(DeliveryConfigLocal.class);
                 break;
             case PICKUP_DELIVERY:
-                // 这里可以添加 Pickup 配置的处理逻辑
+                deliveryConfig = jsonObject.toBean(DeliveryConfigPickup.class);
                 break;
             case NONE_DELIVERY:
-                // 无配送方式不需要配置
+                deliveryConfig = jsonObject.toBean(DeliveryConfigNone.class);
                 break;
             default:
                 break;

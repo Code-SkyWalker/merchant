@@ -1,5 +1,7 @@
 package org.dromara.merchant.infrastructure.merchant.mapper.dataobject;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,10 +12,12 @@ import org.dromara.common.mybatis.core.domain.BaseEntity;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@TableName("tb_merchant_delivery_config")
 public class MerchantDeliveryConfigDO extends BaseEntity {
     /**
      * 主键ID
      */
+    @TableId
     private Long deliveryId;
 
     /**
