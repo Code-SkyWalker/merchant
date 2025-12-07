@@ -2,7 +2,6 @@ package org.dromara.merchant.app.merchant.executor;
 
 import lombok.RequiredArgsConstructor;
 import org.dromara.merchant.domain.merchant.gateway.IMerchantCertifyGateway;
-import org.dromara.merchant.infrastructure.merchant.converter.MerchantCertifyConvertor;
 import org.springframework.stereotype.Component;
 
 /**

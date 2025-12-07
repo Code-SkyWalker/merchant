@@ -2,7 +2,6 @@ package org.dromara.merchant.infrastructure.category.converter;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.dromara.merchant.client.Command;
 import org.dromara.merchant.client.category.dto.data.clientobject.CategoryCO;
 import org.dromara.merchant.client.category.dto.data.clientobject.CategoryDefaultCO;
 import org.dromara.merchant.client.category.dto.data.command.CategoryCreateCmd;
@@ -14,7 +13,6 @@ import org.dromara.merchant.domain.category.model.CategoryDefault;
 import org.dromara.merchant.infrastructure.category.mapper.dataobject.CategoryDO;
 import org.dromara.merchant.infrastructure.category.mapper.dataobject.CategoryDefaultDO;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
 import java.util.List;

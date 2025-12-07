@@ -1,7 +1,5 @@
 package org.dromara.merchant.infrastructure.merchant.mapper.dataobject;
 
-import java.time.LocalDateTime;
-
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -9,6 +7,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.dromara.common.mybatis.core.domain.BaseEntity;
+
+import java.time.LocalDateTime;
 
 /**
  * @Description 商户审批表DO对象

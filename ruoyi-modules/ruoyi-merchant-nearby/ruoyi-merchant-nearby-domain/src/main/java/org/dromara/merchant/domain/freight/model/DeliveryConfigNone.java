@@ -1,9 +1,9 @@
 package org.dromara.merchant.domain.freight.model;
 
+import cn.hutool.json.JSONObject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import cn.hutool.json.JSONObject;
 
 import java.util.List;
 

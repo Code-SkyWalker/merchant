@@ -10,7 +10,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * 列值重复合并策略

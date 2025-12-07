@@ -6,8 +6,8 @@ import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.merchant.client.freight.dto.data.clientobject.ExpressTemplateCO;
 import org.dromara.merchant.client.freight.dto.data.command.query.ExpressTemplatePageQry;
 import org.dromara.merchant.infrastructure.freight.converter.ExpressTemplateConvertor;
-import org.dromara.merchant.infrastructure.freight.mapper.ExpressTemplateMapper;
 import org.dromara.merchant.infrastructure.freight.gateway.dataobject.ExpressTemplateDO;
+import org.dromara.merchant.infrastructure.freight.mapper.ExpressTemplateMapper;
 import org.springframework.stereotype.Component;
 
 /**

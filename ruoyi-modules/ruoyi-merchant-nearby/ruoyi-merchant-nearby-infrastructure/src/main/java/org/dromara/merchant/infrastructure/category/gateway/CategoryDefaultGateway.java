@@ -7,10 +7,7 @@ import org.dromara.merchant.domain.category.model.CategoryDefault;
 import org.dromara.merchant.infrastructure.category.converter.CategoryConvertor;
 import org.dromara.merchant.infrastructure.category.mapper.CategoryDefaultMapper;
 import org.dromara.merchant.infrastructure.category.mapper.dataobject.CategoryDO;
-import org.dromara.merchant.infrastructure.category.mapper.dataobject.CategoryDefaultDO;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
 
 /**
  * @Description TODO
