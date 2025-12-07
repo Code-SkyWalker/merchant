@@ -26,7 +26,7 @@
                 d.flow_name,
                 d.flow_code,
                 d.form_custom,
-                d.category,
+                d.commCategory,
                 COALESCE(t.form_path, d.form_path) as form_path,
                 d.version,
                 uu.processed_by,
@@ -73,7 +73,7 @@
                 b.create_by,
                 c.flow_name,
                 c.flow_code,
-                c.category,
+                c.commCategory,
                 c.version,
                 biz.business_code,
                 biz.business_title
@@ -105,7 +105,7 @@
                 b.node_code,
                 d.flow_name,
                 d.flow_code,
-                d.category,
+                d.commCategory,
                 d.version,
                 biz.business_code,
                 biz.business_title

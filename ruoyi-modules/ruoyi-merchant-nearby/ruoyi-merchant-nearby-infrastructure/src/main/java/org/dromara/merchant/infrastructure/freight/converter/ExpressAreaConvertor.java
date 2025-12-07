@@ -5,7 +5,7 @@ import org.dromara.merchant.client.freight.dto.data.clientobject.ExpressAreaCO;
 import org.dromara.merchant.client.freight.dto.data.command.ExpressAreaCreateCmd;
 import org.dromara.merchant.client.freight.dto.data.command.ExpressAreaModifyCmd;
 import org.dromara.merchant.domain.freight.model.ExpressArea;
-import org.dromara.merchant.infrastructure.freight.gateway.dataobject.ExpressAreaDO;
+import org.dromara.merchant.infrastructure.freight.mapper.dataobject.ExpressAreaDO;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;

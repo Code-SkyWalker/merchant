@@ -6,7 +6,7 @@ CREATE TABLE flow_definition (
     flow_code nvarchar(40) NOT NULL,
     flow_name nvarchar(100) NOT NULL,
     model_value nvarchar(40) DEFAULT('CLASSICS') NOT NULL,
-    category nvarchar(100) NULL,
+    commCategory nvarchar(100) NULL,
     version nvarchar(20) NOT NULL,
     is_publish tinyint DEFAULT('0') NULL,
     form_custom nchar(1) DEFAULT('N') NULL,
@@ -60,7 +60,7 @@ EXEC sp_addextendedproperty
 'MS_Description', N'流程类别',
 'SCHEMA', N'dbo',
 'TABLE', N'flow_definition',
-'COLUMN', N'category'
+'COLUMN', N'commCategory'
 GO
 
 EXEC sp_addextendedproperty
@@ -1591,7 +1591,7 @@ INSERT sys_menu VALUES (11620, N'流程定义', 11616, 3, N'processDefinition', 
 GO
 INSERT sys_menu VALUES (11621, N'流程实例', 11630, 1, N'processInstance', N'workflow/processInstance/index', N'', 1, 1, N'C', N'0', N'0', N'', N'tree-table', 103, 1, GETDATE(), NULL, NULL, N'');
 GO
-INSERT sys_menu VALUES (11622, N'流程分类', 11616, 1, N'category', N'workflow/category/index', N'', 1, 0, N'C', N'0', N'0', N'workflow:category:list', N'category', 103, 1, GETDATE(), NULL, NULL, N'');
+INSERT sys_menu VALUES (11622, N'流程分类', 11616, 1, N'commCategory', N'workflow/commCategory/index', N'', 1, 0, N'C', N'0', N'0', N'workflow:commCategory:list', N'commCategory', 103, 1, GETDATE(), NULL, NULL, N'');
 GO
 INSERT sys_menu VALUES (11629, N'我发起的', 11618, 1, N'myDocument', N'workflow/task/myDocument', N'', 1, 1, N'C', N'0', N'0', N'', N'guide', 103, 1, GETDATE(), NULL, NULL, N'');
 GO
@@ -1605,15 +1605,15 @@ INSERT sys_menu VALUES (11701, N'请假申请', 11616, 6, N'leaveEdit/index', N'
 GO
 
 -- 流程分类管理相关按钮
-INSERT sys_menu VALUES (11623, N'流程分类查询', 11622, 1, N'#', N'', N'', 1, 0, N'F', N'0', N'0', N'workflow:category:query', N'#', 103, 1, GETDATE(), NULL, NULL, N'');
+INSERT sys_menu VALUES (11623, N'流程分类查询', 11622, 1, N'#', N'', N'', 1, 0, N'F', N'0', N'0', N'workflow:commCategory:query', N'#', 103, 1, GETDATE(), NULL, NULL, N'');
 GO
-INSERT sys_menu VALUES (11624, N'流程分类新增', 11622, 2, N'#', N'', N'', 1, 0, N'F', N'0', N'0', N'workflow:category:add', N'#', 103, 1, GETDATE(), NULL, NULL, N'');
+INSERT sys_menu VALUES (11624, N'流程分类新增', 11622, 2, N'#', N'', N'', 1, 0, N'F', N'0', N'0', N'workflow:commCategory:add', N'#', 103, 1, GETDATE(), NULL, NULL, N'');
 GO
-INSERT sys_menu VALUES (11625, N'流程分类修改', 11622, 3, N'#', N'', N'', 1, 0, N'F', N'0', N'0', N'workflow:category:edit', N'#', 103, 1, GETDATE(), NULL, NULL, N'');
+INSERT sys_menu VALUES (11625, N'流程分类修改', 11622, 3, N'#', N'', N'', 1, 0, N'F', N'0', N'0', N'workflow:commCategory:edit', N'#', 103, 1, GETDATE(), NULL, NULL, N'');
 GO
-INSERT sys_menu VALUES (11626, N'流程分类删除', 11622, 4, N'#', N'', N'', 1, 0, N'F', N'0', N'0', N'workflow:category:remove', N'#', 103, 1, GETDATE(), NULL, NULL, N'');
+INSERT sys_menu VALUES (11626, N'流程分类删除', 11622, 4, N'#', N'', N'', 1, 0, N'F', N'0', N'0', N'workflow:commCategory:remove', N'#', 103, 1, GETDATE(), NULL, NULL, N'');
 GO
-INSERT sys_menu VALUES (11627, N'流程分类导出', 11622, 5, N'#', N'', N'', 1, 0, N'F', N'0', N'0', N'workflow:category:export', N'#', 103, 1, GETDATE(), NULL, NULL, N'');
+INSERT sys_menu VALUES (11627, N'流程分类导出', 11622, 5, N'#', N'', N'', 1, 0, N'F', N'0', N'0', N'workflow:commCategory:export', N'#', 103, 1, GETDATE(), NULL, NULL, N'');
 GO
 
 INSERT sys_menu VALUES (11801, N'流程表达式', N'11616', 2, N'spel', N'workflow/spel/index', N'', 1, 0, N'C', N'0', N'0', N'workflow:spel:list', N'input', 103, 1, GETDATE(), 1, GETDATE(), N'流程达式定义菜单');

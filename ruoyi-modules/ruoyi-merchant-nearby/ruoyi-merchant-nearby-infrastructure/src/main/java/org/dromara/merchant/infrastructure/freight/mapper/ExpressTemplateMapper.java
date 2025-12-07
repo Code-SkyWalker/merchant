@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 import org.dromara.common.mybatis.core.mapper.BaseMapperPlus;
 import org.dromara.merchant.client.freight.dto.data.command.query.ExpressTemplatePageQry;
-import org.dromara.merchant.infrastructure.freight.gateway.dataobject.ExpressTemplateDO;
+import org.dromara.merchant.infrastructure.freight.mapper.dataobject.ExpressTemplateDO;
 
 /**
  * @Description 商户运费模板Mapper接口

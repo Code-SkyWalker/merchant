@@ -27,7 +27,7 @@
                fd.version,
                fd.form_custom,
                fd.form_path,
-               fd.category,
+               fd.commCategory,
                biz.business_code,
                biz.business_title
         from flow_instance fi

@@ -1,7 +1,7 @@
 package org.dromara.merchant.infrastructure.freight.mapper;
 
 import org.dromara.common.mybatis.core.mapper.BaseMapperPlus;
-import org.dromara.merchant.infrastructure.freight.gateway.dataobject.ExpressAreaDO;
+import org.dromara.merchant.infrastructure.freight.mapper.dataobject.ExpressAreaDO;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.dromara.merchant.infrastructure.category.mapper.CategoryMapper">
-    <resultMap id="BaseResultMap" type="org.dromara.merchant.infrastructure.category.mapper.dataobject.CategoryDO">
+<mapper namespace="org.dromara.merchant.infrastructure.merchant.mapper.CategoryMapper">
+    <resultMap id="BaseResultMap" type="org.dromara.merchant.infrastructure.merchant.mapper.dataobject.CategoryDO">
         <!--@mbg.generated-->
         <!--@Table tb_shop_category-->
         <id column="category_id" jdbcType="BIGINT" property="categoryId"/>
@@ -36,7 +36,7 @@
         where category_id = #{categoryId,jdbcType=BIGINT}
     </delete>
     <insert id="insertSelective" keyColumn="category_id" keyProperty="categoryId"
-            parameterType="org.dromara.merchant.infrastructure.category.mapper.dataobject.CategoryDO"
+            parameterType="org.dromara.merchant.infrastructure.merchant.mapper.dataobject.CategoryDO"
             useGeneratedKeys="true">
         <!--@mbg.generated-->
         insert into tb_shop_category
@@ -94,7 +94,7 @@
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective"
-            parameterType="org.dromara.merchant.infrastructure.category.mapper.dataobject.CategoryDO">
+            parameterType="org.dromara.merchant.infrastructure.merchant.mapper.dataobject.CategoryDO">
         <!--@mbg.generated-->
         update tb_shop_category
         <set>

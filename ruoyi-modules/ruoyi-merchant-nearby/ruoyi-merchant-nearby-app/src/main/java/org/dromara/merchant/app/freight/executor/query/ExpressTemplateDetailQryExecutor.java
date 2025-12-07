@@ -3,7 +3,7 @@ package org.dromara.merchant.app.freight.executor.query;
 import lombok.RequiredArgsConstructor;
 import org.dromara.merchant.client.freight.dto.data.clientobject.ExpressTemplateCO;
 import org.dromara.merchant.infrastructure.freight.converter.ExpressTemplateConvertor;
-import org.dromara.merchant.infrastructure.freight.gateway.dataobject.ExpressTemplateDO;
+import org.dromara.merchant.infrastructure.freight.mapper.dataobject.ExpressTemplateDO;
 import org.dromara.merchant.infrastructure.freight.mapper.ExpressTemplateMapper;
 import org.springframework.stereotype.Component;
 

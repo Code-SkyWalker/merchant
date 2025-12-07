@@ -2,8 +2,8 @@ package org.dromara.merchant.app.category.executor.query;
 
 import lombok.RequiredArgsConstructor;
 import org.dromara.merchant.client.category.dto.data.clientobject.CategoryCO;
-import org.dromara.merchant.infrastructure.category.converter.CategoryConvertor;
-import org.dromara.merchant.infrastructure.category.mapper.CategoryMapper;
+import org.dromara.merchant.infrastructure.merchant.converter.CategoryConvertor;
+import org.dromara.merchant.infrastructure.merchant.mapper.CategoryMapper;
 import org.springframework.stereotype.Component;
 
 

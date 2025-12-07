@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.dromara.merchant.domain.freight.gateway.IExpressTemplateGateway;
 import org.dromara.merchant.domain.freight.model.ExpressTemplate;
 import org.dromara.merchant.infrastructure.freight.converter.ExpressTemplateConvertor;
-import org.dromara.merchant.infrastructure.freight.gateway.dataobject.ExpressTemplateDO;
+import org.dromara.merchant.infrastructure.freight.mapper.dataobject.ExpressTemplateDO;
 import org.dromara.merchant.infrastructure.freight.mapper.ExpressTemplateMapper;
 import org.springframework.stereotype.Component;
 

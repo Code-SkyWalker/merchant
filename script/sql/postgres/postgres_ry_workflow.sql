@@ -4,7 +4,7 @@ CREATE TABLE flow_definition
     flow_code       varchar(40)  NOT NULL,
     flow_name       varchar(100) NOT NULL,
     model_value     varchar(40)  NOT NULL DEFAULT 'CLASSICS',
-    category        varchar(100) NULL,
+    commCategory        varchar(100) NULL,
     "version"       varchar(20)  NOT NULL,
     is_publish      int2         NOT NULL DEFAULT 0,
     form_custom     bpchar(1)    NULL     DEFAULT 'N':: character varying,
@@ -27,7 +27,7 @@ COMMENT ON COLUMN flow_definition.id IS '主键id';
 COMMENT ON COLUMN flow_definition.flow_code IS '流程编码';
 COMMENT ON COLUMN flow_definition.flow_name IS '流程名称';
 COMMENT ON COLUMN flow_definition.model_value IS '设计器模型（CLASSICS经典模型 MIMIC仿钉钉模型）';
-COMMENT ON COLUMN flow_definition.category IS '流程类别';
+COMMENT ON COLUMN flow_definition.commCategory IS '流程类别';
 COMMENT ON COLUMN flow_definition."version" IS '流程版本';
 COMMENT ON COLUMN flow_definition.is_publish IS '是否发布（0未发布 1已发布 9失效）';
 COMMENT ON COLUMN flow_definition.form_custom IS '审批表单是否自定义（Y是 N否）';
@@ -457,18 +457,18 @@ INSERT INTO sys_menu VALUES ('11632', '我的已办', '11618', '3', 'taskFinish'
 INSERT INTO sys_menu VALUES ('11633', '我的抄送', '11618', '4', 'taskCopyList', 'workflow/task/taskCopyList', '', '1', '1', 'C', '0', '0', '', 'my-copy', 103, 1, now(), NULL, NULL, '');
 INSERT INTO sys_menu VALUES ('11620', '流程定义', '11616', '3', 'processDefinition', 'workflow/processDefinition/index', '', '1', '1', 'C', '0', '0', '', 'process-definition', 103, 1, now(), NULL, NULL, '');
 INSERT INTO sys_menu VALUES ('11621', '流程实例', '11630', '1', 'processInstance', 'workflow/processInstance/index', '', '1', '1', 'C', '0', '0', '', 'tree-table', 103, 1, now(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('11622', '流程分类', '11616', '1', 'category', 'workflow/category/index', '', '1', '0', 'C', '0', '0', 'workflow:category:list', 'category', 103, 1, now(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('11622', '流程分类', '11616', '1', 'commCategory', 'workflow/commCategory/index', '', '1', '0', 'C', '0', '0', 'workflow:commCategory:list', 'commCategory', 103, 1, now(), NULL, NULL, '');
 INSERT INTO sys_menu VALUES ('11629', '我发起的', '11618', '1', 'myDocument', 'workflow/task/myDocument', '', '1', '1', 'C', '0', '0', '', 'guide', 103, 1, now(), NULL, NULL, '');
 INSERT INTO sys_menu VALUES ('11630', '流程监控', '11616', '4', 'monitor', '', '', '1', '0', 'M', '0', '0', '', 'monitor', 103, 1, now(), NULL, NULL, '');
 INSERT INTO sys_menu VALUES ('11631', '待办任务', '11630', '2', 'allTaskWaiting', 'workflow/task/allTaskWaiting', '', '1', '1', 'C', '0', '0', '', 'waiting', 103, 1, now(), NULL, NULL, '');
 INSERT INTO sys_menu VALUES ('11700', '流程设计', '11616', '5', 'design/index',   'workflow/processDefinition/design', '', '1', '1', 'C', '1', '0', 'workflow:leave:edit', '#', 103, 1, now(), NULL, NULL, '/workflow/processDefinition');
 INSERT INTO sys_menu VALUES ('11701', '请假申请', '11616', '6', 'leaveEdit/index', 'workflow/leave/leaveEdit', '', '1', '1', 'C', '1', '0', 'workflow:leave:edit', '#', 103, 1, now(), NULL, NULL, '');
 
-INSERT INTO sys_menu VALUES ('11623', '流程分类查询', '11622', '1', '#', '', '', '1', '0', 'F', '0', '0', 'workflow:category:query', '#', 103, 1, now(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('11624', '流程分类新增', '11622', '2', '#', '', '', '1', '0', 'F', '0', '0', 'workflow:category:add', '#', 103, 1, now(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('11625', '流程分类修改', '11622', '3', '#', '', '', '1', '0', 'F', '0', '0', 'workflow:category:edit', '#', 103, 1, now(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('11626', '流程分类删除', '11622', '4', '#', '', '', '1', '0', 'F', '0', '0', 'workflow:category:remove', '#', 103, 1, now(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('11627', '流程分类导出', '11622', '5', '#', '', '', '1', '0', 'F', '0', '0', 'workflow:category:export', '#', 103, 1, now(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('11623', '流程分类查询', '11622', '1', '#', '', '', '1', '0', 'F', '0', '0', 'workflow:commCategory:query', '#', 103, 1, now(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('11624', '流程分类新增', '11622', '2', '#', '', '', '1', '0', 'F', '0', '0', 'workflow:commCategory:add', '#', 103, 1, now(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('11625', '流程分类修改', '11622', '3', '#', '', '', '1', '0', 'F', '0', '0', 'workflow:commCategory:edit', '#', 103, 1, now(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('11626', '流程分类删除', '11622', '4', '#', '', '', '1', '0', 'F', '0', '0', 'workflow:commCategory:remove', '#', 103, 1, now(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('11627', '流程分类导出', '11622', '5', '#', '', '', '1', '0', 'F', '0', '0', 'workflow:commCategory:export', '#', 103, 1, now(), NULL, NULL, '');
 
 INSERT INTO sys_menu VALUES ('11801', '流程表达式', '11616', 2, 'spel', 'workflow/spel/index', '', 1, 0, 'C', '0', '0', 'workflow:spel:list', 'input', 103, 1, now(), 1, now(), '流程达式定义菜单');
 INSERT INTO sys_menu VALUES ('11802', '流程spel达式定义查询', '11801', 1, '#', '', NULL, 1, 0, 'F', '0', '0', 'workflow:spel:query', '#', 103, 1, now(), NULL, NULL, '');

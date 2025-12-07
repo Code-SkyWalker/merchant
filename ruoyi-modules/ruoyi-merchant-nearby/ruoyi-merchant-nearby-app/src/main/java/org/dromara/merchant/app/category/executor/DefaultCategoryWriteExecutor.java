@@ -1,7 +1,7 @@
 package org.dromara.merchant.app.category.executor;
 
 import lombok.RequiredArgsConstructor;
-import org.dromara.merchant.domain.category.gateway.ICategoryDefaultGateway;
+import org.dromara.merchant.domain.merchant.gateway.ICategoryDefaultGateway;
 import org.springframework.stereotype.Component;
 
 /**

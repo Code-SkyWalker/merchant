@@ -5,9 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.merchant.client.category.dto.data.clientobject.CategoryDefaultCO;
 import org.dromara.merchant.client.category.dto.data.command.DefaultCategoryPageQry;
-import org.dromara.merchant.infrastructure.category.converter.CategoryConvertor;
-import org.dromara.merchant.infrastructure.category.mapper.CategoryDefaultMapper;
-import org.dromara.merchant.infrastructure.category.mapper.dataobject.CategoryDefaultDO;
+import org.dromara.merchant.infrastructure.merchant.converter.CategoryConvertor;
+import org.dromara.merchant.infrastructure.merchant.mapper.CategoryDefaultMapper;
+import org.dromara.merchant.infrastructure.merchant.mapper.dataobject.CategoryDefaultDO;
 import org.springframework.stereotype.Component;
 
 

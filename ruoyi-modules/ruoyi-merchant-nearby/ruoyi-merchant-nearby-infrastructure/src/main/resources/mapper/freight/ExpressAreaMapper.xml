@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.dromara.merchant.infrastructure.freight.mapper.ExpressAreaMapper">
 
-    <resultMap type="org.dromara.merchant.infrastructure.freight.gateway.dataobject.ExpressAreaDO" id="BaseResultMap">
+    <resultMap type="org.dromara.merchant.infrastructure.freight.mapper.dataobject.ExpressAreaDO" id="BaseResultMap">
         <result property="areaId" column="area_id"/>
         <result property="templateId" column="template_id"/>
         <result property="tenantId" column="tenant_id"/>
@@ -45,7 +45,7 @@
         where area_id = #{areaId}
     </select>
 
-    <insert id="insertOrUpdateSelective" parameterType="org.dromara.merchant.infrastructure.freight.gateway.dataobject.ExpressAreaDO">
+    <insert id="insertOrUpdateSelective" parameterType="org.dromara.merchant.infrastructure.freight.mapper.dataobject.ExpressAreaDO">
         insert into tb_merchant_shipping_area
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="areaId != null">

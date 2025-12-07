@@ -5,7 +5,7 @@ import org.dromara.merchant.client.freight.dto.data.clientobject.ExpressTemplate
 import org.dromara.merchant.client.freight.dto.data.command.ExpressTemplateCreateCmd;
 import org.dromara.merchant.client.freight.dto.data.command.ExpressTemplateModifyCmd;
 import org.dromara.merchant.domain.freight.model.ExpressTemplate;
-import org.dromara.merchant.infrastructure.freight.gateway.dataobject.ExpressTemplateDO;
+import org.dromara.merchant.infrastructure.freight.mapper.dataobject.ExpressTemplateDO;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;

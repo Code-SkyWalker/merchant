@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.dromara.merchant.infrastructure.freight.mapper.ExpressTemplateMapper">
 
-    <resultMap type="org.dromara.merchant.infrastructure.freight.gateway.dataobject.ExpressTemplateDO" id="BaseResultMap">
+    <resultMap type="org.dromara.merchant.infrastructure.freight.mapper.dataobject.ExpressTemplateDO" id="BaseResultMap">
         <result property="templateId" column="template_id"/>
         <result property="merchantId" column="merchant_id"/>
         <result property="tenantId" column="tenant_id"/>
@@ -41,12 +41,12 @@
     <select id="selectByPrimaryKey" parameterType="long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_merchant_freight_template
+        from tb_merchant_shipping_template
         where template_id = #{templateId}
     </select>
 
-    <insert id="insertOrUpdateSelective" parameterType="org.dromara.merchant.infrastructure.freight.gateway.dataobject.ExpressTemplateDO">
-        insert into tb_merchant_freight_template
+    <insert id="insertOrUpdateSelective" parameterType="org.dromara.merchant.infrastructure.freight.mapper.dataobject.ExpressTemplateDO">
+        insert into tb_merchant_shipping_template
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="templateId != null">
                 template_id,
@@ -177,13 +177,13 @@
     </insert>
 
     <delete id="deleteByPrimaryKey" parameterType="long">
-        delete from tb_merchant_freight_template where template_id = #{templateId}
+        delete from tb_merchant_shipping_template where template_id = #{templateId}
     </delete>
 
     <select id="selectPages" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_merchant_freight_template
+        from tb_merchant_shipping_template
         <where>
             <if test="qry.templateName != null and qry.templateName != ''">
                 and template_name like concat('%', #{qry.templateName}, '%')
@@ -201,7 +201,7 @@
     <select id="selectByMerchantId" parameterType="long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_merchant_freight_template
+        from tb_merchant_shipping_template
         where merchant_id = #{merchantId}
         order by sort asc
     </select>
@@ -209,12 +209,12 @@
     <select id="selectByMerchantIdAndIsDefault" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_merchant_freight_template
+        from tb_merchant_shipping_template
         where merchant_id = #{merchantId}
     </select>
 
     <update id="setDefaultByMerchantId" parameterType="long">
-        update tb_merchant_freight_template
+        update tb_merchant_shipping_template
         SET is_default = CASE
                              WHEN is_default = 1 THEN 0                     -- 原默认记录设为 0
                              WHEN template_id = #{templateId} THEN 1        -- 新记录设为 1

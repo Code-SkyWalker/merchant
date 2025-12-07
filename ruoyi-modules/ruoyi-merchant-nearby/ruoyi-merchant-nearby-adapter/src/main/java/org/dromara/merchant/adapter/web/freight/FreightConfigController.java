@@ -6,7 +6,7 @@ import org.dromara.merchant.app.freight.IFreightConfigService;
 import org.dromara.merchant.client.freight.dto.data.command.FreightConfigCreateCmd;
 import org.dromara.merchant.domain.freight.model.FreightConfig;
 import org.dromara.merchant.infrastructure.freight.converter.FreightConfigConvertor;
-import org.dromara.merchant.infrastructure.freight.gateway.dataobject.FreightConfigDO;
+import org.dromara.merchant.infrastructure.freight.mapper.dataobject.FreightConfigDO;
 import org.dromara.merchant.infrastructure.freight.mapper.FreightConfigMapper;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

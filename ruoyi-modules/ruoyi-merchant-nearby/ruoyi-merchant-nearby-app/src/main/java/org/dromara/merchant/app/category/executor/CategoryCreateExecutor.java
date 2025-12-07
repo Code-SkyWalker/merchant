@@ -3,9 +3,9 @@ package org.dromara.merchant.app.category.executor;
 import lombok.RequiredArgsConstructor;
 import org.dromara.merchant.app.Executor;
 import org.dromara.merchant.client.category.dto.data.command.CategoryCreateCmd;
-import org.dromara.merchant.domain.category.gateway.ICategoryGateway;
-import org.dromara.merchant.domain.category.model.Category;
-import org.dromara.merchant.infrastructure.category.converter.CategoryConvertor;
+import org.dromara.merchant.domain.merchant.gateway.ICategoryGateway;
+import org.dromara.merchant.domain.merchant.model.MerCategory;
+import org.dromara.merchant.infrastructure.merchant.converter.CategoryConvertor;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,7 +22,7 @@ public class CategoryCreateExecutor implements Executor<CategoryCreateCmd, Boole
 
     @Override
     public Boolean execute(CategoryCreateCmd cmd) {
-        Category categoryEntity = convertor.toCategoryEntity(cmd);
-        return this.categoryGateway.create(categoryEntity);
+        MerCategory merCategoryEntity = convertor.toCategoryEntity(cmd);
+        return this.categoryGateway.create(merCategoryEntity);
     }
 }

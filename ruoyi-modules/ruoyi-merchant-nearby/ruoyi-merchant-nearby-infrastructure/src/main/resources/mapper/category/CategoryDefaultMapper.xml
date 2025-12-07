@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.dromara.merchant.infrastructure.category.mapper.CategoryDefaultMapper">
+<mapper namespace="org.dromara.merchant.infrastructure.merchant.mapper.CategoryDefaultMapper">
     <resultMap id="BaseResultMap"
-               type="org.dromara.merchant.infrastructure.category.mapper.dataobject.CategoryDefaultDO">
+               type="org.dromara.merchant.infrastructure.merchant.mapper.dataobject.CategoryDefaultDO">
         <!--@mbg.generated-->
         <!--@Table tb_shop_category_default-->
         <id column="category_id" jdbcType="BIGINT" property="categoryId"/>
@@ -30,7 +30,7 @@
         where category_id = #{categoryId}
     </delete>
     <insert id="insertSelective" keyColumn="category_id" keyProperty="categoryId"
-            parameterType="org.dromara.merchant.infrastructure.category.mapper.dataobject.CategoryDefaultDO"
+            parameterType="org.dromara.merchant.infrastructure.merchant.mapper.dataobject.CategoryDefaultDO"
             useGeneratedKeys="true">
         <!--@mbg.generated-->
         insert into tb_shop_category_default
@@ -70,7 +70,7 @@
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective"
-            parameterType="org.dromara.merchant.infrastructure.category.mapper.dataobject.CategoryDefaultDO">
+            parameterType="org.dromara.merchant.infrastructure.merchant.mapper.dataobject.CategoryDefaultDO">
         <!--@mbg.generated-->
         update tb_shop_category_default
         <set>
@@ -124,10 +124,10 @@
         tenant_id, create_dept, create_by, update_by)
         select
         parent_id, category_image, category_name, category_sort, `state`,
-        #{category.tenantId},
-        #{category.createDept},
-        #{category.createBy},
-        #{category.updateBy}
+        #{commCategory.tenantId},
+        #{commCategory.createDept},
+        #{commCategory.createBy},
+        #{commCategory.updateBy}
         from tb_shop_category_default
     </insert>
 </mapper>
