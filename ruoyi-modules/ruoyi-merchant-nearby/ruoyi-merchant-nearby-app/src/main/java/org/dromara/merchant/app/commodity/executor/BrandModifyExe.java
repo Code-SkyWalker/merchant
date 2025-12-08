@@ -3,7 +3,6 @@ package org.dromara.merchant.app.commodity.executor;
 import lombok.RequiredArgsConstructor;
 import org.dromara.merchant.client.commodity.dto.data.command.BrandModifyCmd;
 import org.dromara.merchant.domain.commodity.gateway.IBrandGateway;
-import org.dromara.merchant.domain.commodity.model.Brand;
 import org.dromara.merchant.infrastructure.commodity.converter.BrandConvertor;
 import org.springframework.stereotype.Component;
 

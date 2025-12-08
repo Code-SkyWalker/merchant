@@ -143,6 +143,8 @@ tenant:
     - tb_shop_category_default
     - tb_merchant_category
     - tb_category_brand
+    - tb_spec
+    - tb_para
 
 # MyBatisPlus配置
 # https://baomidou.com/config/
