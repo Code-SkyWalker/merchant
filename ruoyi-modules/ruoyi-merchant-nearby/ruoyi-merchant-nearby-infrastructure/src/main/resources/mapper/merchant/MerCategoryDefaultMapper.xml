@@ -112,22 +112,16 @@
         </where>
     </select>
 
-    <delete id="deleteByTenantId">
-        delete
-        from tb_shop_category_default
-        where tenant_id = #{tenantId}
-    </delete>
-
     <insert id="writeDefault">
         insert into tb_shop_category
         (parent_id, category_image, category_name, category_sort, `state`,
         tenant_id, create_dept, create_by, update_by)
         select
         parent_id, category_image, category_name, category_sort, `state`,
-        #{commCategory.tenantId},
-        #{commCategory.createDept},
-        #{commCategory.createBy},
-        #{commCategory.updateBy}
+        #{category.tenantId},
+        #{category.createDept},
+        #{category.createBy},
+        #{category.updateBy}
         from tb_shop_category_default
     </insert>
 </mapper>
