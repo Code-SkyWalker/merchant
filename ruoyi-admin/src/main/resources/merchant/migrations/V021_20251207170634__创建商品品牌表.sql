@@ -1,9 +1,9 @@
 DROP TABLE IF EXISTS `tb_brand`;
 CREATE TABLE `tb_brand`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '品牌id',
-  `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '品牌名称',
-  `image` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '品牌图片地址',
-  `letter` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '品牌的首字母',
+  `name` varchar(100) NOT NULL COMMENT '品牌名称',
+  `image` varchar(1000) NULL DEFAULT '' COMMENT '品牌图片地址',
+  `letter` char(1) NULL DEFAULT '' COMMENT '品牌的首字母',
   `seq` int(11) NULL DEFAULT NULL COMMENT '排序',
   `merchant_id` bigint DEFAULT null COMMENT '商家Id',
   `tenant_id` varchar(128) NOT NULL COMMENT '租户ID',
@@ -15,4 +15,4 @@ CREATE TABLE `tb_brand`  (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_tenant_id` (`tenant_id`),
   KEY `idx_merchant_id` (`merchant_id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 325417 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '品牌表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 325417 CHARACTER SET = utf8mb4 COMMENT = '品牌表' ROW_FORMAT = Dynamic;

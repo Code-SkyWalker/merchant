@@ -14,4 +14,4 @@ CREATE TABLE `tb_album` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_tenant_id` (`tenant_id`),
   KEY `idx_merchant_id` (`merchant_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT '相册';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT '相册';

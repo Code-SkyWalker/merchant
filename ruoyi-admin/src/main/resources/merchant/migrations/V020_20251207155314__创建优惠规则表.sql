@@ -6,8 +6,8 @@ CREATE TABLE `tb_pref` (
   `pre_money` int DEFAULT NULL COMMENT '优惠金额',
   `start_time` date DEFAULT NULL COMMENT '活动开始日期',
   `end_time` date DEFAULT NULL COMMENT '活动截至日期',
-  `type` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '类型,1:普通订单，2：限时活动',
-  `state` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '状态,1:有效，0：无效',
+  `type` char(1) DEFAULT NULL COMMENT '类型,1:普通订单，2：限时活动',
+  `state` char(1) DEFAULT NULL COMMENT '状态,1:有效，0：无效',
   `merchant_id` bigint DEFAULT null COMMENT '商家Id',
   `tenant_id` varchar(128) NOT NULL COMMENT '租户ID',
   `join_time` datetime DEFAULT NULL COMMENT '入驻时间',
@@ -19,4 +19,4 @@ CREATE TABLE `tb_pref` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_tenant_id` (`tenant_id`),
   KEY `idx_merchant_id` (`merchant_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT '优惠规则表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT '优惠规则表';
