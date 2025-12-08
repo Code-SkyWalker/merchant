@@ -23,7 +23,8 @@ public class MerchantCertifyPageQryExecutor {
     private final MerchantCertifyConvertor convertor;
 
     public Page<MerchantCertifyCO> execute(MerchantCertifyPageQry query, PageQuery page) {
-        Page<MerchantCertifyDO> certifyDO = mapper.selectPages(query, page);
+        Page<MerchantCertifyDO> pageDO = page.build();
+        Page<MerchantCertifyDO> certifyDO = mapper.selectPages(pageDO, query);
         return this.convertor.toMerchantCertifyCO(certifyDO);
     }
 

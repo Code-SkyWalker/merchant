@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.dromara.common.mybatis.core.mapper.BaseMapperPlus;
-import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.merchant.client.merchant.dto.data.command.query.MerchantCertifyPageQry;
 import org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantCertifyDO;
 
@@ -37,5 +36,5 @@ public interface MerchantCertifyMapper extends BaseMapperPlus<MerchantCertifyDO,
 
 
 
-    Page<MerchantCertifyDO> selectPages(@Param("qry") MerchantCertifyPageQry qry, @Param("page") PageQuery page);
+    Page<MerchantCertifyDO> selectPages(Page<MerchantCertifyDO> page, @Param("qry") MerchantCertifyPageQry qry);
 }

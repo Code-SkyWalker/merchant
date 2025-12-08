@@ -387,7 +387,7 @@
         where approval_id = #{approvalId,jdbcType=BIGINT}
     </update>
 
-    <select id="selectPages" resultMap="BaseResultMap">
+    <select id="selectPages" parameterType="org.dromara.merchant.client.merchant.dto.data.command.query.MerchantCertifyPageQry" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from tb_merchant_certify
