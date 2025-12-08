@@ -6,7 +6,7 @@ import org.dromara.merchant.client.merchant.dto.data.command.query.MerCategoryPa
 import org.dromara.merchant.infrastructure.merchant.mapper.dataobject.CategoryDO;
 
 
-public interface CategoryMapper {
+public interface MerCategoryMapper {
     int deleteByPrimaryKey(Long categoryId);
 
     int insertSelective(CategoryDO record);

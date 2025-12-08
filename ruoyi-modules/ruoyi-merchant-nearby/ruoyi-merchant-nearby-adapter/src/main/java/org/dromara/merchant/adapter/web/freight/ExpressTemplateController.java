@@ -17,7 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * 商户快递运费模板控制器
+ * 商家配送设置 - 快递运费模板
  * @Author Code Skywalker
  * @Date 2025/12/3 15:30
  */

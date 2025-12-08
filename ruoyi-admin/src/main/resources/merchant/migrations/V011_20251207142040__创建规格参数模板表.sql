@@ -1,11 +1,11 @@
-  DROP TABLE IF exists `tb_template`;
+DROP TABLE IF exists `tb_template`;
 CREATE TABLE `tb_template` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `name` varchar(50) DEFAULT NULL COMMENT '模板名称',
   `spec_num` int(11) DEFAULT '0' COMMENT '规格数量',
   `para_num` int(11) DEFAULT '0' COMMENT '参数数量',
+  `category_id` int(11) DEFAULT '0' COMMENT '分类ID',
   `tenant_id` varchar(128) NOT NULL COMMENT '租户ID',
-  `join_time` datetime DEFAULT NULL COMMENT '入驻时间',
   `create_dept` bigint DEFAULT NULL COMMENT '创建部门',
   `create_by` bigint DEFAULT NULL COMMENT '创建人',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',

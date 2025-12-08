@@ -1,18 +1,14 @@
-package org.dromara.merchant.domain.commodity.model;
+package org.dromara.merchant.client.commodity.dto.data.command;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
- * @Description 商品分类
+ * @Description 分类修改参数
  * @Author Code Skywalker
- * @Date 2025/12/8 15:30
+ * @Date 2025/12/8 15:38
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class CommCategory {
+public class CategoryModifyCmd {
 
     /**
      * 分类ID
@@ -53,4 +49,5 @@ public class CommCategory {
      * 商家Id
      */
     private Long merchantId;
+
 }

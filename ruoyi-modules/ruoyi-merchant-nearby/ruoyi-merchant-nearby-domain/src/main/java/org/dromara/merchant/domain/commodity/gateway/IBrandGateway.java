@@ -14,7 +14,7 @@ public interface IBrandGateway {
      * @param brand 品牌
      * @return 是否保存成功
      */
-    boolean save(Brand brand);
+    Integer save(Brand brand);
 
     /**
      * 删除商品品牌

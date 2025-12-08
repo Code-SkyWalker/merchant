@@ -6,7 +6,7 @@ import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.merchant.client.merchant.dto.data.clientobject.MerCategoryCO;
 import org.dromara.merchant.client.merchant.dto.data.command.query.MerCategoryPageQry;
 import org.dromara.merchant.infrastructure.merchant.converter.MerCategoryConvertor;
-import org.dromara.merchant.infrastructure.merchant.mapper.CategoryMapper;
+import org.dromara.merchant.infrastructure.merchant.mapper.MerCategoryMapper;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MerCategoryPageQryExecutor {
 
-    private final CategoryMapper mapper;
+    private final MerCategoryMapper mapper;
     private final MerCategoryConvertor convertor;
 
     public Page<MerCategoryCO> execute(MerCategoryPageQry qry, PageQuery query) {

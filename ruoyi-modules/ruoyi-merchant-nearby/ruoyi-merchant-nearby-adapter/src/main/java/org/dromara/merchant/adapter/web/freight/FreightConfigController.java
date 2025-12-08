@@ -12,7 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * 商城配送设置
+ * 商家配送设置
  * @Author Code Skywalker
  * @Date 2025/12/4 17:44
  */
@@ -27,11 +27,21 @@ public class FreightConfigController {
     private final FreightConfigMapper mapper;
     private final FreightConfigConvertor convertor;
 
+    /**
+     * 创建配送设置
+     * @param cmd 配送设置参数
+     * @return 创建结果
+     */
     @PostMapping
     public R<Boolean> create(@Validated @RequestBody FreightConfigCreateCmd cmd) {
         return R.ok(configService.create(cmd));
     }
 
+    /**
+     * 获取配送设置
+     * @param configId 配送设置ID
+     * @return 配送设置
+     */
     @GetMapping("/{configId}")
     public R<FreightConfig> create(@PathVariable Long configId) {
 

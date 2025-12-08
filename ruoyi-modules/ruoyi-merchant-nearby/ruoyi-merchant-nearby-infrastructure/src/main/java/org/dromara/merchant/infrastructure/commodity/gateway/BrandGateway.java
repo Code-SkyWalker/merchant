@@ -16,8 +16,11 @@ public class BrandGateway implements IBrandGateway {
     private final BrandConvertor convertor;
 
     @Override
-    public boolean save(Brand brand) {
-        return mapper.insertOrUpdate(convertor.toDo(brand));
+    public Integer save(Brand brand) {
+        BrandDO brandDO = convertor.toDo(brand);
+        boolean inserted = mapper.insertOrUpdate(brandDO);
+        if (!inserted) return null;
+        return brandDO.getId();
     }
 
     @Override

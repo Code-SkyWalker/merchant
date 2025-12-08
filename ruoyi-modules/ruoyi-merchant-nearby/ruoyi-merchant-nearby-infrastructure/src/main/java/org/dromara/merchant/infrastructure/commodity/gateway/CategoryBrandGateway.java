@@ -7,6 +7,8 @@ import org.dromara.merchant.infrastructure.commodity.converter.CategoryBrandConv
 import org.dromara.merchant.infrastructure.commodity.mapper.CategoryBrandMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class CategoryBrandGateway implements ICategoryBrandGateway {
@@ -16,7 +18,12 @@ public class CategoryBrandGateway implements ICategoryBrandGateway {
 
     @Override
     public boolean save(CategoryBrand categoryBrand) {
-        return this.mapper.insertOrUpdate(convertor.toDO(categoryBrand));
+        return this.mapper.insert(convertor.toDO(categoryBrand)) > 0;
+    }
+
+    @Override
+    public boolean saveBatch(List<CategoryBrand> categoryBrands) {
+        return this.mapper.insertBatch(categoryBrands.stream().map(convertor::toDO).toList());
     }
 
     @Override

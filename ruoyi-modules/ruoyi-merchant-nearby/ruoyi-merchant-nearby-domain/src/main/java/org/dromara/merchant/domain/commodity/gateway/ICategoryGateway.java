@@ -1,6 +1,6 @@
 package org.dromara.merchant.domain.commodity.gateway;
 
-import org.dromara.merchant.domain.commodity.model.CommCategory;
+import org.dromara.merchant.domain.commodity.model.Category;
 
 import java.util.List;
 
@@ -9,13 +9,13 @@ import java.util.List;
  * @Author Code Skywalker
  * @Date 2025-10-23 11:37
  */
-public interface ICommCategoryGateway {
+public interface ICategoryGateway {
     /**
      * 保存商品类目
-     * @param commCategory 类目
+     * @param category 类目
      * @return 是否保存成功
      */
-    boolean save(CommCategory commCategory);
+    boolean save(Category category);
 
     /**
      * 删除商品类目
@@ -29,12 +29,12 @@ public interface ICommCategoryGateway {
      * @param id 类目ID
      * @return 类目
      */
-    CommCategory queryById(Integer id);
+    Category queryById(Integer id);
 
     /**
      * 根据父类目ID查询子类目
      * @param parentId 父类目ID
      * @return 子类目列表
      */
-    List<CommCategory> queryByParentId(Integer parentId);
+    List<Category> queryByParentId(Integer parentId);
 }
