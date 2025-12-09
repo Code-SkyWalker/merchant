@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dromara.merchant.infrastructure.commodity.mapper.SpuMapper">
+  <resultMap id="BaseResultMap" type="org.dromara.merchant.infrastructure.commodity.mapper.dataobject.SpuDO">
+    <!--@mbg.generated-->
+    <!--@Table tb_spu-->
+    <id column="id" property="id" />
+    <result column="sn" property="sn" />
+    <result column="name" property="name" />
+    <result column="caption" property="caption" />
+    <result column="brand_id" property="brandId" />
+    <result column="category1_id" property="category1Id" />
+    <result column="category2_id" property="category2Id" />
+    <result column="category3_id" property="category3Id" />
+    <result column="template_id" property="templateId" />
+    <result column="freight_id" property="freightId" />
+    <result column="freight_type" property="freightType" />
+    <result column="image" property="image" />
+    <result column="images" property="images" />
+    <result column="video" property="video" />
+    <result column="sale_service" property="saleService" />
+    <result column="introduction" property="introduction" />
+    <result column="spec_items" property="specItems" />
+    <result column="para_items" property="paraItems" />
+    <result column="sale_num" property="saleNum" />
+    <result column="comment_num" property="commentNum" />
+    <result column="type" property="type" />
+    <result column="commition" property="commition" />
+    <result column="cart" property="cart" />
+    <result column="stock_unit" property="stockUnit" />
+    <result column="marketable_mode" property="marketableMode" />
+    <result column="marketable_time" property="marketableTime" />
+    <result column="unmarketable_time" property="unmarketableTime" />
+    <result column="is_marketable" property="isMarketable" />
+    <result column="is_enable_spec" property="isEnableSpec" />
+    <result column="is_delete" property="isDelete" />
+    <result column="status" property="status" />
+    <result column="merchant_id" property="merchantId" />
+    <result column="tenant_id" property="tenantId" />
+    <result column="create_dept" property="createDept" />
+    <result column="create_by" property="createBy" />
+    <result column="create_time" property="createTime" />
+    <result column="update_by" property="updateBy" />
+    <result column="update_time" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, sn, `name`, caption, brand_id, category1_id, category2_id, category3_id, template_id,
+    freight_id, freight_type, image, images, video, sale_service, introduction, spec_items,
+    para_items, sale_num, comment_num, `type`, commition, cart, stock_unit, marketable_mode,
+    marketable_time, unmarketable_time, is_marketable, is_enable_spec, is_delete, `status`,
+    merchant_id, tenant_id, create_dept, create_by, create_time, update_by, update_time
+  </sql>
+</mapper>

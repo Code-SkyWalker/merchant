@@ -3,12 +3,18 @@ CREATE TABLE `tb_sku` (
   `id` bigint NOT NULL COMMENT '商品id',
   `sn` varchar(100) NOT NULL COMMENT '商品条码',
   `name` varchar(200) NOT NULL COMMENT 'SKU名称',
-  `price` int NOT NULL COMMENT '价格（分）',
+  `price` decimal(10,2) NOT NULL COMMENT '价格',
+  `member_price` decimal(10,2) DEFAULT '0.00' COMMENT '普通会员价',
+  `vip_price` decimal(10,2) DEFAULT '0.00' COMMENT '超级会员价',
+  `original_price` decimal(10,2) DEFAULT '0.00' COMMENT '划线价',
   `num` int NOT NULL COMMENT '库存数量',
   `alert_num` int DEFAULT NULL COMMENT '库存预警数量',
   `image` varchar(200) DEFAULT NULL COMMENT '商品图片',
   `images` varchar(2000) DEFAULT NULL COMMENT '商品图片列表',
-  `weight` int DEFAULT NULL COMMENT '重量（克）',
+  `weight` decimal(10,2) DEFAULT '0.00' COMMENT '重量（千克）',
+  `volume` decimal(10,2) DEFAULT '0.00' COMMENT '体积（立方）',
+  `min_purchase` int DEFAULT NULL COMMENT '起购量',
+  `max_purchase` int DEFAULT NULL COMMENT '限购量',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `spu_id` bigint DEFAULT NULL COMMENT 'SPUID',
@@ -23,4 +29,4 @@ CREATE TABLE `tb_sku` (
   KEY `cid` (`category_id`) USING BTREE,
   KEY `status` (`status`) USING BTREE,
   KEY `updated` (`update_time`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='商品sku表'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC COMMENT='商品sku表'
