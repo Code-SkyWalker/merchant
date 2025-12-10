@@ -1,14 +1,19 @@
 package org.dromara.merchant.app.commodity.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.merchant.app.commodity.ITemplateService;
 import org.dromara.merchant.app.commodity.executor.TemplateCreateExe;
 import org.dromara.merchant.app.commodity.executor.TemplateDeleteExe;
 import org.dromara.merchant.app.commodity.executor.TemplateModifyExe;
+import org.dromara.merchant.client.commodity.dto.data.clientobject.TemplatePageCO;
 import org.dromara.merchant.client.commodity.dto.data.command.TemplateCreateCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.TemplateModifyCmd;
+import org.dromara.merchant.client.commodity.dto.data.command.query.TemplateQry;
 import org.dromara.merchant.domain.commodity.gateway.ITemplateGateway;
 import org.dromara.merchant.domain.commodity.model.Template;
+import org.dromara.merchant.infrastructure.commodity.mapper.TemplateMapper;
 import org.springframework.stereotype.Component;
 
 /**
@@ -25,6 +30,8 @@ public class TemplateService implements ITemplateService {
     private final TemplateDeleteExe templateDeleteExe;
 
     private final ITemplateGateway templateGateway;
+
+    private final TemplateMapper templateMapper;
 
     @Override
     public boolean create(TemplateCreateCmd cmd) {
@@ -44,5 +51,10 @@ public class TemplateService implements ITemplateService {
     @Override
     public Template queryById(Integer id) {
         return this.templateGateway.queryById(id);
+    }
+
+    @Override
+    public Page<TemplatePageCO> queryPage(TemplateQry qry, PageQuery page) {
+        return templateMapper.selectPage(page.build(), qry);
     }
 }

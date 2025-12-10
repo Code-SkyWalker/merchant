@@ -1,17 +1,17 @@
-package org.dromara.merchant.client.commodity.dto.data.command;
+package org.dromara.merchant.client.commodity.dto.data.clientobject;
 
 import lombok.Data;
 
 /**
- * @Description 商品规格模板修改参数
+ * @Description 参数模板分页数据CO
  * @Author Code Skywalker
- * @Date 2025/12/8 13:37
+ * @Date 2025/12/10 14:25
  */
 @Data
-public class SpecModifyCmd {
+public class ParaPageCO {
 
     /**
-     * 规格ID
+     * id
      */
     private Integer id;
 
@@ -21,7 +21,7 @@ public class SpecModifyCmd {
     private String name;
 
     /**
-     * 规格选项
+     * 选项
      */
     private String options;
 
@@ -29,5 +29,10 @@ public class SpecModifyCmd {
      * 排序
      */
     private Integer seq;
+
+    /**
+     * 模板ID
+     */
+    private Integer templateId;
 
 }

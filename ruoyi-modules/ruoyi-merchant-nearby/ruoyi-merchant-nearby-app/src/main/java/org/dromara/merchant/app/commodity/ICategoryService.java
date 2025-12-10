@@ -1,5 +1,7 @@
 package org.dromara.merchant.app.commodity;
 
+import cn.hutool.core.lang.tree.Tree;
+import org.dromara.merchant.client.commodity.dto.data.clientobject.CategoryTreeCO;
 import org.dromara.merchant.client.commodity.dto.data.command.CategoryCreateCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.CategoryModifyCmd;
 import org.dromara.merchant.domain.commodity.model.Category;
@@ -32,7 +34,7 @@ public interface ICategoryService {
      * @param id 类目ID
      * @return 是否删除成功
      */
-    boolean delete(Integer id);
+    boolean delete(Integer id, Long merchantId);
 
     /**
      * 根据ID查询商品类目
@@ -47,5 +49,11 @@ public interface ICategoryService {
      * @return 子类目列表
      */
     List<Category> queryByParentId(Integer parentId);
+
+    /**
+     * 查询商品类目树
+     * @return 类目树
+     */
+    List<CategoryTreeCO> queryTree(Long merchantId);
 
 }

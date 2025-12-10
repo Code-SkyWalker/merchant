@@ -15,10 +15,7 @@ public class CategoryDeleteExe {
 
     private final ICategoryGateway categoryGateway;
 
-    public boolean execute(Integer id) {
-
-
-
+    public boolean execute(Integer id, Long merchantId) {
         return categoryGateway.delete(id);
     }
 

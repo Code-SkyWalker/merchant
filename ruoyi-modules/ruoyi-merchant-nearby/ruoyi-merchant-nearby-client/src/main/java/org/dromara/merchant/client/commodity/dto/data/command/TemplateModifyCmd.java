@@ -21,21 +21,6 @@ public class TemplateModifyCmd {
     private String name;
 
     /**
-     * 规格数量
-     */
-    private Integer specNum;
-
-    /**
-     * 参数数量
-     */
-    private Integer paraNum;
-
-    /**
-     * 租户ID
-     */
-    private String tenantId;
-
-    /**
      * 分类ID
      */
     private String categoryId;

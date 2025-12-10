@@ -145,6 +145,7 @@ tenant:
     - tb_category_brand
     - tb_spec
     - tb_para
+    - tb_sku
 
 # MyBatisPlus配置
 # https://baomidou.com/config/

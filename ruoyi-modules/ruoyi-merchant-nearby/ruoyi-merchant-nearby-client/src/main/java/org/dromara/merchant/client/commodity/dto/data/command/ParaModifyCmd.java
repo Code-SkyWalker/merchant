@@ -30,9 +30,4 @@ public class ParaModifyCmd {
      */
     private Integer seq;
 
-    /**
-     * 模板ID
-     */
-    private Integer templateId;
-
 }

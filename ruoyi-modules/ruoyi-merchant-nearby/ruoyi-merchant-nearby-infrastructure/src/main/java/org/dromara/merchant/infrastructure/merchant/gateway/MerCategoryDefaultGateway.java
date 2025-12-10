@@ -7,6 +7,7 @@ import org.dromara.merchant.domain.merchant.model.MerCategoryDefault;
 import org.dromara.merchant.infrastructure.merchant.converter.MerCategoryConvertor;
 import org.dromara.merchant.infrastructure.merchant.mapper.MerCategoryDefaultMapper;
 import org.dromara.merchant.infrastructure.merchant.mapper.dataobject.CategoryDO;
+import org.dromara.merchant.infrastructure.merchant.mapper.dataobject.CategoryDefaultDO;
 import org.springframework.stereotype.Component;
 
 /**
@@ -35,7 +36,7 @@ public class MerCategoryDefaultGateway implements IMerCategoryDefaultGateway {
 
     @Override
     public boolean delete(Long categoryId) {
-        return false;
+        return this.categoryMapper.deleteByPrimaryKey(categoryId) > 0;
     }
 
     @Override
@@ -45,7 +46,8 @@ public class MerCategoryDefaultGateway implements IMerCategoryDefaultGateway {
 
     @Override
     public MerCategoryDefault selectById(Long categoryId) {
-        return null;
+        CategoryDefaultDO categoryDefaultDO = this.categoryMapper.selectByPrimaryKey(categoryId);
+        return merCategoryConvertor.toCategoryDefaultEntity(categoryDefaultDO);
     }
 
     @Override

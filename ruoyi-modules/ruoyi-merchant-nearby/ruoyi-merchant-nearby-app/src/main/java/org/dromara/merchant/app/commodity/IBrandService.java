@@ -1,8 +1,12 @@
 package org.dromara.merchant.app.commodity;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.dromara.common.mybatis.core.page.PageQuery;
+import org.dromara.merchant.client.commodity.dto.data.clientobject.BrandPageCO;
 import org.dromara.merchant.client.commodity.dto.data.command.BrandCreateCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.BrandDeleteCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.BrandModifyCmd;
+import org.dromara.merchant.client.commodity.dto.data.command.query.BrandQry;
 import org.dromara.merchant.domain.commodity.model.Brand;
 
 /**
@@ -39,4 +43,12 @@ public interface IBrandService {
      * @return  品牌
      */
     Brand queryById(Integer id);
+
+    /**
+     * 分页查询
+     * @param qry 查询参数
+     * @param page 分页参数
+     * @return 品牌列表
+     */
+    Page<BrandPageCO> queryPage(BrandQry qry, PageQuery page);
 }

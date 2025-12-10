@@ -124,4 +124,9 @@
         #{category.updateBy}
         from tb_shop_category_default
     </insert>
+
+    <delete id="deleteByTenantId">
+        delete from tb_shop_category
+        where tenant_id = #{tenantId}
+    </delete>
 </mapper>

@@ -14,4 +14,17 @@
     <!--@mbg.generated-->
     id, `name`, `options`, seq, template_id
   </sql>
+
+  <select id="selectPage" resultType="org.dromara.merchant.client.commodity.dto.data.clientobject.ParaPageCO">
+      select <include refid="Base_Column_List"/>
+      from tb_para
+      <where>
+          <if test="qry.paraName != null and qry.paraName != ''">
+              and `name` like concat('%', #{qry.paraName}, '%')
+          </if>
+          <if test="qry.templateId != null">
+              and template_id = #{qry.templateId}
+          </if>
+      </where>
+    </select>
 </mapper>

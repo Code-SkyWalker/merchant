@@ -3,9 +3,12 @@ package org.dromara.merchant.adapter.web.commodity;
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.domain.R;
 import org.dromara.merchant.app.commodity.ICategoryService;
+import org.dromara.merchant.client.commodity.dto.data.clientobject.CategoryTreeCO;
 import org.dromara.merchant.client.commodity.dto.data.command.CategoryCreateCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.CategoryModifyCmd;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 商品类目
@@ -44,10 +47,19 @@ public class CategoryController {
      * @param id 类目id
      * @return 删除结果
      */
-    @DeleteMapping("{id}")
-    public R<Boolean> deleteCategory(@PathVariable final Integer id) {
-        return R.ok(categoryService.delete(id));
+    @DeleteMapping("{merchantId}/{id}")
+    public R<Boolean> deleteCategory(@PathVariable final Integer id, @PathVariable final Long merchantId) {
+        return R.ok(categoryService.delete(id, merchantId));
     }
 
+    /**
+     * 查询商品分类
+     * @return 商品分类树
+     */
+    @GetMapping("/tree/{merchantId}")
+    public R<List<CategoryTreeCO>> queryPage(@PathVariable Long merchantId) {
+        List<CategoryTreeCO> tree = categoryService.queryTree(merchantId);
+        return R.ok(tree);
+    }
 
 }

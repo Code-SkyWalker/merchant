@@ -1,6 +1,12 @@
 package org.dromara.merchant.app.commodity;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.dromara.common.mybatis.core.page.PageQuery;
+import org.dromara.merchant.client.commodity.dto.data.clientobject.ParaPageCO;
+import org.dromara.merchant.client.commodity.dto.data.clientobject.SpecPageCO;
 import org.dromara.merchant.client.commodity.dto.data.command.*;
+import org.dromara.merchant.client.commodity.dto.data.command.query.ParaQry;
+import org.dromara.merchant.client.commodity.dto.data.command.query.SpecQry;
 import org.dromara.merchant.domain.commodity.model.Spec;
 
 /**
@@ -37,4 +43,13 @@ public interface ISpecService {
      * @return  品牌
      */
     Spec queryById(Integer id);
+
+    /**
+     * 查询
+     * @param qry 查询参数
+     * @param page 分页参数
+     * @return  规格模板分页数据
+     */
+    Page<SpecPageCO> queryPage(SpecQry qry, PageQuery page);
+
 }

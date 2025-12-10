@@ -1,7 +1,11 @@
 package org.dromara.merchant.app.commodity;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.dromara.common.mybatis.core.page.PageQuery;
+import org.dromara.merchant.client.commodity.dto.data.clientobject.ParaPageCO;
 import org.dromara.merchant.client.commodity.dto.data.command.ParaCreateCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.ParaModifyCmd;
+import org.dromara.merchant.client.commodity.dto.data.command.query.ParaQry;
 import org.dromara.merchant.domain.commodity.model.Para;
 
 /**
@@ -38,4 +42,12 @@ public interface IParaService {
      * @return 参数
      */
     Para queryById(Integer id);
+
+    /**
+     * 分页查询参数模板
+     * @param qry 查询参数
+     * @param page 分页参数
+     * @return 参数列表
+     */
+    Page<ParaPageCO> queryPage(ParaQry qry, PageQuery page);
 }

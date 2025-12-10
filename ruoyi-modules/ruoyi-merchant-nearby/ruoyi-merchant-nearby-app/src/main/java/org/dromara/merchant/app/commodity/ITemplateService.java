@@ -1,7 +1,11 @@
 package org.dromara.merchant.app.commodity;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.dromara.common.mybatis.core.page.PageQuery;
+import org.dromara.merchant.client.commodity.dto.data.clientobject.TemplatePageCO;
 import org.dromara.merchant.client.commodity.dto.data.command.TemplateCreateCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.TemplateModifyCmd;
+import org.dromara.merchant.client.commodity.dto.data.command.query.TemplateQry;
 import org.dromara.merchant.domain.commodity.model.Template;
 
 /**
@@ -42,5 +46,13 @@ public interface ITemplateService {
      * @return 商品模板
      */
     Template queryById(Integer id);
+
+    /**
+     * 查询商品模板列表
+     *
+     * @param qry 查询参数
+     * @return 商品模板列表
+     */
+    Page<TemplatePageCO> queryPage(TemplateQry qry, PageQuery page);
 
 }

@@ -15,15 +15,13 @@ import org.dromara.common.mybatis.core.domain.BaseEntity;
  * 商品sku表
  */
 @Data
-@EqualsAndHashCode(callSuper=true)
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "tb_sku")
-public class SkuDO extends BaseEntity {
+public class SkuDO {
     /**
      * 商品id
      */
-    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     /**

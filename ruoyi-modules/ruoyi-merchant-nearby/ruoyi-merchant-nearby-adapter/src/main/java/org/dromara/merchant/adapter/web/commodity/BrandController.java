@@ -1,11 +1,16 @@
 package org.dromara.merchant.adapter.web.commodity;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.domain.R;
+import org.dromara.common.mybatis.core.page.PageQuery;
+import org.dromara.common.mybatis.core.page.TableDataInfo;
 import org.dromara.merchant.app.commodity.IBrandService;
+import org.dromara.merchant.client.commodity.dto.data.clientobject.BrandPageCO;
 import org.dromara.merchant.client.commodity.dto.data.command.BrandCreateCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.BrandDeleteCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.BrandModifyCmd;
+import org.dromara.merchant.client.commodity.dto.data.command.query.BrandQry;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -51,6 +56,18 @@ public class BrandController {
     public R<Boolean> deleteBrand(@RequestBody final BrandDeleteCmd cmd) {
         boolean delete = brandService.delete(cmd);
         return R.ok(delete);
+    }
+
+    /**
+     * 分页查询商品品牌
+     * @param qry 查询参数
+     * @param page 分页参数
+     * @return 商品品牌列表
+     */
+    @GetMapping("/page")
+    public TableDataInfo<BrandPageCO> queryPage(@ModelAttribute BrandQry qry, @ModelAttribute PageQuery page) {
+        Page<BrandPageCO> brandPage = brandService.queryPage(qry, page);
+        return TableDataInfo.build(brandPage);
     }
 
 }

@@ -16,11 +16,6 @@ public class CategoryCreateCmd {
     private String name;
 
     /**
-     * 商品数量
-     */
-    private Integer goodsNum;
-
-    /**
      * 是否显示
      */
     private String isShow;

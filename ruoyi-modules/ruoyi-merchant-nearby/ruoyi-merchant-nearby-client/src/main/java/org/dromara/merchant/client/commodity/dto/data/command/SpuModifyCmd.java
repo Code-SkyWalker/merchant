@@ -1,7 +1,6 @@
 package org.dromara.merchant.client.commodity.dto.data.command;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -77,6 +76,8 @@ public class SpuModifyCmd {
      * 配送方式：0无需配送 1需要配送
      */
     @NotNull
+    @Min(0)
+    @Max(1)
     private Integer freightType;
 
     /**
@@ -132,18 +133,23 @@ public class SpuModifyCmd {
      * 商品能否加入购物车 0否 1是 默认1
      */
     @NotNull
+    @Min(0)
+    @Max(1)
     private Integer cart;
 
     /**
      * 库存单位
      */
     @NotBlank
+    @Size(max = 10)
     private String stockUnit;
 
     /**
      * 上架类型：0立即上架 1暂不上架 2定时上架
      */
     @NotNull
+    @Min(0)
+    @Max(2)
     private Integer marketableMode;
 
     /**
@@ -157,9 +163,11 @@ public class SpuModifyCmd {
     private LocalDateTime unmarketableTime;
 
     /**
-     * 是否启用规格
+     * 是否启用规格 0否 1是
      */
     @NotNull
+    @Min(0)
+    @Max(1)
     private Integer isEnableSpec;
 
     /**

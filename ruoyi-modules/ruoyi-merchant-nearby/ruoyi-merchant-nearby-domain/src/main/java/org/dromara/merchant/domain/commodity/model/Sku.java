@@ -4,6 +4,7 @@ package org.dromara.merchant.domain.commodity.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.dromara.common.core.utils.SnowflakeIdGenerator;
 
 import java.math.BigDecimal;
 
@@ -20,7 +21,7 @@ public class Sku {
     /**
      * 商品id
      */
-    private Long id;
+    private Long id = SnowflakeIdGenerator.generateId();
 
     /**
      * 商品条码

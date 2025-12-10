@@ -1,5 +1,6 @@
 package org.dromara.merchant.client.commodity.dto.data.command;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -25,6 +26,7 @@ public class SkuCreateCmd {
     /**
      * 价格
      */
+    @NotNull
     private BigDecimal price;
 
     /**
@@ -45,6 +47,7 @@ public class SkuCreateCmd {
     /**
      * 库存数量
      */
+    @NotNull
     private Integer num;
 
     /**
@@ -90,16 +93,19 @@ public class SkuCreateCmd {
     /**
      * 类目ID
      */
+    @NotNull
     private Integer categoryId;
 
     /**
      * 类目名称
      */
+    @NotNull
     private String categoryName;
 
     /**
      * 品牌名称
      */
+    @NotNull
     private String brandName;
 
     /**

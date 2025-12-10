@@ -22,4 +22,29 @@
     id, `name`, image, letter, seq, merchant_id, tenant_id, create_dept, create_by,
     create_time, update_by, update_time
   </sql>
+
+  <select id="selectPage" resultType="org.dromara.merchant.client.commodity.dto.data.clientobject.BrandPageCO">
+      select
+      brand.id,
+      brand.name,
+      brand.image,
+      brand.letter,
+      brand.seq,
+      brand.merchant_id
+      from tb_brand brand
+      <if test="qry.categoryId != null">
+          left join tb_category_brand on brand.id = tb_category_brand.brand_id
+      </if>
+      <where>
+          <if test="qry.brandName != null and qry.brandName != ''">
+              and `name` like concat('%',#{qry.brandName},'%')
+          </if>
+          <if test="qry.letter != null and qry.letter != ''">
+              and letter = #{qry.letter}
+          </if>
+          <if test="qry.categoryId != null">
+              and category_id = #{qry.categoryId}
+          </if>
+      </where>
+    </select>
 </mapper>

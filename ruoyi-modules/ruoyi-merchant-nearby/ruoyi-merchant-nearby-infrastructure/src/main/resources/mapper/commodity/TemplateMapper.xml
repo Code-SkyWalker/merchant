@@ -9,7 +9,6 @@
     <result column="spec_num" property="specNum" />
     <result column="para_num" property="paraNum" />
     <result column="tenant_id" property="tenantId" />
-    <result column="join_time" property="joinTime" />
     <result column="create_dept" property="createDept" />
     <result column="create_by" property="createBy" />
     <result column="create_time" property="createTime" />
@@ -18,7 +17,20 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, `name`, spec_num, para_num, tenant_id, join_time, create_dept, create_by, create_time,
+    id, `name`, spec_num, para_num, category_id, tenant_id, create_dept, create_by, create_time,
     update_by, update_time
   </sql>
+
+  <select id="selectPage" resultType="org.dromara.merchant.client.commodity.dto.data.clientobject.TemplatePageCO">
+      select id, `name`, spec_num, para_num, category_id
+      from tb_template
+      <where>
+          <if test="qry.templateName != null and qry.templateName != ''">
+              and `name` like concat('%', #{qry.templateName}, '%')
+          </if>
+          <if test="qry.categoryId != null">
+              and category_id = #{qry.categoryId}
+          </if>
+      </where>
+    </select>
 </mapper>
