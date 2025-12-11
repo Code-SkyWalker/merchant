@@ -7,6 +7,7 @@ import org.dromara.merchant.app.commodity.ITemplateService;
 import org.dromara.merchant.app.commodity.executor.TemplateCreateExe;
 import org.dromara.merchant.app.commodity.executor.TemplateDeleteExe;
 import org.dromara.merchant.app.commodity.executor.TemplateModifyExe;
+import org.dromara.merchant.client.commodity.dto.data.clientobject.SkuTempCO;
 import org.dromara.merchant.client.commodity.dto.data.clientobject.TemplatePageCO;
 import org.dromara.merchant.client.commodity.dto.data.command.TemplateCreateCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.TemplateModifyCmd;
@@ -15,6 +16,8 @@ import org.dromara.merchant.domain.commodity.gateway.ITemplateGateway;
 import org.dromara.merchant.domain.commodity.model.Template;
 import org.dromara.merchant.infrastructure.commodity.mapper.TemplateMapper;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @Description TODO
@@ -56,5 +59,10 @@ public class TemplateService implements ITemplateService {
     @Override
     public Page<TemplatePageCO> queryPage(TemplateQry qry, PageQuery page) {
         return templateMapper.selectPage(page.build(), qry);
+    }
+
+    @Override
+    public List<SkuTempCO> queryByTemplateId(Integer templateId) {
+        return this.templateMapper.selectById(templateId);
     }
 }

@@ -3,14 +3,14 @@ package org.dromara.merchant.adapter.web.commodity;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.domain.R;
+import org.dromara.common.log.annotation.Log;
+import org.dromara.common.log.enums.BusinessType;
 import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.common.mybatis.core.page.TableDataInfo;
 import org.dromara.merchant.app.commodity.IParaService;
-import org.dromara.merchant.client.commodity.dto.data.clientobject.BrandPageCO;
 import org.dromara.merchant.client.commodity.dto.data.clientobject.ParaPageCO;
 import org.dromara.merchant.client.commodity.dto.data.command.ParaCreateCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.ParaModifyCmd;
-import org.dromara.merchant.client.commodity.dto.data.command.query.BrandQry;
 import org.dromara.merchant.client.commodity.dto.data.command.query.ParaQry;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +32,7 @@ public class ParaController {
      * @return 添加结果
      */
     @PostMapping
+    @Log(title = "商品参数模板", businessType = BusinessType.INSERT)
     public R<Boolean> addPara(@RequestBody final ParaCreateCmd cmd) {
         boolean add = paraService.create(cmd);
         return R.ok(add);
@@ -43,6 +44,7 @@ public class ParaController {
      * @return 修改结果
      */
     @PutMapping
+    @Log(title = "商品参数模板", businessType = BusinessType.UPDATE)
     public R<Boolean> modifyPara(@RequestBody final ParaModifyCmd cmd) {
         boolean modify = paraService.modify(cmd);
         return R.ok(modify);
@@ -54,6 +56,7 @@ public class ParaController {
      * @return 删除结果
      */
     @DeleteMapping("{id}")
+    @Log(title = "商品参数模板", businessType = BusinessType.DELETE)
     public R<Boolean> deletePara(@PathVariable final Integer id) {
         boolean delete = paraService.delete(id);
         return R.ok(delete);

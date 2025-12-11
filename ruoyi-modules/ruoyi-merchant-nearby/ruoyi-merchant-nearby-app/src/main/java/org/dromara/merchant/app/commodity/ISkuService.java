@@ -1,10 +1,12 @@
 package org.dromara.merchant.app.commodity;
 
 import org.dromara.merchant.client.commodity.dto.data.command.SkuCreateCmd;
+import org.dromara.merchant.client.commodity.dto.data.command.SkuGenCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.SkuModifyCmd;
 import org.dromara.merchant.domain.commodity.model.Sku;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description 商品SKU服务接口
@@ -47,4 +49,13 @@ public interface ISkuService {
      * @return 商品sku
      */
     List<Sku> queryBySpuId(Long spuId);
+
+    /**
+     * 根据商品规格生成SKU列表
+     * @param spuId SPU ID
+     * @param specItems 规格项，格式为 {"颜色": ["红色", "蓝色"], "尺寸": ["S", "M", "L"]}
+     * @param baseSku 基础SKU信息
+     * @return 生成的SKU列表
+     */
+    List<SkuCreateCmd> generateSkus(Long spuId, Map<String, List<String>> specItems, SkuGenCmd.SpuInfo baseSku);
 }

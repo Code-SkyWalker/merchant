@@ -3,6 +3,8 @@ package org.dromara.merchant.adapter.web.commodity;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.domain.R;
+import org.dromara.common.log.annotation.Log;
+import org.dromara.common.log.enums.BusinessType;
 import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.common.mybatis.core.page.TableDataInfo;
 import org.dromara.merchant.app.commodity.ISpecService;
@@ -30,6 +32,7 @@ public class SpecController {
      * @return 添加结果
      */
     @PostMapping
+    @Log(title = "商品规格模板", businessType = BusinessType.INSERT)
     public R<Boolean> addSpec(@RequestBody final SpecCreateCmd cmd) {
         boolean add = specService.create(cmd);
         return R.ok(add);
@@ -41,6 +44,7 @@ public class SpecController {
      * @return 修改结果
      */
     @PutMapping
+    @Log(title = "商品规格模板", businessType = BusinessType.UPDATE)
     public R<Boolean> modifySpec(@RequestBody final SpecModifyCmd cmd) {
         boolean modify = specService.modify(cmd);
         return R.ok(modify);
@@ -52,6 +56,7 @@ public class SpecController {
      * @return 删除结果
      */
     @DeleteMapping("{id}")
+    @Log(title = "商品规格模板", businessType = BusinessType.DELETE)
     public R<Boolean> deletePara(@PathVariable final Integer id) {
         boolean delete = specService.delete(id);
         return R.ok(delete);

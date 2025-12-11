@@ -2,11 +2,14 @@ package org.dromara.merchant.app.commodity;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.dromara.common.mybatis.core.page.PageQuery;
+import org.dromara.merchant.client.commodity.dto.data.clientobject.SkuTempCO;
 import org.dromara.merchant.client.commodity.dto.data.clientobject.TemplatePageCO;
 import org.dromara.merchant.client.commodity.dto.data.command.TemplateCreateCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.TemplateModifyCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.query.TemplateQry;
 import org.dromara.merchant.domain.commodity.model.Template;
+
+import java.util.List;
 
 /**
  * @Description 商品模板服务接口
@@ -54,5 +57,13 @@ public interface ITemplateService {
      * @return 商品模板列表
      */
     Page<TemplatePageCO> queryPage(TemplateQry qry, PageQuery page);
+
+    /**
+     * 根据模板ID查询SKU模板
+     *
+     * @param templateId 模板ID
+     * @return SKU模板列表
+     */
+    List<SkuTempCO> queryByTemplateId(Integer templateId);
 
 }

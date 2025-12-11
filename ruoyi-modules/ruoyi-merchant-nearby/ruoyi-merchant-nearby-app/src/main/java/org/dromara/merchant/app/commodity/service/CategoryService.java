@@ -65,7 +65,7 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    @CacheEvict(cacheNames = "goods.category", key = "#merchantId")
+    @Cacheable(cacheNames = "goods.category", key = "#merchantId")
     public List<CategoryTreeCO> queryTree(Long merchantId) {
         List<CategoryTreeCO> nodes = categoryMapper.selectAll(merchantId);
         return TreeIfyUtils.treeIfy(

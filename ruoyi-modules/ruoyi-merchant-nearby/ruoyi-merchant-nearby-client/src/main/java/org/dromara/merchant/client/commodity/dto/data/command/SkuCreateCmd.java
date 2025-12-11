@@ -48,7 +48,7 @@ public class SkuCreateCmd {
      * 库存数量
      */
     @NotNull
-    private Integer num;
+    private Integer num = 1;
 
     /**
      * 库存预警数量
@@ -68,17 +68,17 @@ public class SkuCreateCmd {
     /**
      * 重量（千克）
      */
-    private BigDecimal weight;
+    private BigDecimal weight = BigDecimal.ONE;
 
     /**
      * 体积（立方）
      */
-    private BigDecimal volume;
+    private BigDecimal volume = new BigDecimal("0.01");
 
     /**
      * 起购量
      */
-    private Integer minPurchase;
+    private Integer minPurchase = 1;
 
     /**
      * 限购量
@@ -105,7 +105,6 @@ public class SkuCreateCmd {
     /**
      * 品牌名称
      */
-    @NotNull
     private String brandName;
 
     /**

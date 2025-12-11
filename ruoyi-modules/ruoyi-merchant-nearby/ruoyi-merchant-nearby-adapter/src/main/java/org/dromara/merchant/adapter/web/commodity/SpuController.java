@@ -2,10 +2,18 @@ package org.dromara.merchant.adapter.web.commodity;
 
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.domain.R;
+import org.dromara.common.core.utils.SnowflakeIdGenerator;
+import org.dromara.common.log.annotation.Log;
+import org.dromara.common.log.enums.BusinessType;
+import org.dromara.merchant.app.commodity.ISkuService;
 import org.dromara.merchant.app.commodity.ISpuService;
+import org.dromara.merchant.client.commodity.dto.data.command.SkuCreateCmd;
+import org.dromara.merchant.client.commodity.dto.data.command.SkuGenCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.SpuCreateCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.SpuModifyCmd;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 商品spu
@@ -19,12 +27,15 @@ public class SpuController {
 
     private final ISpuService spuService;
 
+    private final ISkuService skuService;
+
     /**
      * 添加商品
      * @param cmd 添加参数
      * @return 添加结果
      */
     @PostMapping
+    @Log(title = "商品spu", businessType = BusinessType.INSERT)
     public R<Boolean> addSpu(@RequestBody final SpuCreateCmd cmd) {
         return R.ok(spuService.create(cmd));
     }
@@ -35,6 +46,7 @@ public class SpuController {
      * @return 修改结果
      */
     @PutMapping
+    @Log(title = "商品spu", businessType = BusinessType.UPDATE)
     public R<Boolean> modifySpu(@RequestBody final SpuModifyCmd cmd) {
         return R.ok(spuService.modify(cmd));
     }
@@ -45,8 +57,20 @@ public class SpuController {
      * @return 删除结果
      */
     @DeleteMapping("{id}")
+    @Log(title = "商品spu", businessType = BusinessType.DELETE)
     public R<Boolean> deleteSpu(@PathVariable final Long id) {
         return R.ok(spuService.delete(id));
+    }
+
+    /**
+     * 生成商品SKU
+     * @param cmd 生成参数
+     * @return 生成结果
+     */
+    @PostMapping("/generateSkus")
+    public R<List<SkuCreateCmd>> generateSkus(@RequestBody final SkuGenCmd cmd) {
+        cmd.setSpuId(SnowflakeIdGenerator.generateId());
+        return R.ok(skuService.generateSkus(cmd.getSpuId(), cmd.getSpecItems(), cmd.getBaseSku()));
     }
 
 }

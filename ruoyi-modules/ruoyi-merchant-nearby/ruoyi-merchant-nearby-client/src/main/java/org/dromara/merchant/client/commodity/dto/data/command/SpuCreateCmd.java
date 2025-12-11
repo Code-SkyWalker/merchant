@@ -1,9 +1,6 @@
 package org.dromara.merchant.client.commodity.dto.data.command;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -17,6 +14,12 @@ import java.util.List;
  */
 @Data
 public class SpuCreateCmd {
+
+    /**
+     * SPU编号
+     */
+    @NotNull
+    private Long id;
 
     /**
      * 货号

@@ -2,6 +2,8 @@ package org.dromara.merchant.adapter.web.commodity;
 
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.domain.R;
+import org.dromara.common.log.annotation.Log;
+import org.dromara.common.log.enums.BusinessType;
 import org.dromara.merchant.app.commodity.ICategoryService;
 import org.dromara.merchant.client.commodity.dto.data.clientobject.CategoryTreeCO;
 import org.dromara.merchant.client.commodity.dto.data.command.CategoryCreateCmd;
@@ -28,6 +30,7 @@ public class CategoryController {
      * @return 添加结果
      */
     @PostMapping
+    @Log(title = "商品类目", businessType = BusinessType.INSERT)
     public R<Boolean> addCategory(@RequestBody final CategoryCreateCmd cmd) {
         return R.ok(categoryService.create(cmd));
     }
@@ -38,6 +41,7 @@ public class CategoryController {
      * @return 修改结果
      */
     @PutMapping
+    @Log(title = "商品类目", businessType = BusinessType.UPDATE)
     public R<Boolean> modifyCategory(@RequestBody final CategoryModifyCmd cmd) {
         return R.ok(categoryService.modify(cmd));
     }
@@ -48,6 +52,7 @@ public class CategoryController {
      * @return 删除结果
      */
     @DeleteMapping("{merchantId}/{id}")
+    @Log(title = "商品类目", businessType = BusinessType.DELETE)
     public R<Boolean> deleteCategory(@PathVariable final Integer id, @PathVariable final Long merchantId) {
         return R.ok(categoryService.delete(id, merchantId));
     }

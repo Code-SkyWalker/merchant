@@ -3,6 +3,8 @@ package org.dromara.merchant.adapter.web.commodity;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.domain.R;
+import org.dromara.common.log.annotation.Log;
+import org.dromara.common.log.enums.BusinessType;
 import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.common.mybatis.core.page.TableDataInfo;
 import org.dromara.merchant.app.commodity.IBrandService;
@@ -31,6 +33,7 @@ public class BrandController {
      * @return 添加结果
      */
     @PostMapping
+    @Log(title = "商品品牌", businessType = BusinessType.INSERT)
     public R<Boolean> addBrand(@RequestBody final BrandCreateCmd cmd) {
         boolean add = brandService.create(cmd);
         return R.ok(add);
@@ -42,6 +45,7 @@ public class BrandController {
      * @return 修改结果
      */
     @PutMapping
+    @Log(title = "商品品牌", businessType = BusinessType.UPDATE)
     public R<Boolean> modifyBrand(@RequestBody final BrandModifyCmd cmd) {
         boolean modify = brandService.modify(cmd);
         return R.ok(modify);
@@ -53,6 +57,7 @@ public class BrandController {
      * @return 删除结果
      */
     @DeleteMapping
+    @Log(title = "商品品牌", businessType = BusinessType.DELETE)
     public R<Boolean> deleteBrand(@RequestBody final BrandDeleteCmd cmd) {
         boolean delete = brandService.delete(cmd);
         return R.ok(delete);
