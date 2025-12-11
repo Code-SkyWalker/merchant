@@ -1,7 +1,7 @@
 drop TABLE if exists `tb_sku`;
 CREATE TABLE `tb_sku` (
   `id` bigint NOT NULL COMMENT '商品id',
-  `sn` varchar(100) NOT NULL COMMENT '商品条码',
+  `sn` varchar(100) DEFAULT NULL COMMENT '商品条码',
   `name` varchar(200) NOT NULL COMMENT 'SKU名称',
   `price` decimal(10,2) NOT NULL COMMENT '价格',
   `member_price` decimal(10,2) DEFAULT '0.00' COMMENT '普通会员价',
@@ -15,8 +15,6 @@ CREATE TABLE `tb_sku` (
   `volume` decimal(10,2) DEFAULT '0.00' COMMENT '体积（立方）',
   `min_purchase` int DEFAULT NULL COMMENT '起购量',
   `max_purchase` int DEFAULT NULL COMMENT '限购量',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `spu_id` bigint DEFAULT NULL COMMENT 'SPUID',
   `category_id` int DEFAULT NULL COMMENT '类目ID',
   `category_name` varchar(200) DEFAULT NULL COMMENT '类目名称',
@@ -25,6 +23,8 @@ CREATE TABLE `tb_sku` (
   `sale_num` int DEFAULT '0' COMMENT '销量',
   `comment_num` int DEFAULT '0' COMMENT '评论数',
   `status` char(1) DEFAULT '1' COMMENT '商品状态 1-正常，2-下架，3-删除',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `cid` (`category_id`) USING BTREE,
   KEY `status` (`status`) USING BTREE,

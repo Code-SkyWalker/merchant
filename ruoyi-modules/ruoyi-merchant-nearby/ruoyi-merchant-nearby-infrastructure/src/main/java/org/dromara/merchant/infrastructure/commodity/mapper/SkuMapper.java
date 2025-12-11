@@ -10,6 +10,5 @@ public interface SkuMapper extends BaseMapperPlus<SkuDO, SkuDO> {
 
     List<SkuDO> selectBySpuId(@Param("spuId")Long spuId);
 
-
     int deleteBySpuId(@Param("spuId") Long spuId);
 }

@@ -1,16 +1,22 @@
 package org.dromara.merchant.app.commodity.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.merchant.app.commodity.ISkuService;
 import org.dromara.merchant.app.commodity.ISpuService;
 import org.dromara.merchant.app.commodity.executor.SpuCreateExe;
 import org.dromara.merchant.app.commodity.executor.SpuDeleteExe;
 import org.dromara.merchant.app.commodity.executor.SpuModifyExe;
+import org.dromara.merchant.client.commodity.dto.data.clientobject.SpuDetailCO;
+import org.dromara.merchant.client.commodity.dto.data.clientobject.SpuPageCO;
 import org.dromara.merchant.client.commodity.dto.data.command.SkuCreateCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.SpuCreateCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.SpuModifyCmd;
+import org.dromara.merchant.client.commodity.dto.data.command.query.SpuQry;
 import org.dromara.merchant.domain.commodity.gateway.ISpuGateway;
 import org.dromara.merchant.domain.commodity.model.Spu;
+import org.dromara.merchant.infrastructure.commodity.mapper.SpuMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +38,8 @@ public class SpuService implements ISpuService {
     private final ISpuGateway spuGateway;
 
     private final ISkuService skuService;
+
+    private final SpuMapper spuMapper;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -58,5 +66,15 @@ public class SpuService implements ISpuService {
     @Override
     public Spu queryById(Long id) {
         return this.spuGateway.findById(id);
+    }
+
+    @Override
+    public Page<SpuPageCO> queryPage(SpuQry qry, PageQuery page) {
+        return this.spuMapper.selectPage(page.build(), qry);
+    }
+
+    @Override
+    public SpuDetailCO queryDetailById(Long id) {
+        return this.spuMapper.selectDetailById(id);
     }
 }

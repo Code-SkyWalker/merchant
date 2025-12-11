@@ -46,8 +46,46 @@
   </select>
 
   <delete id="deleteBySpuId">
-      delete
-      from tb_sku
+      update tb_sku
+      set status = 3
       where spu_id = #{spuId}
   </delete>
+    <sql id="Join_Column_List">
+        <!--@mbg.generated-->
+        tb_sku.id             as tb_sku_id,
+        tb_sku.sn             as tb_sku_sn,
+        tb_sku.name           as tb_sku_name,
+        tb_sku.price          as tb_sku_price,
+        tb_sku.member_price   as tb_sku_member_price,
+        tb_sku.vip_price      as tb_sku_vip_price,
+        tb_sku.original_price as tb_sku_original_price,
+        tb_sku.num            as tb_sku_num,
+        tb_sku.alert_num      as tb_sku_alert_num,
+        tb_sku.image          as tb_sku_image,
+        tb_sku.images         as tb_sku_images,
+        tb_sku.weight         as tb_sku_weight,
+        tb_sku.volume         as tb_sku_volume,
+        tb_sku.min_purchase   as tb_sku_min_purchase,
+        tb_sku.max_purchase   as tb_sku_max_purchase,
+        tb_sku.status         as tb_sku_status
+    </sql>
+    <resultMap id="JoinResultMap" type="org.dromara.merchant.client.commodity.dto.data.clientobject.SkuDetailCO">
+        <!--@mbg.generated-->
+        <id column="tb_sku_id" property="id"/>
+        <result column="tb_sku_sn" property="sn"/>
+        <result column="tb_sku_name" property="name"/>
+        <result column="tb_sku_price" property="price"/>
+        <result column="tb_sku_member_price" property="memberPrice"/>
+        <result column="tb_sku_vip_price" property="vipPrice"/>
+        <result column="tb_sku_original_price" property="originalPrice"/>
+        <result column="tb_sku_num" property="num"/>
+        <result column="tb_sku_alert_num" property="alertNum"/>
+        <result column="tb_sku_image" property="image"/>
+        <result column="tb_sku_images" property="images"/>
+        <result column="tb_sku_weight" property="weight"/>
+        <result column="tb_sku_volume" property="volume"/>
+        <result column="tb_sku_min_purchase" property="minPurchase"/>
+        <result column="tb_sku_max_purchase" property="maxPurchase"/>
+        <result column="tb_sku_status" property="status"/>
+    </resultMap>
 </mapper>

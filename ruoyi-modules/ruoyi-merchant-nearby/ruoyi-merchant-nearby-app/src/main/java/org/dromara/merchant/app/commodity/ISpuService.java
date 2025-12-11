@@ -1,7 +1,12 @@
 package org.dromara.merchant.app.commodity;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.dromara.common.mybatis.core.page.PageQuery;
+import org.dromara.merchant.client.commodity.dto.data.clientobject.SpuDetailCO;
+import org.dromara.merchant.client.commodity.dto.data.clientobject.SpuPageCO;
 import org.dromara.merchant.client.commodity.dto.data.command.SpuCreateCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.SpuModifyCmd;
+import org.dromara.merchant.client.commodity.dto.data.command.query.SpuQry;
 import org.dromara.merchant.domain.commodity.model.Spu;
 
 /**
@@ -39,5 +44,19 @@ public interface ISpuService {
      */
     Spu queryById(Long id);
 
+    /**
+     * 分页查询商品
+     * @param qry 查询参数
+     * @param page 分页参数
+     * @return 商品列表
+     */
+    Page<SpuPageCO> queryPage(SpuQry qry, PageQuery page);
+
+    /**
+     * 查询商品详情
+     * @param id 商品ID
+     * @return 商品详情
+     */
+    SpuDetailCO queryDetailById(Long id);
 
 }

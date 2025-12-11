@@ -1,25 +1,17 @@
-package org.dromara.merchant.infrastructure.commodity.mapper.dataobject;
+package org.dromara.merchant.client.commodity.dto.data.clientobject;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
 import java.math.BigDecimal;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import org.dromara.common.mybatis.core.domain.BaseEntity;
-
 /**
- * 商品sku表
+ * @Description TODO
+ * @Author Code Skywalker
+ * @Date 2025/12/11 16:31
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@TableName(value = "tb_sku")
-public class SkuDO {
+public class SkuDetailCO {
+
     /**
      * 商品id
      */
@@ -96,42 +88,8 @@ public class SkuDO {
     private Integer maxPurchase;
 
     /**
-     * SPUID
-     */
-    private Long spuId;
-
-    /**
-     * 类目ID
-     */
-    private Integer categoryId;
-
-    /**
-     * 类目名称
-     */
-    private String categoryName;
-
-    /**
-     * 品牌名称
-     */
-    private String brandName;
-
-    /**
-     * 规格
-     */
-    private String spec;
-
-    /**
-     * 销量
-     */
-    private Integer saleNum;
-
-    /**
-     * 评论数
-     */
-    private Integer commentNum;
-
-    /**
      * 商品状态 1-正常，2-下架，3-删除
      */
     private Integer status;
+
 }

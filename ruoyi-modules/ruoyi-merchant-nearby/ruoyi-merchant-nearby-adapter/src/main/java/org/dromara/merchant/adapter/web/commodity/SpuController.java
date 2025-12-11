@@ -1,16 +1,23 @@
 package org.dromara.merchant.adapter.web.commodity;
 
+import com.baomidou.mybatisplus.core.metadata.TableInfo;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.domain.R;
 import org.dromara.common.core.utils.SnowflakeIdGenerator;
 import org.dromara.common.log.annotation.Log;
 import org.dromara.common.log.enums.BusinessType;
+import org.dromara.common.mybatis.core.page.PageQuery;
+import org.dromara.common.mybatis.core.page.TableDataInfo;
 import org.dromara.merchant.app.commodity.ISkuService;
 import org.dromara.merchant.app.commodity.ISpuService;
+import org.dromara.merchant.client.commodity.dto.data.clientobject.SpuDetailCO;
+import org.dromara.merchant.client.commodity.dto.data.clientobject.SpuPageCO;
 import org.dromara.merchant.client.commodity.dto.data.command.SkuCreateCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.SkuGenCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.SpuCreateCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.SpuModifyCmd;
+import org.dromara.merchant.client.commodity.dto.data.command.query.SpuQry;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -71,6 +78,28 @@ public class SpuController {
     public R<List<SkuCreateCmd>> generateSkus(@RequestBody final SkuGenCmd cmd) {
         cmd.setSpuId(SnowflakeIdGenerator.generateId());
         return R.ok(skuService.generateSkus(cmd.getSpuId(), cmd.getSpecItems(), cmd.getBaseSku()));
+    }
+
+    /**
+     * 查询商品分页
+     * @param qry 查询参数
+     * @param page 分页参数
+     * @return 商品分页
+     */
+    @GetMapping("/page")
+    public TableDataInfo<SpuPageCO> queryPage(@ModelAttribute final SpuQry qry, @ModelAttribute PageQuery page) {
+        Page<SpuPageCO> spu = spuService.queryPage(qry, page);
+        return TableDataInfo.build(spu);
+    }
+
+    /**
+     * 查询商品详情
+     * @param id ID
+     * @return 商品详情
+     */
+    @GetMapping("/{id}")
+    public R<SpuDetailCO> queryDetailById(@PathVariable final Long id) {
+        return R.ok(spuService.queryDetailById(id));
     }
 
 }

@@ -2,6 +2,7 @@ package org.dromara.merchant.infrastructure.commodity.mapper.dataobject;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -169,6 +170,7 @@ public class SpuDO extends BaseEntity {
     /**
      * 是否删除,0:未删除，1：已删除
      */
+    @TableLogic
     private Integer isDelete;
 
     /**
