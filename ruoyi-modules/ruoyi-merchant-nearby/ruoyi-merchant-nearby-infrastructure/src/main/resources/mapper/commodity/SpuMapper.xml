@@ -91,12 +91,11 @@
                spu.`name`,
                IF(MIN(sku.price) = MAX(sku.price), MIN(sku.price),
                   CONCAT(MIN(sku.price), ' - ', MAX(sku.price)))                                                   as price,
-               GROUP_CONCAT(c.name ORDER BY FIELD(c.id, spu.category1_id, spu.category2_id, spu.category3_id) SEPARATOR '/') as category_name,
+                (select GROUP_CONCAT(`name` ORDER BY FIELD(id, spu.category1_id, spu.category2_id, spu.category3_id) SEPARATOR '/') from tb_category WHERE id IN (spu.category1_id, spu.category2_id, spu.category3_id)) AS category_name,
                spu.is_marketable,
                spu.create_time
         FROM tb_spu spu
                  LEFT JOIN tb_sku sku ON spu.id = sku.spu_id
-                 LEFT JOIN tb_category c ON c.id IN (spu.category1_id, spu.category2_id, spu.category3_id)
         <where>
             <if test="qry.name != null and qry.name != ''">
                 and spu.`name` like concat('%', #{qry.name}, '%')
