@@ -67,7 +67,9 @@
         tb_sku.volume         as tb_sku_volume,
         tb_sku.min_purchase   as tb_sku_min_purchase,
         tb_sku.max_purchase   as tb_sku_max_purchase,
-        tb_sku.status         as tb_sku_status
+        tb_sku.status         as tb_sku_status,
+        tb_sku.category_id    as tb_sku_category_id,
+        tb_sku.category_name  as tb_sku_category_name
     </sql>
     <resultMap id="JoinResultMap" type="org.dromara.merchant.client.commodity.dto.data.clientobject.SkuDetailCO">
         <!--@mbg.generated-->
@@ -87,5 +89,7 @@
         <result column="tb_sku_min_purchase" property="minPurchase"/>
         <result column="tb_sku_max_purchase" property="maxPurchase"/>
         <result column="tb_sku_status" property="status"/>
+        <result column="tb_sku_category_id" property="categoryId"/>
+        <result column="tb_sku_category_name" property="categoryName"/>
     </resultMap>
 </mapper>

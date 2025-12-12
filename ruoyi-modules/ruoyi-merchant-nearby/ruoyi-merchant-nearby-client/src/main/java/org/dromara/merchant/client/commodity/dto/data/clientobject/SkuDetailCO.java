@@ -92,4 +92,14 @@ public class SkuDetailCO {
      */
     private Integer status;
 
+    /**
+     * 商品分类id
+     */
+    private Integer categoryId;
+
+    /**
+     * 商品分类名称
+     */
+    private String categoryName;
+
 }

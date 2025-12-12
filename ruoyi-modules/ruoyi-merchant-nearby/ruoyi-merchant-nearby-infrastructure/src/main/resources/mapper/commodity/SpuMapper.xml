@@ -89,22 +89,35 @@
         SELECT spu.id,
                spu.image,
                spu.`name`,
-               IF(MIN(sku.price) = MAX(sku.price), MIN(sku.price),
-                  CONCAT(MIN(sku.price), ' - ', MAX(sku.price)))                                                   as price,
-                (select GROUP_CONCAT(`name` ORDER BY FIELD(id, spu.category1_id, spu.category2_id, spu.category3_id) SEPARATOR '/') from tb_category WHERE id IN (spu.category1_id, spu.category2_id, spu.category3_id)) AS category_name,
+               (SELECT IF(
+                           MIN(price) = MAX(price),
+                           MIN(price),
+                           CONCAT(MIN(price), ' - ', MAX(price))
+                       )
+                FROM tb_sku
+                WHERE spu_id = spu.id)                                              AS price,
+               (SELECT CONCAT_WS('/',
+                                 (SELECT `name` FROM tb_category WHERE id = spu.category1_id),
+                                 (SELECT `name` FROM tb_category WHERE id = spu.category2_id),
+                                 (SELECT `name` FROM tb_category WHERE id = spu.category3_id))
+                ) AS category_name,
                spu.is_marketable,
                spu.create_time
         FROM tb_spu spu
-                 LEFT JOIN tb_sku sku ON spu.id = sku.spu_id
+        <if test="qry.priceRange != null and qry.priceRange.size() == 2">
+            INNER JOIN (
+                SELECT spu_id 
+                FROM tb_sku 
+                WHERE price BETWEEN #{qry.priceRange[0]} AND #{qry.priceRange[1]}
+                GROUP BY spu_id
+            ) sku_filter ON spu.id = sku_filter.spu_id
+        </if>
         <where>
             <if test="qry.name != null and qry.name != ''">
                 and spu.`name` like concat('%', #{qry.name}, '%')
             </if>
             <if test="qry.categoryId != null">
                 and spu.category3_id = #{qry.categoryId}
-            </if>
-            <if test="qry.priceRange != null and qry.priceRange.size() == 2">
-                and sku.price between #{qry.priceRange[0]} and #{qry.priceRange[1]}
             </if>
             <if test="qry.createTimeRange != null and qry.createTimeRange.size() == 2">
                 and spu.create_time between #{qry.createTimeRange[0]} and #{qry.createTimeRange[1]}
@@ -120,7 +133,7 @@
             </if>
             And spu.is_delete = 0
         </where>
-        GROUP BY spu.id, spu.`name`, spu.is_marketable, spu.create_time
+        ORDER BY spu.create_time DESC, spu.id ASC
     </select>
 
 
@@ -183,7 +196,7 @@
                     resultMap="org.dromara.merchant.infrastructure.commodity.mapper.SkuMapper.JoinResultMap"/>
     </resultMap>
     <select id="selectDetailById" resultMap="SpuAndSkusResult">
-        select<include refid="Join_Column_List"/>,
+        select <include refid="Join_Column_List"/>,
         <include refid="org.dromara.merchant.infrastructure.commodity.mapper.SkuMapper.Join_Column_List"/>
         from tb_spu join tb_sku on tb_spu.id = tb_sku.spu_id
         where tb_spu.id = #{id}
