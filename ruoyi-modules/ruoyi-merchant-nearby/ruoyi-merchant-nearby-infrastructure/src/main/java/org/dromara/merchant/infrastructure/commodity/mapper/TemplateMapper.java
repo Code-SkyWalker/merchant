@@ -14,7 +14,7 @@ public interface TemplateMapper extends BaseMapperPlus<TemplateDO, TemplateDO> {
 
     Page<TemplatePageCO> selectPage(Page<TemplatePageCO> page, @Param("qry") TemplateQry qry);
 
-    List<SkuTempCO> selectById(@Param("id") Integer id);
+    List<SkuTempCO> selectSpecAndParaById(@Param("id") Integer id);
 
 
 }

@@ -63,6 +63,6 @@ public class TemplateService implements ITemplateService {
 
     @Override
     public List<SkuTempCO> queryByTemplateId(Integer templateId) {
-        return this.templateMapper.selectById(templateId);
+        return this.templateMapper.selectSpecAndParaById(templateId);
     }
 }
