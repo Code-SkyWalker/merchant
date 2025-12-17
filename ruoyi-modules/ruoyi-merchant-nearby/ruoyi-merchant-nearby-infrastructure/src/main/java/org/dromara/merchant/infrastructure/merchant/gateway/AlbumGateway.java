@@ -8,6 +8,8 @@ import org.dromara.merchant.infrastructure.merchant.mapper.AlbumMapper;
 import org.dromara.merchant.infrastructure.merchant.mapper.dataobject.AlbumDO;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * @Description 相册网关实现
  * @Author Code Skywalker
@@ -23,6 +25,11 @@ public class AlbumGateway implements IAlbumGateway {
     @Override
     public boolean save(Album album) {
         return this.mapper.insertOrUpdate(converter.toDO(album));
+    }
+
+    @Override
+    public boolean deleteByIds(List<Long> albumIds) {
+        return this.mapper.deleteByIds(albumIds) > 0;
     }
 
     @Override

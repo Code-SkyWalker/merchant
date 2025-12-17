@@ -2,6 +2,8 @@ package org.dromara.merchant.domain.merchant.gateway;
 
 import org.dromara.merchant.domain.merchant.model.Album;
 
+import java.util.List;
+
 /**
  * @Description 相册网关接口
  * @Author Code Skywalker
@@ -22,6 +24,13 @@ public interface IAlbumGateway {
      * @return 是否删除成功
      */
     boolean delete(Long id);
+
+    /**
+     * 批量删除相册
+     * @param albumIds 相册ID列表
+     * @return 是否删除成功
+     */
+    boolean deleteByIds(List<Long> albumIds);
 
     /**
      * 根据ID查询相册

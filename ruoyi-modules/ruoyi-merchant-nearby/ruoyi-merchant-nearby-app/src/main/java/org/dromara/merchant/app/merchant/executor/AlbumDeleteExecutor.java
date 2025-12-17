@@ -3,6 +3,7 @@ package org.dromara.merchant.app.merchant.executor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.merchant.app.merchant.service.AlbumService;
+import org.dromara.merchant.domain.merchant.gateway.IAlbumGateway;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AlbumDeleteExecutor {
 
-    private final AlbumService albumService;
+    private final IAlbumGateway albumGateway;
 
     /**
      * 执行相册删除操作
@@ -26,7 +27,7 @@ public class AlbumDeleteExecutor {
      * @return 是否删除成功
      */
     public boolean execute(Long albumId) {
-        return albumService.delete(albumId);
+        return albumGateway.delete(albumId);
     }
 
     /**
@@ -36,6 +37,6 @@ public class AlbumDeleteExecutor {
      * @return 是否删除成功
      */
     public boolean execute(List<Long> albumIds) {
-        return albumService.delete(albumIds);
+        return albumGateway.deleteByIds(albumIds);
     }
 }
