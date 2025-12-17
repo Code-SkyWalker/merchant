@@ -17,6 +17,24 @@
             <groupId>org.dromara.merchant</groupId>
             <artifactId>ruoyi-merchant-nearby-adapter</artifactId>
         </dependency>
+        
+        <!-- 添加应用层依赖 -->
+        <dependency>
+            <groupId>org.dromara.merchant</groupId>
+            <artifactId>ruoyi-merchant-nearby-app</artifactId>
+        </dependency>
+        
+        <!-- 添加基础设施层依赖 -->
+        <dependency>
+            <groupId>org.dromara.merchant</groupId>
+            <artifactId>ruoyi-merchant-nearby-infrastructure</artifactId>
+        </dependency>
+        
+        <!-- 添加系统模块依赖 -->
+        <dependency>
+            <groupId>org.dromara</groupId>
+            <artifactId>ruoyi-system</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

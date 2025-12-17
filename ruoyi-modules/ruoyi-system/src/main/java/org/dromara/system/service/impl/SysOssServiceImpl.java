@@ -166,6 +166,23 @@ public class SysOssServiceImpl implements ISysOssService, OssService {
 
 
     /**
+     * 根据 ossId 删除对应的 SysOss 记录
+     *
+     * @param ossId 文件在数据库中的唯一标识
+     * @return 是否删除成功
+     */
+    @Override
+    public boolean deleteById(Long ossId) {
+        SysOss sysOss = baseMapper.selectById(ossId);
+        if (sysOss != null) {
+            OssClient storage = OssFactory.instance(sysOss.getService());
+            storage.delete(sysOss.getUrl());
+            return baseMapper.deleteById(ossId) > 0;
+        }
+        return false;
+    }
+
+    /**
      * 文件下载方法，支持一次性下载完整文件
      *
      * @param ossId    OSS对象ID

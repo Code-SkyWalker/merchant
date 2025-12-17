@@ -45,6 +45,14 @@ public interface ISysOssService {
     SysOssVo getById(Long ossId);
 
     /**
+     * 根据 ossId 删除对应的 SysOss 记录
+     *
+     * @param ossId 文件在数据库中的唯一标识
+     * @return 是否删除成功
+     */
+    boolean deleteById(Long ossId);
+
+    /**
      * 上传 MultipartFile 到对象存储服务，并保存文件信息到数据库
      *
      * @param file 要上传的 MultipartFile 对象
