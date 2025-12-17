@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS `tb_album`;
 CREATE TABLE `tb_album`
 (
     `id`          bigint       NOT NULL AUTO_INCREMENT COMMENT '编号',
