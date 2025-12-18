@@ -1,4 +1,4 @@
-package org.dromara.merchant.client.album.dto.data.command;
+package org.dromara.merchant.client.merchant.dto.data.command;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

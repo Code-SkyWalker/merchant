@@ -2,7 +2,7 @@ package org.dromara.merchant.app.merchant.executor;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.dromara.merchant.client.album.dto.data.command.AlbumModifyCmd;
+import org.dromara.merchant.client.merchant.dto.data.command.AlbumModifyCmd;
 import org.dromara.merchant.domain.merchant.gateway.IAlbumGateway;
 import org.dromara.merchant.infrastructure.merchant.converter.AlbumConverter;
 import org.springframework.stereotype.Component;

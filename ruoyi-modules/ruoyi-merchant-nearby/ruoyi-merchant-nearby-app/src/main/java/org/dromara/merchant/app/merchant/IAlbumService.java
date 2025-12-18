@@ -2,10 +2,10 @@ package org.dromara.merchant.app.merchant;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.dromara.common.mybatis.core.page.PageQuery;
-import org.dromara.merchant.client.album.dto.data.clientobject.AlbumCO;
-import org.dromara.merchant.client.album.dto.data.command.AlbumCreateCmd;
-import org.dromara.merchant.client.album.dto.data.command.AlbumModifyCmd;
-import org.dromara.merchant.client.album.dto.data.command.query.AlbumPageQry;
+import org.dromara.merchant.client.merchant.dto.data.clientobject.AlbumCO;
+import org.dromara.merchant.client.merchant.dto.data.command.AlbumCreateCmd;
+import org.dromara.merchant.client.merchant.dto.data.command.AlbumModifyCmd;
+import org.dromara.merchant.client.merchant.dto.data.command.query.AlbumPageQry;
 import org.dromara.merchant.domain.merchant.model.Album;
 import org.springframework.web.multipart.MultipartFile;
 

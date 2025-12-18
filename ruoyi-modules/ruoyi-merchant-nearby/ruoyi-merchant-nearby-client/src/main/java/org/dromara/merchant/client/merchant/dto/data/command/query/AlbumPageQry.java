@@ -1,4 +1,4 @@
-package org.dromara.merchant.client.album.dto.data.command.query;
+package org.dromara.merchant.client.merchant.dto.data.command.query;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

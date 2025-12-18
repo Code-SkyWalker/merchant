@@ -1,4 +1,4 @@
-package org.dromara.merchant.client.album.dto.data.clientobject;
+package org.dromara.merchant.client.merchant.dto.data.clientobject;
 
 import lombok.Data;
 

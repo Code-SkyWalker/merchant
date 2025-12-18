@@ -3,8 +3,8 @@ package org.dromara.merchant.infrastructure.merchant.mapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 import org.dromara.common.mybatis.core.mapper.BaseMapperPlus;
-import org.dromara.merchant.client.album.dto.data.clientobject.AlbumCO;
-import org.dromara.merchant.client.album.dto.data.command.query.AlbumPageQry;
+import org.dromara.merchant.client.merchant.dto.data.clientobject.AlbumCO;
+import org.dromara.merchant.client.merchant.dto.data.command.query.AlbumPageQry;
 import org.dromara.merchant.infrastructure.merchant.mapper.dataobject.AlbumDO;
 
 /**

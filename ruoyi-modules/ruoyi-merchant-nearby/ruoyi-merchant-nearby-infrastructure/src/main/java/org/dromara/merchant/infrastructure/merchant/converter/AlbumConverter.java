@@ -1,10 +1,10 @@
 package org.dromara.merchant.infrastructure.merchant.converter;
 
-import org.dromara.merchant.client.album.dto.data.command.AlbumModifyCmd;
+import org.dromara.merchant.client.merchant.dto.data.command.AlbumModifyCmd;
 import org.dromara.merchant.domain.merchant.model.Album;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
-import org.dromara.merchant.client.album.dto.data.command.AlbumCreateCmd;
+import org.dromara.merchant.client.merchant.dto.data.command.AlbumCreateCmd;
 import org.dromara.merchant.infrastructure.merchant.mapper.dataobject.AlbumDO;
 
 /**
