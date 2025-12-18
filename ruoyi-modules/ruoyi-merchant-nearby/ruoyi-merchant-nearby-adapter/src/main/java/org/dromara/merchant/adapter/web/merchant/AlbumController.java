@@ -14,6 +14,7 @@ import org.dromara.common.web.core.BaseController;
 import org.dromara.merchant.app.merchant.IAlbumService;
 import org.dromara.merchant.client.album.dto.data.clientobject.AlbumCO;
 import org.dromara.merchant.client.album.dto.data.command.AlbumCreateCmd;
+import org.dromara.merchant.client.album.dto.data.command.AlbumModifyCmd;
 import org.dromara.merchant.client.album.dto.data.command.query.AlbumPageQry;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Arrays;
 
 /**
- * @Description 相册控制器
+ * 相册管理接口
  * @Author Code Skywalker
  * @Date 2025/12/17 16:25
  */
@@ -45,10 +46,20 @@ public class AlbumController extends BaseController {
     }
 
     /**
+     * 修改文件夹
+     */
+    @SaCheckPermission("merchant:album:edit")
+    @Log(title = "相册管理", businessType = BusinessType.UPDATE)
+    @PutMapping
+    public R<Boolean> edit(@Validated @RequestBody AlbumModifyCmd cmd) {
+        return R.ok(albumService.modify(cmd));
+    }
+
+    /**
      * 上传文件到文件夹
      */
     @SaCheckPermission("merchant:album:upload")
-    @Log(title = "相册管理", businessType = BusinessType.INSERT)
+    @Log(title = "相册上传文件", businessType = BusinessType.INSERT)
     @PostMapping("/upload")
     public R<Boolean> upload(@RequestParam Long merchantId,
                              @RequestParam(required = false) Long folderId,
