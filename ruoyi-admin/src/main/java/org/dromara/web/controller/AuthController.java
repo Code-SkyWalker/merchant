@@ -15,6 +15,7 @@ import me.zhyd.oauth.request.AuthRequest;
 import me.zhyd.oauth.utils.AuthStateUtils;
 import org.dromara.common.core.constant.SystemConstants;
 import org.dromara.common.core.domain.R;
+import org.dromara.common.core.domain.model.InternalLoginBody;
 import org.dromara.common.core.domain.model.LoginBody;
 import org.dromara.common.core.domain.model.RegisterBody;
 import org.dromara.common.core.domain.model.SocialLoginBody;
@@ -110,6 +111,31 @@ public class AuthController {
             dto.setUserIds(List.of(userId));
             SseMessageUtils.publishMessage(dto);
         }, 5, TimeUnit.SECONDS);
+        return R.ok(loginVo);
+    }
+
+    /**
+     * 内部应用登录方法
+     *
+     * @param loginBody 登录信息
+     * @return 结果
+     */
+    @PostMapping("/login-internal")
+    public R<LoginVo> internalLogin(@RequestBody InternalLoginBody loginBody) {
+        ValidatorUtils.validate(loginBody);
+        // 授权类型和客户端id
+        String clientId = loginBody.getClientId();
+        String grantType = loginBody.getGrantType();
+        SysClientVo client = clientService.queryByClientId(clientId);
+        // 查询不到 client 或 client 内不包含 grantType
+        if (ObjectUtil.isNull(client) || !StringUtils.contains(client.getGrantType(), grantType)) {
+            log.info("客户端id: {} 认证类型：{} 异常!.", clientId, grantType);
+            return R.fail(MessageUtils.message("auth.grant.type.error"));
+        } else if (!SystemConstants.NORMAL.equals(client.getStatus())) {
+            return R.fail(MessageUtils.message("auth.grant.type.blocked"));
+        }
+        // 登录
+        LoginVo loginVo = IAuthStrategy.login(JsonUtils.toJsonString(loginBody), client, grantType);
         return R.ok(loginVo);
     }
 

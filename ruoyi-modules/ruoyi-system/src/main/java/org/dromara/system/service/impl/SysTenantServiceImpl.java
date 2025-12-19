@@ -125,8 +125,13 @@ public class SysTenantServiceImpl implements ISysTenantService {
             new LambdaQueryWrapper<SysTenant>().select(SysTenant::getTenantId), x -> {
                 return Convert.toStr(x);
             });
-        String tenantId = generateTenantId(tenantIds);
-        add.setTenantId(tenantId);
+
+        // 如果传入的租户编号已存在，则生成新的租户编号
+        if (tenantIds.contains(bo.getTenantId())) {
+            String tenantId = generateTenantId(tenantIds);
+            add.setTenantId(tenantId);
+        }
+
         boolean flag = baseMapper.insert(add) > 0;
         if (!flag) {
             throw new ServiceException("创建租户失败");
@@ -134,11 +139,11 @@ public class SysTenantServiceImpl implements ISysTenantService {
         bo.setId(add.getId());
 
         // 根据套餐创建角色
-        Long roleId = createTenantRole(tenantId, bo.getPackageId());
+        Long roleId = createTenantRole(bo.getTenantId(), bo.getPackageId());
 
         // 创建部门: 公司名是部门名称
         SysDept dept = new SysDept();
-        dept.setTenantId(tenantId);
+        dept.setTenantId(bo.getTenantId());
         dept.setDeptName(bo.getCompanyName());
         dept.setParentId(Constants.TOP_PARENT_ID);
         dept.setAncestors(Constants.TOP_PARENT_ID.toString());
@@ -153,7 +158,7 @@ public class SysTenantServiceImpl implements ISysTenantService {
 
         // 创建系统用户
         SysUser user = new SysUser();
-        user.setTenantId(tenantId);
+        user.setTenantId(bo.getTenantId());
         user.setUserName(bo.getUsername());
         user.setNickName(bo.getUsername());
         user.setPassword(BCrypt.hashpw(bo.getPassword()));
@@ -178,7 +183,7 @@ public class SysTenantServiceImpl implements ISysTenantService {
             new LambdaQueryWrapper<SysDictData>().eq(SysDictData::getTenantId, defaultTenantId));
         for (SysDictType dictType : dictTypeList) {
             dictType.setDictId(null);
-            dictType.setTenantId(tenantId);
+            dictType.setTenantId(bo.getTenantId());
             dictType.setCreateDept(null);
             dictType.setCreateBy(null);
             dictType.setCreateTime(null);
@@ -187,7 +192,7 @@ public class SysTenantServiceImpl implements ISysTenantService {
         }
         for (SysDictData dictData : dictDataList) {
             dictData.setDictCode(null);
-            dictData.setTenantId(tenantId);
+            dictData.setTenantId(bo.getTenantId());
             dictData.setCreateDept(null);
             dictData.setCreateBy(null);
             dictData.setCreateTime(null);
@@ -201,7 +206,7 @@ public class SysTenantServiceImpl implements ISysTenantService {
             new LambdaQueryWrapper<SysConfig>().eq(SysConfig::getTenantId, defaultTenantId));
         for (SysConfig config : sysConfigList) {
             config.setConfigId(null);
-            config.setTenantId(tenantId);
+            config.setTenantId(bo.getTenantId());
             config.setCreateDept(null);
             config.setCreateBy(null);
             config.setCreateTime(null);
@@ -214,7 +219,7 @@ public class SysTenantServiceImpl implements ISysTenantService {
         if (SpringUtils.getProperty("warm-flow.enabled", Boolean.class, false)) {
             WorkflowService workflowService = SpringUtils.getBean(WorkflowService.class);
             // 新增租户流程定义
-            workflowService.syncDef(tenantId);
+            workflowService.syncDef(bo.getTenantId());
         }
         return true;
     }
