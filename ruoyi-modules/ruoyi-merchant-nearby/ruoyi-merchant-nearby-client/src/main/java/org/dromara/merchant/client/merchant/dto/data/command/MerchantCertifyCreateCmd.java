@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.dromara.common.core.validate.EditGroup;
 import org.dromara.common.core.xss.Xss;
 
 import java.util.List;
@@ -17,6 +18,13 @@ import java.util.List;
  */
 @Data
 public class MerchantCertifyCreateCmd {
+
+    /**
+     * 商户名称
+     */
+    @Xss
+    @NotBlank(message = "商户id", groups = {EditGroup.class})
+    private Long merchantId;
 
     /**
      * 商户名称

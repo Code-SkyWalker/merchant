@@ -39,6 +39,14 @@ public interface IMerchantCertifyService {
     MerchantCertifyCO findById(Long approvalId);
 
     /**
+     * 根据商户ID查询商户审批
+     *
+     * @param merchantId 商户ID
+     * @return 商户审批客户端对象
+     */
+    MerchantCertifyCO findByMerchantId(Long merchantId);
+
+    /**
      * 分页查询商户审批
      *
      * @param qry 查询参数

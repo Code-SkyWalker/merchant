@@ -15,6 +15,7 @@ import org.dromara.merchant.client.merchant.dto.data.clientobject.MerchantCertif
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantCertifyCreateCmd;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantCertifyModifyCmd;
 import org.dromara.merchant.client.merchant.dto.data.command.query.MerchantCertifyPageQry;
+import org.dromara.merchant.infrastructure.merchant.mapper.MerchantCertifyMapper;
 import org.springframework.stereotype.Service;
 
 /**
@@ -32,6 +33,8 @@ public class MerchantCertifyService implements IMerchantCertifyService {
     private final MerchantCertifyDetailQryExecutor detailQryExecutor;
     private final MerchantCertifyApprovalExecutor approvalExecutor;
     private final MerchantCertifyPageQryExecutor pageQryExecutor;
+
+    private final MerchantCertifyMapper merchantCertifyMapper;
 
     /**
      * 创建商户审批
@@ -64,6 +67,17 @@ public class MerchantCertifyService implements IMerchantCertifyService {
     @Override
     public MerchantCertifyCO findById(Long approvalId) {
         return this.detailQryExecutor.execute(approvalId);
+    }
+
+    /**
+     * 删除商户审批
+     *
+     * @param merchantId 审批ID
+     * @return 是否删除成功
+     */
+    @Override
+    public MerchantCertifyCO findByMerchantId(Long merchantId) {
+        return this.merchantCertifyMapper.selectLatestByMerchantId(merchantId);
     }
 
     /**

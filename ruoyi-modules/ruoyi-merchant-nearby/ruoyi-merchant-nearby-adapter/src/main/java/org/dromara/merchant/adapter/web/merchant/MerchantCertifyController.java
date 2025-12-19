@@ -3,25 +3,37 @@ package org.dromara.merchant.adapter.web.merchant;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.domain.R;
+import org.dromara.common.core.validate.AddGroup;
 import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.common.mybatis.core.page.TableDataInfo;
+import org.dromara.common.web.core.BaseController;
 import org.dromara.merchant.app.merchant.IMerchantCertifyService;
 import org.dromara.merchant.client.merchant.dto.data.clientobject.MerchantCertifyCO;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantCertifyApprovalCmd;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantCertifyCreateCmd;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantCertifyModifyCmd;
 import org.dromara.merchant.client.merchant.dto.data.command.query.MerchantCertifyPageQry;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 商家审批接口
  * @Author Code Skywalker
- * @Date 2025/12/1 14:10
+ * @Date 2025/12/1 16:30
  */
+@Validated
 @RestController
 @RequestMapping("/merchant/certify")
 @RequiredArgsConstructor
-public class MerchantCertifyController {
+public class MerchantCertifyController extends BaseController {
 
     private final IMerchantCertifyService merchantCertifyService;
 
@@ -33,8 +45,8 @@ public class MerchantCertifyController {
      */
     @PostMapping
     public R<Boolean> create(@RequestBody MerchantCertifyCreateCmd cmd) {
-        boolean inserted = this.merchantCertifyService.create(cmd);
-        return inserted ? R.ok(true) : R.fail(false);
+        boolean created = this.merchantCertifyService.create(cmd);
+        return created ? R.ok(true) : R.fail(false);
     }
 
     /**
@@ -50,18 +62,6 @@ public class MerchantCertifyController {
     }
 
     /**
-     * 修改商家审批信息
-     *
-     * @param cmd 修改参数
-     * @return 修改结果
-     */
-    @PutMapping
-    public R<Boolean> modify(@RequestBody MerchantCertifyModifyCmd cmd) {
-        boolean modified = this.merchantCertifyService.modify(cmd);
-        return modified ? R.ok(true) : R.fail(false);
-    }
-
-    /**
      * 查询商家审批信息
      *
      * @param approvalId 审批主键
@@ -70,6 +70,18 @@ public class MerchantCertifyController {
     @GetMapping("/{approvalId}")
     public R<MerchantCertifyCO> findByApprovalId(@PathVariable Long approvalId) {
         MerchantCertifyCO merchantCertifyCO = this.merchantCertifyService.findById(approvalId);
+        return R.ok(merchantCertifyCO);
+    }
+
+    /**
+     * 根据商户ID查询最新的商家审批信息
+     *
+     * @param merchantId 商户ID
+     * @return 商家审批信息
+     */
+    @GetMapping("/latest/{merchantId}")
+    public R<MerchantCertifyCO> findLatestByMerchantId(@PathVariable Long merchantId) {
+        MerchantCertifyCO merchantCertifyCO = this.merchantCertifyService.findByMerchantId(merchantId);
         return R.ok(merchantCertifyCO);
     }
 

@@ -12,9 +12,9 @@ import lombok.Data;
 public class MerchantCertifyModifyCmd {
 
     /**
-     * 审批ID
+     * 商户ID
      */
-    private Long approvalId;
+    private Long merchantId;
 
     /**
      * 商户名称

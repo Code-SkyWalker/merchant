@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @Description 商户审批客户端对象
@@ -12,6 +13,11 @@ import java.time.LocalDateTime;
  */
 @Data
 public class MerchantCertifyCO {
+
+    /**
+     * 商户审批ID
+     */
+    private Long approvalId;
 
     /**
      * 商户ID
@@ -172,4 +178,9 @@ public class MerchantCertifyCO {
      * 更新时间
      */
     private LocalDateTime updateTime;
+
+    /**
+     * 商户分类ID
+     */
+    List<Long> categoryIds;
 }

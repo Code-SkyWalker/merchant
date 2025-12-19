@@ -73,221 +73,13 @@
         update_by,
         update_time
     </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        <!--@mbg.generated-->
-        select
-        <include refid="Base_Column_List"/>
-        from tb_merchant_certify
-        where approval_id = #{approvalId}
-    </select>
     <select id="selectByMerchantId" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from tb_merchant_certify
         where merchant_id = #{merchantId}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        <!--@mbg.generated-->
-        delete
-        from tb_merchant_certify
-        where approval_id = #{approvalId}
-    </delete>
-    <insert id="insertSelective" keyColumn="merchant_id" keyProperty="merchantId"
-            parameterType="org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantCertifyDO"
-            useGeneratedKeys="true">
-        <!--@mbg.generated-->
-        insert into tb_merchant_certify
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="merchantId != null">
-                merchant_id,
-            </if>
-            <if test="tenantId != null">
-                tenant_id,
-            </if>
-            <if test="merchantCode != null">
-                merchant_code,
-            </if>
-            <if test="merchantName != null">
-                merchant_name,
-            </if>
-            <if test="merchantType != null">
-                merchant_type,
-            </if>
-            <if test="status != null">
-                `status`,
-            </if>
-            <if test="level != null">
-                `level`,
-            </if>
-            <if test="legalPerson != null">
-                legal_person,
-            </if>
-            <if test="legalPersonIdNumber != null">
-                legal_person_id_number,
-            </if>
-            <if test="legalPersonIdFront != null">
-                legal_person_id_front,
-            </if>
-            <if test="legalPersonIdBack != null">
-                legal_person_id_back,
-            </if>
-            <if test="businessLicense != null">
-                business_license,
-            </if>
-            <if test="contactPerson != null">
-                contact_person,
-            </if>
-            <if test="contactPhone != null">
-                contact_phone,
-            </if>
-            <if test="contactEmail != null">
-                contact_email,
-            </if>
-            <if test="preciseLocation != null">
-                precise_location,
-            </if>
-            <if test="address != null">
-                address,
-            </if>
-            <if test="outerPicture != null">
-                outer_picture,
-            </if>
-            <if test="innerPicture != null">
-                inner_picture,
-            </if>
-            <if test="logo != null">
-                logo,
-            </if>
-            <if test="description != null">
-                description,
-            </if>
-            <if test="joinTime != null">
-                join_time,
-            </if>
-            <if test="certifiedType != null">
-                certified_type,
-            </if>
-            <if test="approvalStatus != null">
-                approval_status,
-            </if>
-            <if test="approvalComment != null">
-                approval_comment,
-            </if>
-            <if test="approvalTime != null">
-                approval_time,
-            </if>
-            <if test="createBy != null">
-                create_by,
-            </if>
-            <if test="createDept != null">
-                create_dept,
-            </if>
-            <if test="updateBy != null">
-                update_by,
-            </if>
-            <if test="updateTime != null">
-                update_time,
-            </if>
-            <if test="createTime != null">
-                create_time,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="merchantId != null">
-                #{merchantId,jdbcType=BIGINT},
-            </if>
-            <if test="tenantId != null">
-                #{tenantId,jdbcType=VARCHAR},
-            </if>
-            <if test="merchantCode != null">
-                #{merchantCode,jdbcType=VARCHAR},
-            </if>
-            <if test="merchantName != null">
-                #{merchantName,jdbcType=VARCHAR},
-            </if>
-            <if test="merchantType != null">
-                #{merchantType,jdbcType=VARCHAR},
-            </if>
-            <if test="status != null">
-                #{status,jdbcType=VARCHAR},
-            </if>
-            <if test="level != null">
-                #{level,jdbcType=VARCHAR},
-            </if>
-            <if test="legalPerson != null">
-                #{legalPerson,jdbcType=VARCHAR},
-            </if>
-            <if test="legalPersonIdNumber != null">
-                #{legalPersonIdNumber,jdbcType=VARCHAR},
-            </if>
-            <if test="legalPersonIdFront != null">
-                #{legalPersonIdFront,jdbcType=VARCHAR},
-            </if>
-            <if test="legalPersonIdBack != null">
-                #{legalPersonIdBack,jdbcType=VARCHAR},
-            </if>
-            <if test="businessLicense != null">
-                #{businessLicense,jdbcType=VARCHAR},
-            </if>
-            <if test="contactPerson != null">
-                #{contactPerson,jdbcType=VARCHAR},
-            </if>
-            <if test="contactPhone != null">
-                #{contactPhone,jdbcType=VARCHAR},
-            </if>
-            <if test="contactEmail != null">
-                #{contactEmail,jdbcType=VARCHAR},
-            </if>
-            <if test="preciseLocation != null">
-                #{preciseLocation,jdbcType=VARCHAR},
-            </if>
-            <if test="address != null">
-                #{address,jdbcType=VARCHAR},
-            </if>
-            <if test="outerPicture != null">
-                #{outerPicture,jdbcType=VARCHAR},
-            </if>
-            <if test="innerPicture != null">
-                #{innerPicture,jdbcType=VARCHAR},
-            </if>
-            <if test="logo != null">
-                #{logo,jdbcType=VARCHAR},
-            </if>
-            <if test="description != null">
-                #{description,jdbcType=LONGVARCHAR},
-            </if>
-            <if test="joinTime != null">
-                #{joinTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="certifiedType != null">
-                #{certifiedType,jdbcType=CHAR},
-            </if>
-            <if test="approvalStatus != null">
-                #{approvalStatus,jdbcType=VARCHAR},
-            </if>
-            <if test="approvalComment != null">
-                #{approvalComment,jdbcType=VARCHAR},
-            </if>
-            <if test="approvalTime != null">
-                #{approvalTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="createBy != null">
-                #{createBy},
-            </if>
-            <if test="createDept != null">
-                #{createDept},
-            </if>
-            <if test="updateBy != null">
-                #{updateBy},
-            </if>
-            <if test="updateTime != null">
-                #{updateTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="createTime != null">
-                #{createTime,jdbcType=TIMESTAMP},
-            </if>
-        </trim>
-    </insert>
+
     <update id="updateByPrimaryKeySelective"
             parameterType="org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantCertifyDO">
         <!--@mbg.generated-->
@@ -405,4 +197,99 @@
             </choose>
         </where>
     </select>
+    <sql id="Join_Column_List">
+        <!--@mbg.generated-->
+        tb_merchant_certify.approval_id as tb_merchant_certify_approval_id,
+        tb_merchant_certify.merchant_id as tb_merchant_certify_merchant_id,
+        tb_merchant_certify.tenant_id as tb_merchant_certify_tenant_id,
+        tb_merchant_certify.merchant_code as tb_merchant_certify_merchant_code,
+        tb_merchant_certify.merchant_name as tb_merchant_certify_merchant_name,
+        tb_merchant_certify.merchant_type as tb_merchant_certify_merchant_type,
+        tb_merchant_certify.status as tb_merchant_certify_status,
+        tb_merchant_certify.level as tb_merchant_certify_level,
+        tb_merchant_certify.legal_person as tb_merchant_certify_legal_person,
+        tb_merchant_certify.legal_person_id_number as tb_merchant_certify_legal_person_id_number,
+        tb_merchant_certify.legal_person_id_front as tb_merchant_certify_legal_person_id_front,
+        tb_merchant_certify.legal_person_id_back as tb_merchant_certify_legal_person_id_back,
+        tb_merchant_certify.business_license as tb_merchant_certify_business_license,
+        tb_merchant_certify.contact_person as tb_merchant_certify_contact_person,
+        tb_merchant_certify.contact_phone as tb_merchant_certify_contact_phone,
+        tb_merchant_certify.contact_email as tb_merchant_certify_contact_email,
+        tb_merchant_certify.precise_location as tb_merchant_certify_precise_location,
+        tb_merchant_certify.address as tb_merchant_certify_address,
+        tb_merchant_certify.outer_picture as tb_merchant_certify_outer_picture,
+        tb_merchant_certify.inner_picture as tb_merchant_certify_inner_picture,
+        tb_merchant_certify.logo as tb_merchant_certify_logo,
+        tb_merchant_certify.description as tb_merchant_certify_description,
+        tb_merchant_certify.join_time as tb_merchant_certify_join_time,
+        tb_merchant_certify.certified_type as tb_merchant_certify_certified_type,
+        tb_merchant_certify.approval_status as tb_merchant_certify_approval_status,
+        tb_merchant_certify.approval_comment as tb_merchant_certify_approval_comment,
+        tb_merchant_certify.approval_time as tb_merchant_certify_approval_time,
+        tb_merchant_certify.create_dept as tb_merchant_certify_create_dept,
+        tb_merchant_certify.create_by as tb_merchant_certify_create_by,
+        tb_merchant_certify.create_time as tb_merchant_certify_create_time,
+        tb_merchant_certify.update_by as tb_merchant_certify_update_by,
+        tb_merchant_certify.update_time as tb_merchant_certify_update_time
+    </sql>
+    <resultMap id="JoinResultMap"
+               type="org.dromara.merchant.client.merchant.dto.data.clientobject.MerchantCertifyCO">
+        <!--@mbg.generated-->
+        <id column="tb_merchant_certify_approval_id" property="approvalId"/>
+        <result column="tb_merchant_certify_merchant_id" property="merchantId"/>
+        <result column="tb_merchant_certify_tenant_id" property="tenantId"/>
+        <result column="tb_merchant_certify_merchant_code" property="merchantCode"/>
+        <result column="tb_merchant_certify_merchant_name" property="merchantName"/>
+        <result column="tb_merchant_certify_merchant_type" property="merchantType"/>
+        <result column="tb_merchant_certify_status" property="status"/>
+        <result column="tb_merchant_certify_level" property="level"/>
+        <result column="tb_merchant_certify_legal_person" property="legalPerson"/>
+        <result column="tb_merchant_certify_legal_person_id_number" property="legalPersonIdNumber"/>
+        <result column="tb_merchant_certify_legal_person_id_front" property="legalPersonIdFront"/>
+        <result column="tb_merchant_certify_legal_person_id_back" property="legalPersonIdBack"/>
+        <result column="tb_merchant_certify_business_license" property="businessLicense"/>
+        <result column="tb_merchant_certify_contact_person" property="contactPerson"/>
+        <result column="tb_merchant_certify_contact_phone" property="contactPhone"/>
+        <result column="tb_merchant_certify_contact_email" property="contactEmail"/>
+        <result column="tb_merchant_certify_precise_location" property="preciseLocation"/>
+        <result column="tb_merchant_certify_address" property="address"/>
+        <result column="tb_merchant_certify_outer_picture" property="outerPicture"/>
+        <result column="tb_merchant_certify_inner_picture" property="innerPicture"/>
+        <result column="tb_merchant_certify_logo" property="logo"/>
+        <result column="tb_merchant_certify_description" property="description"/>
+        <result column="tb_merchant_certify_join_time" property="joinTime"/>
+        <result column="tb_merchant_certify_certified_type" property="certifiedType"/>
+        <result column="tb_merchant_certify_approval_status" property="approvalStatus"/>
+        <result column="tb_merchant_certify_approval_comment" property="approvalComment"/>
+        <result column="tb_merchant_certify_approval_time" property="approvalTime"/>
+        <result column="tb_merchant_certify_create_time" property="createTime"/>
+        <result column="tb_merchant_certify_update_time" property="updateTime"/>
+    </resultMap>
+    <resultMap id="selectByJoinResultMap"
+               type="org.dromara.merchant.client.merchant.dto.data.clientobject.MerchantCertifyCO"
+               extends="JoinResultMap">
+        <collection column="tb_merchant_category_category_id" property="categoryIds" ofType="java.lang.Long" />
+    </resultMap>
+    <select id="selectLatestByMerchantId" resultMap="selectByJoinResultMap">
+        select<include refid="Join_Column_List"/>,
+        tb_merchant_category.category_id as tb_merchant_category_category_id
+        from tb_merchant_certify join tb_merchant_category
+        where tb_merchant_certify.merchant_id = #{merchantId}
+        order by create_time desc
+        limit 1
+    </select>
+
+
+    <!--    <select id="selectLatestByMerchantId" parameterType="java.lang.Long"-->
+<!--            resultType="org.dromara.merchant.client.merchant.dto.data.clientobject.MerchantCertifyCO">-->
+<!--        select-->
+<!--        <include refid="Base_Column_List"/>-->
+<!--        from tb_merchant_certify-->
+<!--        where merchant_id = #{merchantId}-->
+<!--        order by create_time desc-->
+<!--        limit 1-->
+<!--    </select>-->
+
+
+
 </mapper>
