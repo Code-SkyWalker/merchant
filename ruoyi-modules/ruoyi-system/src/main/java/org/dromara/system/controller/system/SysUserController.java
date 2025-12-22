@@ -25,6 +25,8 @@ import org.dromara.common.mybatis.helper.DataPermissionHelper;
 import org.dromara.common.satoken.utils.LoginHelper;
 import org.dromara.common.tenant.helper.TenantHelper;
 import org.dromara.common.web.core.BaseController;
+import org.dromara.merchant.domain.merchant.model.Merchant;
+import org.dromara.merchant.infrastructure.merchant.mapper.MerchantMapper;
 import org.dromara.system.domain.bo.SysDeptBo;
 import org.dromara.system.domain.bo.SysPostBo;
 import org.dromara.system.domain.bo.SysRoleBo;
@@ -56,6 +58,8 @@ public class SysUserController extends BaseController {
     private final ISysPostService postService;
     private final ISysDeptService deptService;
     private final ISysTenantService tenantService;
+
+    private final MerchantMapper merchantMapper;
 
     /**
      * 获取用户列表
@@ -117,6 +121,12 @@ public class SysUserController extends BaseController {
         if (ObjectUtil.isNull(user)) {
             return R.fail("没有权限访问用户数据!");
         }
+
+        Merchant merchant = merchantMapper.selectByUserId(user.getUserId());
+        if (merchant != null) {
+            userInfoVo.setMerchantId(merchant.getMerchantId());
+        }
+
         userInfoVo.setUser(user);
         userInfoVo.setPermissions(loginUser.getMenuPermission());
         userInfoVo.setRoles(loginUser.getRolePermission());

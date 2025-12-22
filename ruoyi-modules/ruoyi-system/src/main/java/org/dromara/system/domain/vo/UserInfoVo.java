@@ -27,4 +27,9 @@ public class UserInfoVo {
      */
     private Set<String> roles;
 
+    /**
+     * 商户ID
+     */
+    private Long merchantId;
+
 }

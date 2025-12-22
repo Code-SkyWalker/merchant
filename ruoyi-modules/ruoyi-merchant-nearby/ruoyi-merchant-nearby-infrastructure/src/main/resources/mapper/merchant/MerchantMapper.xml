@@ -397,4 +397,11 @@
             </if>
         </where>
     </select>
+
+    <select id="selectByUserId" resultType="org.dromara.merchant.domain.merchant.model.Merchant">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_merchant
+        where create_by = #{userId}
+    </select>
 </mapper>

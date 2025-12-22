@@ -16,6 +16,14 @@
     </description>
 
     <dependencies>
+
+        <!-- 商城app层 -->
+        <dependency>
+            <groupId>org.dromara.merchant</groupId>
+            <artifactId>ruoyi-merchant-nearby-infrastructure</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
         <!-- 通用工具-->
         <dependency>
             <groupId>org.dromara</groupId>
