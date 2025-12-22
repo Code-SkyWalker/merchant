@@ -8,15 +8,15 @@ import org.dromara.merchant.app.merchant.IMerchantCertifyService;
 import org.dromara.merchant.app.merchant.executor.MerchantCertifyApprovalExecutor;
 import org.dromara.merchant.app.merchant.executor.MerchantCertifyCreateExecutor;
 import org.dromara.merchant.app.merchant.executor.MerchantCertifyDeleteExecutor;
-import org.dromara.merchant.app.merchant.executor.MerchantCertifyModifyExecutor;
 import org.dromara.merchant.app.merchant.executor.query.MerchantCertifyDetailQryExecutor;
 import org.dromara.merchant.app.merchant.executor.query.MerchantCertifyPageQryExecutor;
 import org.dromara.merchant.client.merchant.dto.data.clientobject.MerchantCertifyCO;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantCertifyCreateCmd;
-import org.dromara.merchant.client.merchant.dto.data.command.MerchantCertifyModifyCmd;
 import org.dromara.merchant.client.merchant.dto.data.command.query.MerchantCertifyPageQry;
 import org.dromara.merchant.infrastructure.merchant.mapper.MerchantCertifyMapper;
 import org.springframework.stereotype.Service;
+
+import static org.dromara.merchant.domain.merchant.model.CertifyStatus.APPROVED;
 
 /**
  * @Description 商户审批应用服务实现
@@ -29,7 +29,6 @@ public class MerchantCertifyService implements IMerchantCertifyService {
 
     private final MerchantCertifyCreateExecutor createExecutor;
     private final MerchantCertifyDeleteExecutor deleteExecutor;
-    private final MerchantCertifyModifyExecutor modifyExecutor;
     private final MerchantCertifyDetailQryExecutor detailQryExecutor;
     private final MerchantCertifyApprovalExecutor approvalExecutor;
     private final MerchantCertifyPageQryExecutor pageQryExecutor;
@@ -45,17 +44,6 @@ public class MerchantCertifyService implements IMerchantCertifyService {
     @Override
     public boolean create(MerchantCertifyCreateCmd cmd) {
         return this.createExecutor.execute(cmd);
-    }
-
-    /**
-     * 修改商户审批
-     *
-     * @param cmd 修改命令
-     * @return 商户审批客户端对象
-     */
-    @Override
-    public boolean modify(MerchantCertifyModifyCmd cmd) {
-        return this.modifyExecutor.execute(cmd);
     }
 
     /**
@@ -102,7 +90,7 @@ public class MerchantCertifyService implements IMerchantCertifyService {
     public boolean deleteByPrimaryKey(Long approvalId) {
         MerchantCertifyCO certify = this.findById(approvalId);
         if (certify == null) return false;
-        if (certify.getApprovalStatus().equals("APPROVED")) throw new ServiceException("该商户已通过审批，无法删除！");
+        if (APPROVED.name().equals(certify.getApprovalStatus())) throw new ServiceException("该商户已通过审批，无法删除！");
         return this.deleteExecutor.execute(approvalId);
     }
 

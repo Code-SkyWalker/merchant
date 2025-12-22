@@ -3,7 +3,6 @@ package org.dromara.merchant.infrastructure.merchant.converter;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.dromara.merchant.client.merchant.dto.data.clientobject.MerchantCertifyCO;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantCertifyCreateCmd;
-import org.dromara.merchant.client.merchant.dto.data.command.MerchantCertifyModifyCmd;
 import org.dromara.merchant.domain.merchant.model.MerchantCertify;
 import org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantCertifyDO;
 import org.mapstruct.Mapper;
@@ -44,14 +43,6 @@ public interface MerchantCertifyConvertor {
      * @return MerchantCertify实体
      */
     MerchantCertify toMerchantCertifyEntity(MerchantCertifyCreateCmd cmd);
-
-    /**
-     * MerchantCertifyModifyCmd转MerchantCertify实体
-     *
-     * @param cmd MerchantCertifyModifyCmd
-     * @return MerchantCertify实体
-     */
-    MerchantCertify toMerchantCertifyEntity(MerchantCertifyModifyCmd cmd);
 
     /**
      * MerchantCertifyDO转MerchantCertifyCO

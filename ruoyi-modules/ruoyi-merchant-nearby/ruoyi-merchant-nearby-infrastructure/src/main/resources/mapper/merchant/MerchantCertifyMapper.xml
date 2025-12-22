@@ -275,9 +275,17 @@
         tb_merchant_category.category_id as tb_merchant_category_category_id
         from tb_merchant_certify join tb_merchant_category
         where tb_merchant_certify.merchant_id = #{merchantId}
+            and tb_merchant_certify.approval_status != 'CANCEL'
         order by create_time desc
         limit 1
     </select>
+
+    <update id="cancelApproval">
+        update tb_merchant_certify
+        set approval_status = 'CANCEL'
+        where approval_id = #{approvalId}
+        and approval_status = 'PENDING'
+    </update>
 
 
     <!--    <select id="selectLatestByMerchantId" parameterType="java.lang.Long"-->

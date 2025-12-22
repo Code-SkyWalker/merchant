@@ -53,4 +53,11 @@ public interface MerchantCertifyMapper extends BaseMapperPlus<MerchantCertifyDO,
      */
     Page<MerchantCertifyDO> selectPages(Page<MerchantCertifyDO> page, @Param("qry") MerchantCertifyPageQry qry);
 
+    /**
+     * 取消商户审批
+     *
+     * @param approvalId 审批ID
+     * @return 删除数量
+     */
+    int cancelApproval(@Param("approvalId") Long approvalId);
 }

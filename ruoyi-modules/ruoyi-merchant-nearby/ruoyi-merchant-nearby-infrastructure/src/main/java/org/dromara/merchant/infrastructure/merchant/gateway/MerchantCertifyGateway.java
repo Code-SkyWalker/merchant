@@ -56,20 +56,4 @@ public class MerchantCertifyGateway implements IMerchantCertifyGateway {
         return mapper.deleteById(approvalId) > 0;
     }
 
-    /**
-     * 更新审批状态
-     *
-     * @param approvalId 审批记录Id
-     * @param approvalStatus 审批状态
-     * @param approvalComment 审批意见
-     * @return 是否更新成功
-     */
-    @Override
-    public boolean updateApprovalStatus(Long approvalId, String approvalStatus, String approvalComment) {
-        MerchantCertifyDO merchantCertifyDO = new MerchantCertifyDO();
-        merchantCertifyDO.setApprovalId(approvalId);
-        merchantCertifyDO.setApprovalStatus(approvalStatus);
-        merchantCertifyDO.setApprovalComment(approvalComment);
-        return mapper.updateByPrimaryKeySelective(merchantCertifyDO) > 0;
-    }
 }

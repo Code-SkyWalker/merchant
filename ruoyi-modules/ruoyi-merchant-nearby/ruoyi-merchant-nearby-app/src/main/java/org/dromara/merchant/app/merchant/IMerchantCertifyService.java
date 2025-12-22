@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.merchant.client.merchant.dto.data.clientobject.MerchantCertifyCO;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantCertifyCreateCmd;
-import org.dromara.merchant.client.merchant.dto.data.command.MerchantCertifyModifyCmd;
 import org.dromara.merchant.client.merchant.dto.data.command.query.MerchantCertifyPageQry;
 
 /**
@@ -21,14 +20,6 @@ public interface IMerchantCertifyService {
      * @return 商户审批客户端对象
      */
     boolean create(MerchantCertifyCreateCmd cmd);
-
-    /**
-     * 修改商户审批
-     *
-     * @param cmd 修改命令
-     * @return 商户审批客户端对象
-     */
-    boolean modify(MerchantCertifyModifyCmd cmd);
 
     /**
      * 根据商户ID查询商户审批

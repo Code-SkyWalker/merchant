@@ -9,8 +9,7 @@ import org.dromara.merchant.infrastructure.merchant.converter.MerchantConvertor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.dromara.merchant.domain.merchant.model.MerchantCertifyStatus.APPROVED;
-import static org.dromara.merchant.domain.merchant.model.MerchantCertifyStatus.REJECTED;
+import static org.dromara.merchant.domain.merchant.model.CertifyStatus.*;
 
 /**
  * @Description
@@ -54,8 +53,18 @@ public class MerchantCertifyApprovalExecutor {
             return handleApproval(certify);
         }
 
-        // 4. 非法审批状态，返回失败
+        // 5. 处理审批取消场景
+        if (CANCEL.name().equals(approvalStatus)) {
+            return handelCancel(certify);
+        }
+
+        // 5. 非法审批状态，返回失败
         return false;
+    }
+
+    private boolean handelCancel(MerchantCertify certify) {
+        certify.approvalCancel();
+        return this.gateway.save(certify);
     }
 
     /**

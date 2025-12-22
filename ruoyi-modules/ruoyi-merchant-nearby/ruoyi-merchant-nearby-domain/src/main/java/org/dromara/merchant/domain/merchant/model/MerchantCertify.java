@@ -141,7 +141,7 @@ public class MerchantCertify extends BaseEntity {
     private Integer settlementCycle;
 
     /**
-     * 审批类型: 0入驻审批 1修改审批
+     * 审批类型: 0入驻审批 1修改审批 2提货卡审批 3退出审批
      */
     private Integer certifiedType;
 
@@ -151,9 +151,9 @@ public class MerchantCertify extends BaseEntity {
     private LocalDateTime joinTime;
 
     /**
-     * 审批状态 (PENDING:待审批, APPROVED:审批通过, REJECTED:审批拒绝)
+     * 审批状态 (PENDING:待审批, CANCEL:取消审批， APPROVED:审批通过, REJECTED:审批拒绝)
      */
-    private String approvalStatus;
+    private CertifyStatus approvalStatus;
 
     /**
      * 审批意见
@@ -165,13 +165,18 @@ public class MerchantCertify extends BaseEntity {
      */
     private LocalDateTime approvalTime;
 
+    public void approvalCancel() {
+        this.approvalTime = LocalDateTime.now();
+        this.approvalStatus = CertifyStatus.CANCEL;
+    }
+
     /**
      * 认证商户
      */
     public void approvalPass() {
         this.approvalTime = LocalDateTime.now();
         this.approvalComment = "审批通过";
-        this.approvalStatus = "APPROVED";
+        this.approvalStatus = CertifyStatus.APPROVED;
         if (this.certifiedType == 0) {
             this.joinTime = LocalDateTime.now();
         }
@@ -184,7 +189,7 @@ public class MerchantCertify extends BaseEntity {
     public void approvalFail(String approvalComment) {
         this.approvalTime = LocalDateTime.now();
         this.approvalComment = approvalComment;
-        this.approvalStatus = "REJECTED";
+        this.approvalStatus = CertifyStatus.REJECTED;
     }
 
 }

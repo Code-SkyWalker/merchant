@@ -155,7 +155,7 @@ public class MerchantCertifyCO {
     private LocalDateTime joinTime;
 
     /**
-     * 审批状态 (PENDING:待审批, APPROVED:审批通过, REJECTED:审批拒绝)
+     * 审批状态 (PENDING:待审批, CANCEL:取消审批， APPROVED:审批通过, REJECTED:审批拒绝)
      */
     private String approvalStatus;
 
