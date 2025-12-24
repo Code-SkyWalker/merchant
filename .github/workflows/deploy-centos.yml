@@ -78,89 +78,78 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT || 22 }}
         script: |
-          # Create deploy user if not exists
+          # ========================
+          # 部署脚本开始执行
+          # ========================
+
+          # 创建部署用户（如果不存在）
+          # 检查DEPLOY_USER是否已存在，不存在则创建该用户
           if ! id "${{ env.DEPLOY_USER }}" &>/dev/null; then
+            echo "Creating deploy user: ${{ env.DEPLOY_USER }}"
             sudo useradd -m -s /bin/bash ${{ env.DEPLOY_USER }}
           fi
 
-          # Set proper permissions
+          # 设置JAR文件的正确权限
+          # 将JAR文件的所有者设置为DEPLOY_USER，并赋予执行权限
           sudo chown ${{ env.DEPLOY_USER }}:${{ env.DEPLOY_USER }} ${{ env.DEPLOY_PATH }}/${{ env.JAR_FILE }}
           sudo chmod +x ${{ env.DEPLOY_PATH }}/${{ env.JAR_FILE }}
+          echo "Set permissions for ${{ env.DEPLOY_PATH }}/${{ env.JAR_FILE }}"
 
-          # Create backup of current version if exists
+          # 创建当前版本的备份（如果存在）
+          # 如果存在旧的备份文件，则删除它
           if [ -f "${{ env.DEPLOY_PATH }}/ruoyi-admin.jar.bak" ]; then
+            echo "Removing old backup file..."
             rm -f ${{ env.DEPLOY_PATH }}/ruoyi-admin.jar.bak
           fi
 
+          # 如果存在当前运行的JAR文件且不是同一个文件，则创建备份
           if [ -f "${{ env.DEPLOY_PATH }}/ruoyi-admin.jar" ] && [ "${{ env.DEPLOY_PATH }}/ruoyi-admin.jar" != "${{ env.DEPLOY_PATH }}/${{ env.JAR_FILE }}" ]; then
+            echo "Creating backup of current version..."
             mv ${{ env.DEPLOY_PATH }}/ruoyi-admin.jar ${{ env.DEPLOY_PATH }}/ruoyi-admin.jar.bak
           fi
 
-          # Create/update systemd service file
-          sudo tee /etc/systemd/system/ruoyi-vue-plus.service > /dev/null <<EOF
-          [Unit]
-          Description=RuoYi-Vue-Plus Application
-          After=network.target
-
-          [Service]
-          Type=simple
-          User=${{ env.DEPLOY_USER }}
-          Group=${{ env.DEPLOY_USER }}
-          ExecStart=/www/server/java/graalvm-openjdk-17.0.9/bin/java -Dspring.profiles.active=dev -jar ${{ env.DEPLOY_PATH }}/${{ env.JAR_FILE }}
-          ExecReload=/bin/kill -HUP \$MAINPID
-          Restart=always
-          RestartSec=10
-          StandardOutput=journal
-          StandardError=journal
-          WorkingDirectory=${{ env.DEPLOY_PATH }}
-
-          # Security settings
-          NoNewPrivileges=true
-          PrivateTmp=true
-          ProtectSystem=strict
-          ProtectHome=true
-          ReadOnlyDirectories=/
-          ReadWriteDirectories=${{ env.DEPLOY_PATH }}
-
-          [Install]
-          WantedBy=multi-user.target
-          EOF
-
-          # Reload systemd configuration
-          sudo systemctl daemon-reload
-
-          # Stop existing service if running
-          if sudo systemctl is-active --quiet ruoyi-vue-plus; then
-            echo "Stopping existing service..."
-            sudo systemctl stop ruoyi-vue-plus
-            sleep 10
+          # 检查是否有正在运行的Java进程，如果有则停止
+          # 确保在部署新版本前停止旧服务
+          if pgrep -f "${{ env.JAR_FILE }}"; then
+            echo "Stopping existing application..."
+            pkill -f "${{ env.JAR_FILE }}"
+            sleep 10  # 等待10秒确保应用完全停止
           fi
 
-          # Start the service
-          echo "Starting ruoyi-vue-plus service..."
-          sudo systemctl start ruoyi-vue-plus
+          # 启动应用（直接运行JAR文件，不使用systemd服务）
+          # 使用GraalVM运行JAR文件，指定开发环境配置
+          echo "Starting application directly..."
+          sudo -u ${{ env.DEPLOY_USER }} nohup /www/server/java/graalvm-openjdk-17.0.9/bin/java -Dspring.profiles.active=dev -jar ${{ env.DEPLOY_PATH }}/${{ env.JAR_FILE }} > ${{ env.DEPLOY_PATH }}/application.log 2>&1 &
+          echo "Application started successfully!"
 
-          # Enable service on boot
-          sudo systemctl enable ruoyi-vue-plus
-
-          # Wait for service to start
+          # 等待应用启动
+          # 给应用一些时间完成启动过程
           sleep 15
 
-          # Check service status
-          if sudo systemctl is-active --quiet ruoyi-vue-plus; then
-            echo "Service is running successfully!"
-            sudo systemctl status ruoyi-vue-plus --no-pager -l
+          # 检查应用状态
+          # 验证应用进程是否成功启动
+          if pgrep -f "${{ env.JAR_FILE }}" > /dev/null; then
+            echo "✓ Application is running successfully!"
+            echo "Process details:"
+            ps aux | grep java | grep ruoyi
           else
-            echo "Service failed to start!"
-            sudo journalctl -u ruoyi-vue-plus --no-pager -l
-            exit 1
+            echo "✗ Application failed to start!"
+            tail -n 50 ${{ env.DEPLOY_PATH }}/application.log
+            exit 1  # 如果应用启动失败，则退出脚本
           fi
 
-          # Display application info
+          # 显示应用程序信息
+          # 输出部署信息供验证
+          echo "================================"
           echo "Application deployed to ${{ env.DEPLOY_PATH }}"
-          echo "Service name: ruoyi-vue-plus"
+          echo "Application name: ${{ env.JAR_FILE }}"
           echo "Current status:"
-          sudo systemctl status ruoyi-vue-plus --no-pager
-
-          # Show running Java process
           ps aux | grep java | grep ruoyi
+          echo "================================"
+
+          # 显示运行中的Java进程
+          # 验证应用程序进程是否正在运行
+          echo "Running Java processes:"
+          ps aux | grep java | grep ruoyi
+
+          echo "Deployment completed successfully!"
