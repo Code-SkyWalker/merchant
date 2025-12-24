@@ -165,6 +165,9 @@ public class MerchantCertify extends BaseEntity {
      */
     private LocalDateTime approvalTime;
 
+    /**
+     * 商户取消审批
+     */
     public void approvalCancel() {
         this.approvalTime = LocalDateTime.now();
         this.approvalStatus = CertifyStatus.CANCEL;
@@ -184,7 +187,7 @@ public class MerchantCertify extends BaseEntity {
     }
 
     /**
-     * 认证商户
+     * 商户审批不通过
      */
     public void approvalFail(String approvalComment) {
         this.approvalTime = LocalDateTime.now();

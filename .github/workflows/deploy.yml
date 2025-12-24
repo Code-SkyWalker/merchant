@@ -1,0 +1,102 @@
+name: Deploy Java Application
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+env:
+  JAVA_VERSION: '17'
+  SPRING_PROFILES_ACTIVE: dev
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK ${{ env.JAVA_VERSION }}
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ env.JAVA_VERSION }}
+        distribution: 'temurin'
+        cache: 'maven'
+
+    - name: Cache Maven dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+
+    - name: Build with Maven
+      run: |
+        mvn clean package -Pprod -DskipTests
+        echo "Build completed successfully"
+
+    - name: Upload JAR artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ruoyi-admin-jar
+        path: ruoyi-admin/target/ruoyi-admin.jar
+
+    - name: Deploy to remote server via SCP
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT || 22 }}
+        source: "ruoyi-admin/target/ruoyi-admin.jar"
+        target: "/opt/ruoyi-vue-plus/"
+        strip_components: 3
+        overwrite: true
+
+    - name: Restart application via SSH
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: |
+          # Stop the existing application
+          sudo systemctl stop ruoyi-vue-plus || echo "Service not running or does not exist"
+
+          # Backup current version
+          if [ -f /opt/ruoyi-vue-plus/ruoyi-admin.jar.bak ]; then
+            rm /opt/ruoyi-vue-plus/ruoyi-admin.jar.bak
+          fi
+
+          if [ -f /opt/ruoyi-vue-plus/ruoyi-admin.jar ]; then
+            cp /opt/ruoyi-vue-plus/ruoyi-admin.jar /opt/ruoyi-vue-plus/ruoyi-admin.jar.bak
+          fi
+
+          # Move new JAR to the correct location
+          mv /opt/ruoyi-vue-plus/ruoyi-admin.jar /opt/ruoyi-vue-plus/ruoyi-vue-plus.jar
+
+          # Start the application
+          sudo systemctl start ruoyi-vue-plus || echo "Failed to start service with systemctl, trying manual start"
+
+          # If systemctl doesn't work, start manually with nohup
+          if ! sudo systemctl is-active --quiet ruoyi-vue-plus; then
+            echo "Starting application manually..."
+            cd /opt/ruoyi-vue-plus/
+            nohup java -Dspring.profiles.active=prod -jar ruoyi-vue-plus.jar > app.log 2>&1 &
+            echo "Application started manually"
+          fi
+
+          # Wait a moment for the application to start
+          sleep 5
+
+          # Check if the application is running
+          if pgrep -f "ruoyi-vue-plus.jar" > /dev/null; then
+            echo "Application is running successfully"
+          else
+            echo "Application may not be running properly"
+            exit 1
+          fi

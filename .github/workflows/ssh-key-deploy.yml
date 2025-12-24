@@ -1,0 +1,133 @@
+name: Deploy Java Application with SSH Key
+
+on:
+  push:
+    branches: [ master, main ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+        - staging
+        - production
+
+env:
+  JAVA_VERSION: '17'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - environment: staging
+            profile: dev
+            runs-on: github.ref == 'refs/heads/develop' || (github.event_name == 'workflow_dispatch' && inputs.environment == 'staging')
+          - environment: production
+            profile: prod
+            runs-on: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.environment == 'production')
+    if: ${{ matrix.runs-on }}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK ${{ env.JAVA_VERSION }}
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ env.JAVA_VERSION }}
+        distribution: 'temurin'
+        cache: 'maven'
+
+    - name: Cache Maven dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+
+    - name: Build with Maven (${{ matrix.profile }})
+      run: |
+        mvn clean package -P${{ matrix.profile }} -DskipTests
+        echo "Build completed successfully for ${{ matrix.profile }} profile"
+
+    - name: Upload JAR artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ruoyi-admin-${{ matrix.environment }}
+        path: ruoyi-admin/target/ruoyi-admin.jar
+
+    - name: Deploy to ${{ matrix.environment }} via SCP (SSH Key)
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets[format('{0}_HOST', matrix.environment)] }}
+        username: ${{ secrets[format('{0}_USERNAME', matrix.environment)] }}
+        key: ${{ secrets[format('{0}_SSH_KEY', matrix.environment)] }}
+        port: ${{ secrets[format('{0}_PORT', matrix.environment)] }}
+        source: "ruoyi-admin/target/ruoyi-admin.jar"
+        target: "/opt/ruoyi-vue-plus-${{ matrix.environment }}/"
+        strip_components: 3
+        overwrite: true
+
+    - name: Restart ${{ matrix.environment }} application via SSH (SSH Key)
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets[format('{0}_HOST', matrix.environment)] }}
+        username: ${{ secrets[format('{0}_USERNAME', matrix.environment)] }}
+        key: ${{ secrets[format('{0}_SSH_KEY', matrix.environment)] }}
+        port: ${{ secrets[format('{0}_PORT', matrix.environment)] }}
+        script: |
+          # Define application variables
+          APP_NAME="ruoyi-vue-plus-${{ matrix.environment }}"
+          JAR_NAME="ruoyi-admin.jar"
+          DEPLOY_DIR="/opt/ruoyi-vue-plus-${{ matrix.environment }}"
+          
+          echo "Deploying to $APP_NAME"
+          
+          # Stop the existing application
+          sudo systemctl stop $APP_NAME || echo "Service $APP_NAME not running or does not exist"
+          
+          # Backup current version
+          if [ -f $DEPLOY_DIR/$JAR_NAME.bak ]; then
+            rm $DEPLOY_DIR/$JAR_NAME.bak
+          fi
+          
+          if [ -f $DEPLOY_DIR/$JAR_NAME ]; then
+            cp $DEPLOY_DIR/$JAR_NAME $DEPLOY_DIR/$JAR_NAME.bak
+            echo "Backup created"
+          fi
+          
+          # Move uploaded JAR to correct name
+          if [ -f $DEPLOY_DIR/ruoyi-admin.jar ]; then
+            mv $DEPLOY_DIR/ruoyi-admin.jar $DEPLOY_DIR/$JAR_NAME
+            echo "JAR file moved to correct location"
+          fi
+          
+          # Start the application
+          sudo systemctl start $APP_NAME || echo "Failed to start service with systemctl, trying manual start"
+          
+          # If systemctl doesn't work, start manually with nohup
+          if ! sudo systemctl is-active --quiet $APP_NAME; then
+            echo "Starting application manually..."
+            cd $DEPLOY_DIR
+            nohup java -Dspring.profiles.active=${{ matrix.profile }} -jar $JAR_NAME > app.log 2>&1 &
+            echo "Application started manually"
+          fi
+          
+          # Wait a moment for the application to start
+          sleep 10
+          
+          # Check if the application is running
+          if pgrep -f "$JAR_NAME" > /dev/null; then
+            echo "$APP_NAME is running successfully"
+          else
+            echo "$APP_NAME may not be running properly"
+            exit 1
+          fi
+          
+          # Print running processes to verify
+          echo "Current running Java processes:"
+          ps aux | grep java | grep -v grep
