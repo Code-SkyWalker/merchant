@@ -8,7 +8,7 @@ on:
 
 env:
   JAVA_VERSION: '17'
-  SPRING_PROFILES_ACTIVE: dev
+  SPRING_PROFILES_ACTIVE: prod
 
 jobs:
   build-and-deploy:
@@ -76,8 +76,10 @@ jobs:
             cp /opt/ruoyi-vue-plus/ruoyi-admin.jar /opt/ruoyi-vue-plus/ruoyi-admin.jar.bak
           fi
 
-          # Move new JAR to the correct location
-          mv /opt/ruoyi-vue-plus/ruoyi-admin.jar /opt/ruoyi-vue-plus/ruoyi-vue-plus.jar
+          # Move new JAR to the correct location and rename properly
+          if [ -f /opt/ruoyi-vue-plus/ruoyi-admin.jar ]; then
+            mv /opt/ruoyi-vue-plus/ruoyi-admin.jar /opt/ruoyi-vue-plus/ruoyi-vue-plus.jar
+          fi
 
           # Start the application
           sudo systemctl start ruoyi-vue-plus || echo "Failed to start service with systemctl, trying manual start"
@@ -91,12 +93,16 @@ jobs:
           fi
 
           # Wait a moment for the application to start
-          sleep 5
+          sleep 10
 
           # Check if the application is running
           if pgrep -f "ruoyi-vue-plus.jar" > /dev/null; then
             echo "Application is running successfully"
           else
             echo "Application may not be running properly"
+            # Check if it's running under different name
+            if pgrep -f "ruoyi-admin" > /dev/null; then
+              echo "Application might be running under different name"
+            fi
             exit 1
           fi
