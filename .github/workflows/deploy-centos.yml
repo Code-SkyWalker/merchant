@@ -1,0 +1,164 @@
+name: Deploy to CentOS 7.9 Server
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - production
+          - staging
+
+env:
+  PROJECT_NAME: ruoyi-vue-plus
+  JAR_FILE: ruoyi-admin.jar
+  DEPLOY_PATH: /opt/ruoyi-vue-plus
+  DEPLOY_USER: appuser
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment || 'production' }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: 'maven'
+
+    - name: Cache Maven dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+
+    - name: Build with Maven
+      run: |
+        mvn clean package -D skipTests -P dev
+        echo "Build completed successfully"
+
+    - name: Verify JAR file exists
+      run: |
+        if [ ! -f "ruoyi-admin/target/ruoyi-admin.jar" ]; then
+          echo "Error: JAR file not found!"
+          ls -la ruoyi-admin/target/
+          exit 1
+        fi
+        echo "JAR file found: $(ls ruoyi-admin/target/ruoyi-admin.jar)"
+
+    - name: Deploy to CentOS Server
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT || 22 }}
+        source: "ruoyi-admin/target/ruoyi-admin.jar"
+        target: "${{ env.DEPLOY_PATH }}"
+        strip_components: 2
+        overwrite: true
+
+    - name: Execute remote deployment commands
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT || 22 }}
+        script: |
+          # Create deploy user if not exists
+          if ! id "${{ env.DEPLOY_USER }}" &>/dev/null; then
+            sudo useradd -m -s /bin/bash ${{ env.DEPLOY_USER }}
+          fi
+
+          # Set proper permissions
+          sudo chown ${{ env.DEPLOY_USER }}:${{ env.DEPLOY_USER }} ${{ env.DEPLOY_PATH }}/${{ env.JAR_FILE }}
+          sudo chmod +x ${{ env.DEPLOY_PATH }}/${{ env.JAR_FILE }}
+
+          # Create backup of current version if exists
+          if [ -f "${{ env.DEPLOY_PATH }}/ruoyi-admin.jar.bak" ]; then
+            rm -f ${{ env.DEPLOY_PATH }}/ruoyi-admin.jar.bak
+          fi
+
+          if [ -f "${{ env.DEPLOY_PATH }}/ruoyi-admin.jar" ] && [ "${{ env.DEPLOY_PATH }}/ruoyi-admin.jar" != "${{ env.DEPLOY_PATH }}/${{ env.JAR_FILE }}" ]; then
+            mv ${{ env.DEPLOY_PATH }}/ruoyi-admin.jar ${{ env.DEPLOY_PATH }}/ruoyi-admin.jar.bak
+          fi
+
+          # Create/update systemd service file
+          sudo tee /etc/systemd/system/ruoyi-vue-plus.service > /dev/null <<EOF
+          [Unit]
+          Description=RuoYi-Vue-Plus Application
+          After=network.target
+
+          [Service]
+          Type=simple
+          User=${{ env.DEPLOY_USER }}
+          Group=${{ env.DEPLOY_USER }}
+          ExecStart=/usr/bin/java -Dspring.profiles.active=prod -jar ${{ env.DEPLOY_PATH }}/${{ env.JAR_FILE }}
+          ExecReload=/bin/kill -HUP \$MAINPID
+          Restart=always
+          RestartSec=10
+          StandardOutput=journal
+          StandardError=journal
+          WorkingDirectory=${{ env.DEPLOY_PATH }}
+
+          # Security settings
+          NoNewPrivileges=true
+          PrivateTmp=true
+          ProtectSystem=strict
+          ProtectHome=true
+          ReadOnlyDirectories=/
+          ReadWriteDirectories=${{ env.DEPLOY_PATH }}
+
+          [Install]
+          WantedBy=multi-user.target
+          EOF
+
+          # Reload systemd configuration
+          sudo systemctl daemon-reload
+
+          # Stop existing service if running
+          if sudo systemctl is-active --quiet ruoyi-vue-plus; then
+            echo "Stopping existing service..."
+            sudo systemctl stop ruoyi-vue-plus
+            sleep 10
+          fi
+
+          # Start the service
+          echo "Starting ruoyi-vue-plus service..."
+          sudo systemctl start ruoyi-vue-plus
+
+          # Enable service on boot
+          sudo systemctl enable ruoyi-vue-plus
+
+          # Wait for service to start
+          sleep 15
+
+          # Check service status
+          if sudo systemctl is-active --quiet ruoyi-vue-plus; then
+            echo "Service is running successfully!"
+            sudo systemctl status ruoyi-vue-plus --no-pager -l
+          else
+            echo "Service failed to start!"
+            sudo journalctl -u ruoyi-vue-plus --no-pager -l
+            exit 1
+          fi
+
+          # Display application info
+          echo "Application deployed to ${{ env.DEPLOY_PATH }}"
+          echo "Service name: ruoyi-vue-plus"
+          echo "Current status:"
+          sudo systemctl status ruoyi-vue-plus --no-pager
+
+          # Show running Java process
+          ps aux | grep java | grep ruoyi
