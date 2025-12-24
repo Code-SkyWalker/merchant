@@ -106,7 +106,7 @@ jobs:
           Type=simple
           User=${{ env.DEPLOY_USER }}
           Group=${{ env.DEPLOY_USER }}
-          ExecStart=/www/server/java/graalvm-openjdk-17.0.9/bin/java -Dspring.profiles.active=prod -jar ${{ env.DEPLOY_PATH }}/${{ env.JAR_FILE }}
+          ExecStart=/www/server/java/graalvm-openjdk-17.0.9/bin/java -Dspring.profiles.active=dev -jar ${{ env.DEPLOY_PATH }}/${{ env.JAR_FILE }}
           ExecReload=/bin/kill -HUP \$MAINPID
           Restart=always
           RestartSec=10
