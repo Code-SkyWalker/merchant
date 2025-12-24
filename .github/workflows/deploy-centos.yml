@@ -2,7 +2,7 @@ name: Deploy to CentOS 7.9 Server
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, master, 5.x ]
   workflow_dispatch:
     inputs:
       environment:
@@ -35,16 +35,19 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: 'maven'
+        settings-path: ${{ github.workspace }}/.mvn
 
     - name: Cache Maven dependencies
       uses: actions/cache@v4
       with:
         path: ~/.m2
-        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
 
     - name: Build with Maven
       run: |
-        mvn clean package -D skipTests -P dev
+        ./mvnw clean package -D skipTests -P dev
         echo "Build completed successfully"
 
     - name: Verify JAR file exists
@@ -59,10 +62,10 @@ jobs:
     - name: Deploy to CentOS Server
       uses: appleboy/scp-action@v0.1.7
       with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT || 22 }}
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USERNAME }}
+        password: ${{ secrets.SERVER_PASSWORD }}
+        port: ${{ secrets.SERVER_PORT || 22 }}
         source: "ruoyi-admin/target/ruoyi-admin.jar"
         target: "${{ env.DEPLOY_PATH }}"
         strip_components: 2
@@ -71,10 +74,10 @@ jobs:
     - name: Execute remote deployment commands
       uses: appleboy/ssh-action@v1.0.3
       with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT || 22 }}
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USERNAME }}
+        password: ${{ secrets.SERVER_PASSWORD }}
+        port: ${{ secrets.SERVER_PORT || 22 }}
         script: |
           # Create deploy user if not exists
           if ! id "${{ env.DEPLOY_USER }}" &>/dev/null; then
