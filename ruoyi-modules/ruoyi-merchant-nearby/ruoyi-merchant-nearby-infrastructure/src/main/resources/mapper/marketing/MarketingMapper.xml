@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dromara.merchant.infrastructure.marketing.mapper.MarketingMapper">
+  <resultMap id="BaseResultMap" type="org.dromara.merchant.infrastructure.marketing.mapper.dataobject.MarketingDO">
+    <!--@mbg.generated-->
+    <!--@Table tb_marketing-->
+    <id column="id" property="id" />
+    <result column="name" property="name" />
+    <result column="receive_begin" property="receiveBegin" />
+    <result column="receive_end" property="receiveEnd" />
+    <result column="rules" property="rules" />
+    <result column="type" property="type" />
+    <result column="merchant_id" property="merchantId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `name`, receive_begin, receive_end, rules, `type`, merchant_id
+  </sql>
+
+  <select id="queryById" resultType="org.dromara.merchant.client.marketing.dto.data.client.MarketingCO">
+      select
+      <include refid="Base_Column_List"/>
+      from tb_marketing
+      where id = #{id}
+  </select>
+</mapper>
