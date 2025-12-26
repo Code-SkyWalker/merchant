@@ -16,13 +16,27 @@ import java.util.List;
 @AllArgsConstructor
 public class ConfigNone implements DeliveryConfig {
 
+    /**
+     * 无配送配置信息
+     */
     private List<NoneDeliveryInfo> noneDeliveryInfo;
 
 
     @Data
     public static class NoneDeliveryInfo {
+        /**
+         * 无配送配置信息名称
+         */
         private String infoName;
+
+        /**
+         * 是否显示
+         */
         private Boolean show;
+
+        /**
+         * 是否必填
+         */
         private Boolean required;
     }
 }

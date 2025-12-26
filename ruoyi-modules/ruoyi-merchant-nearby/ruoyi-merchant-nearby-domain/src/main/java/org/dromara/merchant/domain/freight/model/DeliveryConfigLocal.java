@@ -17,10 +17,19 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class DeliveryConfigLocal implements DeliveryConfig {
 
+    /**
+     * 精确位置
+     */
     private String preciseLocation;
 
+    /**
+     * 配送范围
+     */
     private BigDecimal deliveryRange;
 
+    /**
+     * 配送费规则
+     */
     private LocalDeliveryFeeConfig config;
 
     @Override
@@ -32,9 +41,24 @@ public class DeliveryConfigLocal implements DeliveryConfig {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class LocalDeliveryFeeConfig {
+        /**
+         * 起步价
+         */
         private BigDecimal startingAmount;
+
+        /**
+         * 基础运费
+         */
         private BigDecimal baseFee;
+
+        /**
+         * 是否包邮
+         */
         private Boolean freeShipping;
+
+        /**
+         * 免运费金额
+         */
         private BigDecimal freeShippingAmount;
     }
 }
