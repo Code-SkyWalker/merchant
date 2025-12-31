@@ -1,6 +1,8 @@
 package org.dromara.merchant.infrastructure.freight.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import org.dromara.common.mybatis.core.mapper.BaseMapperPlus;
+import org.dromara.merchant.client.freight.dto.data.clientobject.FreightConfigCO;
 import org.dromara.merchant.infrastructure.freight.mapper.dataobject.FreightConfigDO;
 
 import java.util.List;
@@ -20,4 +22,13 @@ public interface FreightConfigMapper extends BaseMapperPlus<FreightConfigDO, Fre
      * @return 配置列表
      */
     List<FreightConfigDO> selectListByMerchantId(Long merchantId);
+
+    /**
+     * 根据ID查询配置
+     *
+     * @param merchantId 配置ID
+     * @return 配置
+     */
+    FreightConfigCO selectCOByMerchantId(@Param("merchantId") Long merchantId, @Param("deliveryMethod") String deliveryMethod);
+
 }

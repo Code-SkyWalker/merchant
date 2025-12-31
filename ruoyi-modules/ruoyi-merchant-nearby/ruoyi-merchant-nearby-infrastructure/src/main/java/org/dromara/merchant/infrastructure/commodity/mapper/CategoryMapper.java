@@ -2,6 +2,7 @@ package org.dromara.merchant.infrastructure.commodity.mapper;
 
 import org.apache.ibatis.annotations.Param;
 import org.dromara.common.mybatis.core.mapper.BaseMapperPlus;
+import org.dromara.merchant.client.commodity.dto.data.clientobject.CategoryCascadeCO;
 import org.dromara.merchant.client.commodity.dto.data.clientobject.CategoryTreeCO;
 import org.dromara.merchant.infrastructure.commodity.mapper.dataobject.CategoryDO;
 
@@ -14,4 +15,6 @@ public interface CategoryMapper extends BaseMapperPlus<CategoryDO, CategoryDO> {
 
     List<CategoryTreeCO> selectAll(@Param("merchantId") Long merchantId);
 
+
+    List<CategoryCascadeCO> selectCascade(@Param("merchantId") Long merchantId, @Param("parentId") Integer parentId);
 }

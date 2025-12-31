@@ -13,9 +13,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     include = JsonTypeInfo.As.PROPERTY,
     property = "type")
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = RuleBulk.class, name = "bulk"),
-    @JsonSubTypes.Type(value = RuleMultiUnit.class, name = "multi-unit"),
-    @JsonSubTypes.Type(value = RuleQuantity.class, name = "quantity"),
+    @JsonSubTypes.Type(value = RuleBulk.class, name = "BULK"),
+    @JsonSubTypes.Type(value = RuleMultiUnit.class, name = "MULTIUNIT"),
+    @JsonSubTypes.Type(value = RuleQuantity.class, name = "QUANTITY"),
 })
 public interface Rule {
 

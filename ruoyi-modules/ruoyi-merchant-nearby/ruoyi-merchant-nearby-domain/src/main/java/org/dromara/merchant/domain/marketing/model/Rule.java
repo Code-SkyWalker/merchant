@@ -13,11 +13,13 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     include = JsonTypeInfo.As.PROPERTY,
     property = "type")
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = RuleBulkDiscount.class, name = "bulk"),
-    @JsonSubTypes.Type(value = RuleMultiUnitDiscount.class, name = "multi-unit"),
-    @JsonSubTypes.Type(value = RuleQuantityDiscount.class, name = "quantity"),
+    @JsonSubTypes.Type(value = RuleBulkDiscount.class, name = "BULK"),
+    @JsonSubTypes.Type(value = RuleMultiUnitDiscount.class, name = "MULTIUNIT"),
+    @JsonSubTypes.Type(value = RuleQuantityDiscount.class, name = "QUANTITY"),
 })
 public interface Rule {
+
+    String type();
 
     String toJson();
 }

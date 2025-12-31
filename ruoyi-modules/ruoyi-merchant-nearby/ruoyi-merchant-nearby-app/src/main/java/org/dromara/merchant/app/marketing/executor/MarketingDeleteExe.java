@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.dromara.merchant.app.Executor;
 import org.dromara.merchant.client.marketing.dto.data.command.MarketingCreateCmd;
 import org.dromara.merchant.domain.marketing.gateway.IMarketingGateway;
+import org.dromara.merchant.domain.marketing.gateway.IMarketingSpuGateway;
 import org.dromara.merchant.infrastructure.marketing.converter.MarketingConvertor;
 import org.springframework.stereotype.Component;
 
@@ -17,9 +18,15 @@ import org.springframework.stereotype.Component;
 public class MarketingDeleteExe implements Executor<Long, Boolean> {
 
     private final IMarketingGateway marketingGateway;
+    private final IMarketingSpuGateway marketingSpuGateway;
 
     @Override
     public Boolean execute(Long id) {
-        return this.marketingGateway.delete(id);
+        // 删除营销活动关联商品
+        boolean marketingSpuDeleted = this.marketingSpuGateway.deleteByMarketingId(id);
+
+        // 删除营销活动
+        boolean marketingDeleted = this.marketingGateway.delete(id);
+        return marketingDeleted && marketingSpuDeleted;
     }
 }

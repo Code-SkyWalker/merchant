@@ -17,6 +17,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class DeliveryConfigExpress implements DeliveryConfig {
 
+    private final String type = "express";
+
     /**
      * 配送费规则 0: 叠加计算 1: 最高运费计算
      */
@@ -35,5 +37,10 @@ public class DeliveryConfigExpress implements DeliveryConfig {
     @Override
     public String toJson() {
         return new JSONObject( this).toString();
+    }
+
+    @Override
+    public String type() {
+        return this.type;
     }
 }

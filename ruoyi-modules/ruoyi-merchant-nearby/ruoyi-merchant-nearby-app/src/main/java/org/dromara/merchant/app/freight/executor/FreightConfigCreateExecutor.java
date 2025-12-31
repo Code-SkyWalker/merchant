@@ -19,9 +19,10 @@ public class FreightConfigCreateExecutor {
     private final IFreightConfigGateway deliveryConfigGateway;
     private final FreightConfigConvertor configConvertor;
 
-    public boolean execute(FreightConfigCreateCmd cmd) {
+    public Long execute(FreightConfigCreateCmd cmd) {
         FreightConfig freightConfig = configConvertor.toMerchantDeliveryConfig(cmd);
-        return deliveryConfigGateway.save(freightConfig);
+        boolean save = deliveryConfigGateway.save(freightConfig);
+        return save ? freightConfig.getDeliveryId() : null;
     }
 
 }

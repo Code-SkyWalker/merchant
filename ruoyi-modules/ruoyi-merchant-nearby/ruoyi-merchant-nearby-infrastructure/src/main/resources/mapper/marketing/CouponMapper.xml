@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dromara.merchant.infrastructure.marketing.mapper.CouponMapper">
+  <resultMap id="BaseResultMap" type="org.dromara.merchant.infrastructure.marketing.mapper.dataobject.CouponDO">
+    <!--@mbg.generated-->
+    <!--@Table tb_coupon-->
+    <id column="id" property="id" />
+    <result column="name" property="name" />
+    <result column="receive_begin" property="receiveBegin" />
+    <result column="receive_end" property="receiveEnd" />
+    <result column="service_begin" property="serviceBegin" />
+    <result column="service_end" property="serviceEnd" />
+    <result column="actuating_range" property="actuatingRange" />
+    <result column="actuating_threshold" property="actuatingThreshold" />
+    <result column="discount_type" property="discountType" />
+    <result column="discount" property="discount" />
+    <result column="grant_total" property="grantTotal" />
+    <result column="receive_count" property="receiveCount" />
+    <result column="goods_range" property="goodsRange" />
+    <result column="merchant_id" property="merchantId" />
+    <result column="create_dept" property="createDept" />
+    <result column="create_by" property="createBy" />
+    <result column="create_time" property="createTime" />
+    <result column="update_by" property="updateBy" />
+    <result column="update_time" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `name`, receive_begin, receive_end, service_begin, service_end, actuating_range,
+    actuating_threshold, discount_type, discount, grant_total, receive_count, goods_range,
+    merchant_id, tenant_id, create_dept, create_by, create_time, update_by, update_time
+  </sql>
+
+  <select id="queryPages" resultType="org.dromara.merchant.client.marketing.dto.data.client.CouponPageCO">
+      select id,
+             `name`,
+             receive_begin,
+             receive_end,
+             service_begin,
+             service_end,
+             actuating_range,
+             grant_total,
+             receive_count
+      from tb_coupon
+      <where>
+          <choose>
+              <when test="qry.couponName != null">
+                  name like concat('%', #{qry.couponName}, '%')
+              </when>
+          </choose>
+          and merchant_id = #{qry.merchantId}
+      </where>
+
+  </select>
+
+<!--  <select id="selectByCouponId" resultType="org.dromara.merchant.client.marketing.dto.data.client.CouponCO">-->
+<!--      select coupon.id,-->
+<!--             coupon.`name`,-->
+<!--             coupon.receive_begin,-->
+<!--             coupon.receive_end,-->
+<!--             coupon.service_begin,-->
+<!--             coupon.service_end,-->
+<!--             coupon.actuating_range,-->
+<!--             coupon.actuating_threshold,-->
+<!--             coupon.discount_type,-->
+<!--             coupon.discount,-->
+<!--             coupon.grant_total,-->
+<!--             coupon.receive_count,-->
+<!--             coupon.goods_range,-->
+<!--             coupon.merchant_id-->
+<!--      from tb_coupon as coupon-->
+<!--      left join tb_coupon_spu as coupon_spu using (coupon_id)-->
+<!--      where id = #{couponId}-->
+<!--    </select>-->
+    <sql id="Join_Column_List">
+        <!--@mbg.generated-->
+        tb_coupon.id as tb_coupon_id,
+        tb_coupon.name as tb_coupon_name,
+        tb_coupon.receive_begin as tb_coupon_receive_begin,
+        tb_coupon.receive_end as tb_coupon_receive_end,
+        tb_coupon.service_begin as tb_coupon_service_begin,
+        tb_coupon.service_end as tb_coupon_service_end,
+        tb_coupon.actuating_range as tb_coupon_actuating_range,
+        tb_coupon.actuating_threshold as tb_coupon_actuating_threshold,
+        tb_coupon.discount_type as tb_coupon_discount_type,
+        tb_coupon.discount as tb_coupon_discount,
+        tb_coupon.grant_total as tb_coupon_grant_total,
+        tb_coupon.receive_count as tb_coupon_receive_count,
+        tb_coupon.goods_range as tb_coupon_goods_range,
+        tb_coupon.merchant_id as tb_coupon_merchant_id
+    </sql>
+    <resultMap id="JoinResultMap" type="org.dromara.merchant.client.marketing.dto.data.client.CouponCO">
+        <!--@mbg.generated-->
+        <id column="tb_coupon_id" property="id"/>
+        <result column="tb_coupon_name" property="name"/>
+        <result column="tb_coupon_receive_begin" property="receiveBegin"/>
+        <result column="tb_coupon_receive_end" property="receiveEnd"/>
+        <result column="tb_coupon_service_begin" property="serviceBegin"/>
+        <result column="tb_coupon_service_end" property="serviceEnd"/>
+        <result column="tb_coupon_actuating_range" property="actuatingRange"/>
+        <result column="tb_coupon_actuating_threshold" property="actuatingThreshold"/>
+        <result column="tb_coupon_discount_type" property="discountType"/>
+        <result column="tb_coupon_discount" property="discount"/>
+        <result column="tb_coupon_grant_total" property="grantTotal"/>
+        <result column="tb_coupon_receive_count" property="receiveCount"/>
+        <result column="tb_coupon_goods_range" property="goodsRange"/>
+        <result column="tb_coupon_merchant_id" property="merchantId"/>
+    </resultMap>
+    <resultMap id="CouponCOJoinResultMap"
+               type="org.dromara.merchant.client.marketing.dto.data.client.CouponCO"
+               extends="JoinResultMap">
+        <collection property="couponSpus" ofType="org.dromara.merchant.client.marketing.dto.data.command.CouponSpu"
+                    resultMap="org.dromara.merchant.infrastructure.marketing.mapper.CouponSpuMapper.JoinResultMap"/>
+    </resultMap>
+    <select id="selectByCouponId" resultMap="CouponCOJoinResultMap">
+        select <include refid="Join_Column_List"/>,
+        <include refid="org.dromara.merchant.infrastructure.marketing.mapper.CouponSpuMapper.Join_Column_List"/>
+        from tb_coupon
+        left join tb_coupon_spu on tb_coupon.id = tb_coupon_spu.coupon_id
+        where tb_coupon.id = #{couponId}
+    </select>
+</mapper>

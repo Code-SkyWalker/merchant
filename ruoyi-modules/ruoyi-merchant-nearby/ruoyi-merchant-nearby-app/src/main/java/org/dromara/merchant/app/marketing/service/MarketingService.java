@@ -29,9 +29,6 @@ public class MarketingService implements IMarketingService {
 
     private final IMarketingGateway marketingGateway;
 
-    private final MarketingConvertor marketingConvertor;
-
-    private final MarketingMapper marketingMapper;
 
     @Override
     public boolean create(MarketingCreateCmd cmd) {
@@ -53,8 +50,4 @@ public class MarketingService implements IMarketingService {
         return this.marketingGateway.queryById(id);
     }
 
-    @Override
-    public MarketingCO queryById(Long id) {
-        return this.marketingConvertor.toCO(this.queryByMarketingId(id));
-    }
 }

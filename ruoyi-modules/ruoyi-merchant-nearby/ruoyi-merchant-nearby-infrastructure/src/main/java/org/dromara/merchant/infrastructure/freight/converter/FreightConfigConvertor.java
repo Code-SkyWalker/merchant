@@ -2,7 +2,9 @@ package org.dromara.merchant.infrastructure.freight.converter;
 
 import cn.hutool.json.JSONObject;
 import org.dromara.merchant.client.freight.dto.data.command.FreightConfigCreateCmd;
+import org.dromara.merchant.client.freight.dto.data.command.FreightConfigModifyCmd;
 import org.dromara.merchant.domain.freight.model.*;
+import org.dromara.merchant.domain.marketing.model.Rule;
 import org.dromara.merchant.infrastructure.freight.mapper.dataobject.FreightConfigDO;
 import org.mapstruct.*;
 
@@ -19,13 +21,15 @@ public interface FreightConfigConvertor {
     /**
      * DO转Entity
      */
-    @Mapping(target = "deliveryConfig", ignore = true) // 忽略自动映射，使用AfterMapping手动处理
+    @Mapping(target = "deliveryConfig", ignore = true)
+    // 忽略自动映射，使用AfterMapping手动处理
     FreightConfig toMerchantDeliveryConfigEntity(FreightConfigDO freightConfigDO);
 
     /**
      * Entity转DO
      */
-    @Mapping(target = "deliveryConfig", ignore = true) // 忽略自动映射，使用AfterMapping手动处理
+    @Mapping(target = "deliveryConfig", ignore = true)
+    // 忽略自动映射，使用AfterMapping手动处理
     FreightConfigDO toMerchantDeliveryConfigDO(FreightConfig freightConfig);
 
     /**
@@ -34,55 +38,26 @@ public interface FreightConfigConvertor {
     List<FreightConfig> toMerchantDeliveryConfigListEntity(List<FreightConfigDO> freightConfigDOS);
 
     /**
-     * Entity列表转DO列表
-     */
-    List<FreightConfigDO> toMerchantDeliveryConfigDO(List<FreightConfig> freightConfigs);
-
-    /**
      * cmd转Entity
      */
     @Mapping(target = "deliveryConfig", ignore = true)
     FreightConfig toMerchantDeliveryConfig(FreightConfigCreateCmd cmd);
 
+    /**
+     * cmd转Entity
+     */
+    @Mapping(target = "deliveryConfig", ignore = true)
+    FreightConfig toMerchantDeliveryConfig(FreightConfigModifyCmd cmd);
+
 
     @AfterMapping
     default void afterMappingDOToEntity(FreightConfigDO source, @MappingTarget FreightConfig target) {
-        // 根据配送方式确定具体的配置类型
-        String deliveryMethodStr = source.getDeliveryMethod();
-        DeliveryMethod method = DeliveryMethod.getByCode(deliveryMethodStr);
-
-        if (method == null || source.getDeliveryConfig() == null || source.getDeliveryConfig().isEmpty()) {
-            return;
-        }
-
-        JSONObject jsonObject = new JSONObject(source.getDeliveryConfig());
-        DeliveryConfig deliveryConfig = null;
-
-        switch (method) {
-            case EXPRESS_DELIVERY:
-                deliveryConfig = jsonObject.toBean(DeliveryConfigExpress.class);
-                break;
-            case LOCAL_DELIVERY:
-                deliveryConfig = jsonObject.toBean(DeliveryConfigLocal.class);
-                break;
-            case PICKUP_DELIVERY:
-                // 这里可以添加 Pickup 配置的处理逻辑
-                break;
-            case NONE_DELIVERY:
-                // 无配送方式不需要配置
-                break;
-            default:
-                break;
-        }
-
-        if (deliveryConfig != null) {
-            target.setDeliveryConfig(deliveryConfig);
-        }
+        DeliveryConfig config = convertConfigToEntity(source.getDeliveryConfig(), source.getDeliveryMethod());
+        if (config != null) target.setDeliveryConfig(config);
     }
 
     @AfterMapping
     default void afterMappingEntityToDO(FreightConfig source, @MappingTarget FreightConfigDO target) {
-        // 将 DeliveryConfig 对象转换为 JSON 字符串
         if (source.getDeliveryConfig() != null) {
             target.setDeliveryConfig(source.getDeliveryConfig().toJson());
         }
@@ -90,38 +65,33 @@ public interface FreightConfigConvertor {
 
     @AfterMapping
     default void afterMappingCmdToEntity(FreightConfigCreateCmd source, @MappingTarget FreightConfig target) {
-        // 根据配送方式确定具体的配置类型
-        String deliveryMethodStr = source.getDeliveryMethod();
-        DeliveryMethod method = DeliveryMethod.getByCode(deliveryMethodStr);
+        DeliveryConfig config = convertConfigToEntity(new JSONObject(source.getDeliveryConfig()).toString(), source.getDeliveryMethod());
+        if (config != null) target.setDeliveryConfig(config);
+    }
 
-        if (method == null || source.getDeliveryConfig() == null) {
-            return;
-        }
+    /**
+     * 从规则JSON字符串和类型转换为具体的规则实体
+     *
+     * @param configJson 规则JSON字符串
+     * @param type       营销类型
+     * @return 具体的规则实体
+     */
+    default DeliveryConfig convertConfigToEntity(String configJson, String type) {
+        if (configJson == null) return null;
+
+        DeliveryMethod method = DeliveryMethod.getByCode(type);
+        if (method == null) return null;
 
         // 使用JSON序列化/反序列化来转换客户端对象到领域对象
-        DeliveryConfig deliveryConfig = null;
-        JSONObject jsonObject = new JSONObject(source.getDeliveryConfig());
+        JSONObject jsonObject = new JSONObject(configJson);
 
-        switch (method) {
-            case EXPRESS_DELIVERY:
-                deliveryConfig = jsonObject.toBean(DeliveryConfigExpress.class);
-                break;
-            case LOCAL_DELIVERY:
-                deliveryConfig = jsonObject.toBean(DeliveryConfigLocal.class);
-                break;
-            case PICKUP_DELIVERY:
-                deliveryConfig = jsonObject.toBean(DeliveryConfigPickup.class);
-                break;
-            case NONE_DELIVERY:
-                deliveryConfig = jsonObject.toBean(DeliveryConfigNone.class);
-                break;
-            default:
-                break;
-        }
+        return switch (method) {
+            case EXPRESS_DELIVERY -> jsonObject.toBean(DeliveryConfigExpress.class);
+            case LOCAL_DELIVERY -> jsonObject.toBean(DeliveryConfigLocal.class);
+            case PICKUP_DELIVERY -> jsonObject.toBean(DeliveryConfigPickup.class);
+            case NONE_DELIVERY -> jsonObject.toBean(DeliveryConfigNone.class);
+        };
 
-        if (deliveryConfig != null) {
-            target.setDeliveryConfig(deliveryConfig);
-        }
     }
 
 }

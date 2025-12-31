@@ -1,7 +1,6 @@
 package org.dromara.merchant.infrastructure.marketing.converter;
 
 import cn.hutool.json.JSONObject;
-import org.dromara.merchant.client.marketing.dto.data.client.MarketingCO;
 import org.dromara.merchant.client.marketing.dto.data.command.*;
 import org.dromara.merchant.domain.marketing.model.*;
 import org.dromara.merchant.domain.marketing.model.Rule;
@@ -52,52 +51,10 @@ public interface MarketingConvertor {
     @Mapping(target = "rules", ignore = true)
     Marketing toEntity(MarketingCreateCmd cmd);
 
-    /**
-     * Marketing实体转MarketingCO
-     *
-     * @param marketing Marketing实体
-     * @return MarketingCO
-     */
-    @Mapping(target = "rules", ignore = true)
-    MarketingCO toCO(Marketing marketing);
-
-
     @AfterMapping
     default void afterMappingEntityToDO(Marketing source, @MappingTarget MarketingDO target) {
         if (source.getRules() != null) {
             target.setRules(source.getRules().toJson());
-        }
-    }
-
-    @AfterMapping
-    default void afterMappingEntityToCO(Marketing source, @MappingTarget MarketingCO target) {
-
-        String rulesJson = source.getRules().toJson();
-        if (rulesJson == null) return;
-
-        MarketingType type = MarketingType.getByCode(source.getType().getCode());
-        if (type == null) return;
-
-        // 使用JSON序列化/反序列化来转换客户端对象到领域对象
-        org.dromara.merchant.client.marketing.dto.data.command.Rule rule = null;
-        JSONObject jsonObject = new JSONObject(rulesJson);
-
-        switch (type) {
-            case BULK:
-                rule = jsonObject.toBean(RuleBulk.class);
-                break;
-            case MULTIUNIT:
-                rule = jsonObject.toBean(RuleMultiUnit.class);
-                break;
-            case QUANTITY:
-                rule = jsonObject.toBean(RuleQuantity.class);
-                break;
-            default:
-                break;
-        }
-
-        if (rule != null) {
-            target.setRules(rule);
         }
     }
 

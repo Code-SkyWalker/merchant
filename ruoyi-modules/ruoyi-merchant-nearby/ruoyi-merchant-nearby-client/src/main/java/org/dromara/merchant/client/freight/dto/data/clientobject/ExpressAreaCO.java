@@ -23,11 +23,6 @@ public class ExpressAreaCO {
     private Long templateId;
 
     /**
-     * 租户ID
-     */
-    private String tenantId;
-
-    /**
      * 地区编码
      */
     private String adCode;

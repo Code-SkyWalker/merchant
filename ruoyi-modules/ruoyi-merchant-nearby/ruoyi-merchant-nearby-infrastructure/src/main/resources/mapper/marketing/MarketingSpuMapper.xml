@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dromara.merchant.infrastructure.marketing.mapper.MarketingSpuMapper">
+    <resultMap id="BaseResultMap" type="org.dromara.merchant.infrastructure.marketing.mapper.dataobject.MarketingSpuDO">
+        <!--@mbg.generated-->
+        <!--@Table tb_marketing_spu-->
+        <id column="id" property="id"/>
+        <result column="marketing_id" property="marketingId"/>
+        <result column="spu_id" property="spuId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, marketing_id, spu_id
+    </sql>
+
+    <delete id="deleteByMarketingId">
+        delete
+        from tb_marketing_spu
+        where marketing_id = #{marketingId}
+    </delete>
+
+    <sql id="Join_Column_List">
+        <!--@mbg.generated-->
+        tb_marketing_spu.id      as tb_marketing_spu_id,
+        tb_marketing_spu.marketing_id as tb_marketing_spu_rule_id,
+        tb_marketing_spu.spu_id  as tb_marketing_spu_spu_id
+    </sql>
+    <resultMap id="JoinResultMap" type="org.dromara.merchant.infrastructure.marketing.mapper.dataobject.MarketingSpuDO">
+        <!--@mbg.generated-->
+        <id column="tb_marketing_spu_id" property="id"/>
+        <result column="tb_marketing_spu_rule_id" property="marketingId"/>
+        <result column="tb_marketing_spu_spu_id" property="spuId"/>
+    </resultMap>
+</mapper>

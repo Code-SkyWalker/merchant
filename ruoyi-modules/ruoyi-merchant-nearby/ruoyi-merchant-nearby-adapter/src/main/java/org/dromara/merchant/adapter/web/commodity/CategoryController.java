@@ -5,9 +5,11 @@ import org.dromara.common.core.domain.R;
 import org.dromara.common.log.annotation.Log;
 import org.dromara.common.log.enums.BusinessType;
 import org.dromara.merchant.app.commodity.ICategoryService;
+import org.dromara.merchant.client.commodity.dto.data.clientobject.CategoryCascadeCO;
 import org.dromara.merchant.client.commodity.dto.data.clientobject.CategoryTreeCO;
 import org.dromara.merchant.client.commodity.dto.data.command.CategoryCreateCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.CategoryModifyCmd;
+import org.dromara.merchant.infrastructure.commodity.mapper.CategoryMapper;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +25,8 @@ import java.util.List;
 public class CategoryController {
 
     private final ICategoryService categoryService;
+
+    private final CategoryMapper categoryMapper;
 
     /**
      * 添加商品类目
@@ -66,5 +70,19 @@ public class CategoryController {
         List<CategoryTreeCO> tree = categoryService.queryTree(merchantId);
         return R.ok(tree);
     }
+
+    /**
+     * 根据父级id（异步）级联查询商品分类
+     *
+     * @param parentId 父级ID
+     * @param merchantId 商家ID
+     * @return 商品分类树
+     */
+    @GetMapping("/cascade/{merchantId}/{parentId}")
+    public R<List<CategoryCascadeCO>> queryCascade(@PathVariable Long merchantId, @PathVariable Integer parentId) {
+        List<CategoryCascadeCO> tree = categoryMapper.selectCascade(merchantId, parentId);
+        return R.ok(tree);
+    }
+
 
 }

@@ -17,6 +17,8 @@ import java.util.List;
 @AllArgsConstructor
 public class DeliveryConfigNone implements DeliveryConfig {
 
+    private final String type = "none";
+
     /**
      * 无配送配置信息
      */
@@ -26,6 +28,11 @@ public class DeliveryConfigNone implements DeliveryConfig {
     @Override
     public String toJson() {
         return new JSONObject(this).toString();
+    }
+
+    @Override
+    public String type() {
+        return this.type;
     }
 
     @Data

@@ -1,13 +1,14 @@
 package org.dromara.merchant.client.marketing.dto.data.client;
 
 import lombok.Data;
+import org.dromara.merchant.client.marketing.dto.data.command.MarketingSpu;
 import org.dromara.merchant.client.marketing.dto.data.command.Rule;
 
 import java.time.LocalDateTime;
-import java.util.Map;
+import java.util.List;
 
 /**
- * @Description TODO
+ * @Description 营销活动返回结果
  * @Author Code Skywalker
  * @Date 2025/12/26 16:52
  */
@@ -48,5 +49,10 @@ public class MarketingCO {
      * 商家Id
      */
     private Long merchantId;
+
+    /**
+     * 营销活动与商品关联
+     */
+    private List<MarketingSpu> spus;
 
 }

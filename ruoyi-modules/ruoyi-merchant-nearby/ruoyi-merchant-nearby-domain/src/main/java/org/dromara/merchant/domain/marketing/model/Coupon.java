@@ -1,0 +1,137 @@
+package org.dromara.merchant.domain.marketing.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.dromara.common.core.utils.SnowflakeIdGenerator;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+
+/**
+ * @Description 优惠券领域对象
+ * @Author Code Skywalker
+ * @Date 2025/12/29 10:58
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Coupon {
+
+    /**
+     * 折扣类型满减
+     */
+    public static final int DISCOUNT_TYPE_FULL_REDUCTION = 0;
+
+    /**
+     * 折扣类型满折
+     */
+    public static final int DISCOUNT_TYPE_FULL_DISCOUNT = 1;
+
+    /**
+     * 优惠券主键
+     */
+    private Long id = SnowflakeIdGenerator.generateId();
+
+    /**
+     * 优惠券名称
+     */
+    private String name;
+
+    /**
+     * 领取时间（开始）
+     */
+    private LocalDateTime receiveBegin;
+
+    /**
+     * 领取时间（结束）
+     */
+    private LocalDateTime receiveEnd;
+
+    /**
+     * 券使用时间（开始）
+     */
+    private LocalDateTime serviceBegin;
+
+    /**
+     * 券使用时间（结束）
+     */
+    private LocalDateTime serviceEnd;
+
+    /**
+     * 使用范围：'ONLINE'线上，'OFFLINE'线下，'NON_LIMIT'无限制
+     */
+    private String actuatingRange;
+
+    /**
+     * 使用门槛：0无门槛
+     */
+    private BigDecimal actuatingThreshold;
+
+    /**
+     * 活动优惠类型：0满减元 1满打折
+     */
+    private Integer discountType;
+
+    /**
+     * 活动优惠额度
+     */
+    private BigDecimal discount;
+
+    /**
+     * 发放张数
+     */
+    private Integer grantTotal;
+
+    /**
+     * 领取数
+     */
+    private Integer receiveCount;
+
+    /**
+     * 商品作用范围：'ALL'所有商品,'INCLUDE'指定商品,'EXCLUDE'排除商品
+     */
+    private String goodsRange;
+
+    /**
+     * 商家Id
+     */
+    private Long merchantId;
+
+    /**
+     * 优惠券与商品关联 列表
+     */
+    List<CouponSpu> couponSpus;
+
+
+    /**
+     * 计算 优惠后的价格
+     *
+     * @param originalPrice 原价
+     * @return 优惠后的价格
+     */
+    public BigDecimal finalPriceCalculate(BigDecimal originalPrice) {
+
+        //  判断优惠券是否可用
+        if (this.serviceBegin.isAfter(LocalDateTime.now()) || this.serviceEnd.isBefore(LocalDateTime.now())) {
+            return originalPrice;
+        }
+
+        //  判断优惠券是否满足使用门槛
+        if (originalPrice.compareTo(this.actuatingThreshold) < 0) {
+            return originalPrice;
+        }
+
+        //   判断优惠券类型, 满减元
+        if (this.discountType == DISCOUNT_TYPE_FULL_REDUCTION) {
+            return originalPrice.subtract(this.discount);
+        }
+
+        //   判断优惠券类型, 满打折
+        return originalPrice.multiply(this.discount);
+    }
+
+
+
+}

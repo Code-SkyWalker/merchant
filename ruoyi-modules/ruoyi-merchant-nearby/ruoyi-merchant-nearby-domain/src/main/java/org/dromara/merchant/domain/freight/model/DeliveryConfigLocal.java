@@ -17,6 +17,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class DeliveryConfigLocal implements DeliveryConfig {
 
+    private final String type = "local";
+
     /**
      * 精确位置
      */
@@ -35,6 +37,11 @@ public class DeliveryConfigLocal implements DeliveryConfig {
     @Override
     public String toJson() {
         return new JSONObject(this).toString();
+    }
+
+    @Override
+    public String type() {
+        return this.type;
     }
 
     @Data

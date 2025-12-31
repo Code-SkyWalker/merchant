@@ -9,5 +9,5 @@ import org.dromara.merchant.client.freight.dto.data.command.FreightConfigCreateC
  */
 public interface IFreightConfigService {
 
-    boolean create(FreightConfigCreateCmd cmd);
+    Long create(FreightConfigCreateCmd cmd);
 }

@@ -17,6 +17,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class RuleQuantityDiscount implements Rule {
 
+    private final String type = "QUANTITY";
+
     /**
      * 满足数量
      */
@@ -27,9 +29,13 @@ public class RuleQuantityDiscount implements Rule {
      */
     private BigDecimal discount;
 
-
     @Override
     public String toJson() {
         return new JSONObject(this).toString();
+    }
+
+    @Override
+    public String type() {
+        return type;
     }
 }

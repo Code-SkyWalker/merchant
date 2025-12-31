@@ -19,6 +19,7 @@ import java.util.List;
 
 /**
  * 商品模板
+ *
  * @Author Code Skywalker
  * @Date 2025/12/8 15:04
  */
@@ -31,6 +32,7 @@ public class TemplateController {
 
     /**
      * 添加商品模板
+     *
      * @param cmd 添加参数
      * @return 添加结果
      */
@@ -42,6 +44,7 @@ public class TemplateController {
 
     /**
      * 修改商品模板
+     *
      * @param cmd 修改参数
      * @return 修改结果
      */
@@ -53,6 +56,7 @@ public class TemplateController {
 
     /**
      * 删除商品模板
+     *
      * @param id ID
      * @return 删除结果
      */
@@ -64,7 +68,8 @@ public class TemplateController {
 
     /**
      * 分页查询商品规格
-     * @param qry 查询参数
+     *
+     * @param qry  查询参数
      * @param page 分页参数
      * @return 商品规格列表
      */
@@ -76,6 +81,7 @@ public class TemplateController {
 
     /**
      * 查询商品规格参数模板
+     *
      * @param id templateId
      * @return 商品规格参数
      */

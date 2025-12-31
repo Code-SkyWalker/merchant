@@ -44,12 +44,4 @@ public interface IMarketingService {
      */
     Marketing queryByMarketingId(Long id);
 
-    /**
-     * 获取营销活动
-     *
-     * @param id 营销活动ID
-     * @return 营销活动
-     */
-    MarketingCO queryById(Long id);
-
 }

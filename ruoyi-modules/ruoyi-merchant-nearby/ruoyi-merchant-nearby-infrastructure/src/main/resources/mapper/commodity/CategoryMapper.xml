@@ -50,4 +50,17 @@
         from tb_category
         where merchant_id = #{merchantId}
     </select>
+
+    <select id="selectCascade"
+            resultType="org.dromara.merchant.client.commodity.dto.data.clientobject.CategoryCascadeCO">
+        select
+        category.id,
+        category.`name`,
+        template.id AS template_id
+        from tb_category category
+        left join tb_template template on category.id = template.category_id
+        where merchant_id = #{merchantId}
+            and parent_id = #{parentId}
+        order by seq desc
+    </select>
 </mapper>

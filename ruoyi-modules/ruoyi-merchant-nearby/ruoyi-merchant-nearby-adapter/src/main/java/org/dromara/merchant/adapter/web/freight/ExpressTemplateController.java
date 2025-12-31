@@ -12,6 +12,7 @@ import org.dromara.merchant.client.freight.dto.data.clientobject.ExpressTemplate
 import org.dromara.merchant.client.freight.dto.data.command.ExpressTemplateCreateCmd;
 import org.dromara.merchant.client.freight.dto.data.command.ExpressTemplateModifyCmd;
 import org.dromara.merchant.client.freight.dto.data.command.query.ExpressTemplatePageQry;
+import org.dromara.merchant.infrastructure.freight.mapper.ExpressTemplateMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +28,10 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ExpressTemplateController {
 
-    @Autowired
-    private IExpressTemplateService expressTemplateService;
+    private final IExpressTemplateService expressTemplateService;
+
+    private final ExpressTemplateMapper expressTemplateMapper;
+
 
     /**
      * 运费模板列表
@@ -40,6 +43,16 @@ public class ExpressTemplateController {
     public TableDataInfo<ExpressTemplateCO> queryPage(@ModelAttribute ExpressTemplatePageQry query, @ModelAttribute PageQuery page) {
         Page<ExpressTemplateCO> pages = this.expressTemplateService.queryPage(query, page);
         return TableDataInfo.build(pages);
+    }
+
+    /**
+     * 运费模板详情
+     * @param templateId 运费模板ID
+     * @return 运费模板详情
+     */
+    @GetMapping("/{templateId}")
+    public R<ExpressTemplateCO> queryById(@PathVariable Long templateId) {
+        return R.ok(expressTemplateMapper.selectByPrimaryKey(templateId));
     }
 
     /**

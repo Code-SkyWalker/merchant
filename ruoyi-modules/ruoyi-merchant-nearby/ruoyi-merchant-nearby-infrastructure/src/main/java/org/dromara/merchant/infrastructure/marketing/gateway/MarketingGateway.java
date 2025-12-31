@@ -27,8 +27,9 @@ public class MarketingGateway implements IMarketingGateway {
      * @return 是否保存成功
      */
     @Override
-    public boolean save(Marketing marketing) {
-        return this.mapper.insertOrUpdate(convertor.toDo(marketing));
+    public Long save(Marketing marketing) {
+        this.mapper.insertOrUpdate(convertor.toDo(marketing));
+        return marketing.getId();
     }
 
     /**

@@ -20,5 +20,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 })
 public interface DeliveryConfig {
 
+    String type();
+
     String toJson();
 }

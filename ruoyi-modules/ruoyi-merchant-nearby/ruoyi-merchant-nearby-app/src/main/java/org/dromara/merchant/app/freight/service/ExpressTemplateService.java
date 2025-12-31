@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.merchant.app.freight.IExpressTemplateService;
 import org.dromara.merchant.app.freight.executor.*;
-import org.dromara.merchant.app.freight.executor.query.ExpressTemplateDetailQryExecutor;
 import org.dromara.merchant.app.freight.executor.query.ExpressTemplatePageQryExecutor;
 import org.dromara.merchant.client.freight.dto.data.clientobject.ExpressTemplateCO;
 import org.dromara.merchant.client.freight.dto.data.command.ExpressTemplateCreateCmd;
@@ -26,7 +25,6 @@ public class ExpressTemplateService implements IExpressTemplateService {
     private final ExpressTemplateCreateExecutor createExecutor;
     private final ExpressTemplateDeleteExecutor deleteExecutor;
     private final ExpressTemplateModifyExecutor modifyExecutor;
-    private final ExpressTemplateDetailQryExecutor detailQryExecutor;
     private final ExpressTemplatePageQryExecutor pageQryExecutor;
     private final ExpressTemplateSetDefaultExecutor setDefaultExecutor;
 
@@ -73,11 +71,6 @@ public class ExpressTemplateService implements IExpressTemplateService {
         return setDefaultExecutor.execute(templateId, merchantId);
     }
 
-
-    @Override
-    public ExpressTemplateCO queryById(Long templateId) {
-        return detailQryExecutor.execute(templateId);
-    }
 
     @Override
     public Page<ExpressTemplateCO> queryPage(ExpressTemplatePageQry qry, PageQuery pageQuery) {

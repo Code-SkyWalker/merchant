@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.dromara.common.core.utils.SnowflakeIdGenerator;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @Description 营销活动规则
@@ -53,8 +54,8 @@ public class Marketing {
     private Long merchantId;
 
     /**
-     * 租户编号
+     * 营销活动与商品关联 列表
      */
-    private String tenantId;
+    private List<MarketingSpu> marketingSpus;
 
 }

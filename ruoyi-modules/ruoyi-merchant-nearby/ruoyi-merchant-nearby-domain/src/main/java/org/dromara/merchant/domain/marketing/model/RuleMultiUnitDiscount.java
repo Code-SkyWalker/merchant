@@ -19,6 +19,8 @@ import java.util.List;
 @NoArgsConstructor
 public class RuleMultiUnitDiscount implements Rule {
 
+    private final String type = "MULTIUNIT";
+
     /**
      * 优惠条件
      */
@@ -49,6 +51,10 @@ public class RuleMultiUnitDiscount implements Rule {
         return new JSONObject(this).toString();
     }
 
+    @Override
+    public String type() {
+        return type;
+    }
 
     /**
      * 优惠内容枚举

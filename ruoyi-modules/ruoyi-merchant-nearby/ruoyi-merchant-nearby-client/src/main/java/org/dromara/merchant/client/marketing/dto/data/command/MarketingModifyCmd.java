@@ -3,6 +3,7 @@ package org.dromara.merchant.client.marketing.dto.data.command;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @Description 营销活动创建命令
@@ -51,5 +52,10 @@ public class MarketingModifyCmd {
      * 租户编号
      */
     private String tenantId;
+
+    /**
+     * 营销活动与商品关联
+     */
+    private List<MarketingSpu> marketingSpus;
 
 }

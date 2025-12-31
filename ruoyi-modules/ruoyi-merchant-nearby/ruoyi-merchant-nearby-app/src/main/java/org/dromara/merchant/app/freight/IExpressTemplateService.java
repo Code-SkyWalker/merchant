@@ -48,14 +48,6 @@ public interface IExpressTemplateService {
     boolean setDefault(Long templateId, Long merchantId);
 
     /**
-     * 根据ID查询商户运费模板
-     *
-     * @param templateId 模板ID
-     * @return 运费模板客户端对象
-     */
-    ExpressTemplateCO queryById(Long templateId);
-
-    /**
      * 分页查询商户运费模板
      *
      * @param qry 查询条件

@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@TableName("tb_merchant_freight_template")
+@TableName("tb_merchant_shipping_template")
 public class ExpressTemplateDO extends TenantEntity {
 
     /**

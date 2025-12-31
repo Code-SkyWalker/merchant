@@ -19,9 +19,8 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @TableName("tb_merchant_shipping_area")
-public class ExpressAreaDO extends BaseEntity {
+public class ExpressAreaDO {
 
     /**
      * 配送区域ID
@@ -33,11 +32,6 @@ public class ExpressAreaDO extends BaseEntity {
      * 运费模板ID
      */
     private Long templateId;
-
-    /**
-     * 租户ID
-     */
-    private String tenantId;
 
     /**
      * 区划代码集合

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dromara.merchant.infrastructure.marketing.mapper.CouponSpuMapper">
+  <resultMap id="BaseResultMap" type="org.dromara.merchant.infrastructure.marketing.mapper.dataobject.CouponSpuDO">
+    <!--@mbg.generated-->
+    <!--@Table tb_coupon_spu-->
+    <id column="id" property="id" />
+    <result column="coupon_id" property="couponId" />
+    <result column="spu_id" property="spuId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, coupon_id, spu_id
+  </sql>
+
+  <delete id="deleteByCouponId">
+      delete
+      from tb_coupon_spu
+      where coupon_id = #{couponId}
+    </delete>
+
+
+    <sql id="Join_Column_List">
+        <!--@mbg.generated-->
+        tb_coupon_spu.id as tb_coupon_spu_id,
+        tb_coupon_spu.coupon_id as tb_coupon_spu_coupon_id,
+        tb_coupon_spu.spu_id as tb_coupon_spu_spu_id
+    </sql>
+    <resultMap id="JoinResultMap" type="org.dromara.merchant.infrastructure.marketing.mapper.dataobject.CouponSpuDO">
+        <!--@mbg.generated-->
+        <id column="tb_coupon_spu_id" property="id"/>
+        <result column="tb_coupon_spu_coupon_id" property="couponId"/>
+        <result column="tb_coupon_spu_spu_id" property="spuId"/>
+    </resultMap>
+</mapper>

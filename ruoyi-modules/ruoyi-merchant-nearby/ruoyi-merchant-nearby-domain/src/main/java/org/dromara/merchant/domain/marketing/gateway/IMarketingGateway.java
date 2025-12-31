@@ -15,7 +15,7 @@ public interface IMarketingGateway {
      * @param marketing 营销活动规则
      * @return 是否保存成功
      */
-    boolean save(Marketing marketing);
+    Long save(Marketing marketing);
 
     /**
      * 删除

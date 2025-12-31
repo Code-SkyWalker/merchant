@@ -1,12 +1,18 @@
 package org.dromara.merchant.adapter.web.marketing;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.domain.R;
+import org.dromara.common.mybatis.core.page.PageQuery;
+import org.dromara.common.mybatis.core.page.TableDataInfo;
 import org.dromara.merchant.app.marketing.IMarketingService;
 import org.dromara.merchant.client.marketing.dto.data.client.MarketingCO;
+import org.dromara.merchant.client.marketing.dto.data.client.MarketingPageCo;
 import org.dromara.merchant.client.marketing.dto.data.command.MarketingCreateCmd;
 import org.dromara.merchant.client.marketing.dto.data.command.MarketingModifyCmd;
-import org.dromara.merchant.domain.marketing.model.Marketing;
+import org.dromara.merchant.client.marketing.dto.data.command.query.MarketingPageQry;
+import org.dromara.merchant.infrastructure.marketing.converter.MarketingConvertor;
+import org.dromara.merchant.infrastructure.marketing.mapper.MarketingMapper;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -21,6 +27,10 @@ import org.springframework.web.bind.annotation.*;
 public class MarketingController {
 
     private final IMarketingService marketingService;
+
+    private final MarketingMapper marketingMapper;
+
+    private final MarketingConvertor marketingConvertor;
 
     /**
      * 创建营销活动
@@ -66,8 +76,19 @@ public class MarketingController {
      */
     @GetMapping("/{id}")
     public R<MarketingCO> queryById(@PathVariable Long id) {
-        MarketingCO marketing = marketingService.queryById(id);
+        MarketingCO marketing = marketingMapper.queryById(id);
         return marketing != null ? R.ok(marketing) : R.fail("查询失败");
+    }
+
+    /**
+     * 列表查询营销活动
+     *
+     * @return 营销活动列表
+     */
+    @GetMapping("/page")
+    public TableDataInfo<MarketingPageCo> queryPages(@ModelAttribute MarketingPageQry qry, @ModelAttribute PageQuery page) {
+        Page<MarketingPageCo> marketing = marketingMapper.queryPages(qry, page.build());
+        return TableDataInfo.build(marketing);
     }
 
 }

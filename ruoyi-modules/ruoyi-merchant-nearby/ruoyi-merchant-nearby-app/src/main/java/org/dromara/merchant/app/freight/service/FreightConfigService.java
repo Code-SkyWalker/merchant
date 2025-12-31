@@ -18,7 +18,7 @@ public class FreightConfigService implements IFreightConfigService {
     private final FreightConfigCreateExecutor createExecutor;
 
     @Override
-    public boolean create(FreightConfigCreateCmd cmd) {
+    public Long create(FreightConfigCreateCmd cmd) {
         return createExecutor.execute(cmd);
     }
 }

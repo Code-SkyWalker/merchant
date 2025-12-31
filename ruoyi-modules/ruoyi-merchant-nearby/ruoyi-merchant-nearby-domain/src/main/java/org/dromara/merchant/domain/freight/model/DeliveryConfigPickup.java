@@ -15,10 +15,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DeliveryConfigPickup implements DeliveryConfig {
 
+    private final String type = "pickup";
+
     private Object reservationConfig;
 
     @Override
     public String toJson() {
         return new JSONObject(this).toString();
+    }
+
+    @Override
+    public String type() {
+        return this.type;
     }
 }

@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @Description 商户运费模板客户端对象
@@ -34,39 +35,14 @@ public class ExpressTemplateCO {
     private String billingMethod;
 
     /**
-     * 首重/首件/首体积 (单位: kg/件/m³)
+     * 是否默认
      */
-    private BigDecimal baseWeightQuantityVolume;
-
-    /**
-     * 首费 (单位: 元)
-     */
-    private BigDecimal baseFee;
-
-    /**
-     * 续重/续件/续体积 (单位: kg/件/m³)
-     */
-    private BigDecimal additionalWeightQuantityVolume;
-
-    /**
-     * 续费 (单位: 元)
-     */
-    private BigDecimal additionalFee;
+    private Boolean isDefault;
 
     /**
      * 是否包邮 (0:不包邮, 1:包邮)
      */
     private Boolean freeShipping;
-
-    /**
-     * 包邮条件金额 (单位: 元)
-     */
-    private BigDecimal freeShippingAmount;
-
-    /**
-     * 包邮条件件数
-     */
-    private Integer freeShippingQuantity;
 
     /**
      * 模板状态 (ACTIVE:启用, DISABLED:禁用)
@@ -84,13 +60,8 @@ public class ExpressTemplateCO {
     private String description;
 
     /**
-     * 创建时间
+     * 配送区域
      */
-    private LocalDateTime createTime;
-
-    /**
-     * 更新时间
-     */
-    private LocalDateTime updateTime;
+    private List<ExpressAreaCO> expressAreas;
 
 }

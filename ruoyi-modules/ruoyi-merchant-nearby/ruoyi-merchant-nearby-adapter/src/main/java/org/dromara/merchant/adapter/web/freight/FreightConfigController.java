@@ -3,10 +3,12 @@ package org.dromara.merchant.adapter.web.freight;
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.domain.R;
 import org.dromara.merchant.app.freight.IFreightConfigService;
+import org.dromara.merchant.app.freight.executor.query.FreightConfigQryExe;
+import org.dromara.merchant.client.freight.dto.data.clientobject.FreightConfigCO;
 import org.dromara.merchant.client.freight.dto.data.command.FreightConfigCreateCmd;
-import org.dromara.merchant.domain.freight.model.FreightConfig;
-import org.dromara.merchant.infrastructure.freight.converter.FreightConfigConvertor;
-import org.dromara.merchant.infrastructure.freight.mapper.dataobject.FreightConfigDO;
+import org.dromara.merchant.domain.freight.model.DeliveryMethod;
+import org.dromara.merchant.infrastructure.freight.mapper.ExpressAreaMapper;
+import org.dromara.merchant.infrastructure.freight.mapper.ExpressTemplateMapper;
 import org.dromara.merchant.infrastructure.freight.mapper.FreightConfigMapper;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +26,7 @@ public class FreightConfigController {
 
     private final IFreightConfigService configService;
 
-    private final FreightConfigMapper mapper;
-    private final FreightConfigConvertor convertor;
+    private final FreightConfigQryExe configQryExe;
 
     /**
      * 创建配送设置
@@ -33,21 +34,18 @@ public class FreightConfigController {
      * @return 创建结果
      */
     @PostMapping
-    public R<Boolean> create(@Validated @RequestBody FreightConfigCreateCmd cmd) {
+    public R<Long> create(@Validated @RequestBody FreightConfigCreateCmd cmd) {
         return R.ok(configService.create(cmd));
     }
 
     /**
      * 获取配送设置
-     * @param configId 配送设置ID
+     * @param merchantId 配送设置ID
      * @return 配送设置
      */
-    @GetMapping("/{configId}")
-    public R<FreightConfig> create(@PathVariable Long configId) {
-
-        FreightConfigDO configDO = mapper.selectById(configId);
-
-        FreightConfig entity = this.convertor.toMerchantDeliveryConfigEntity(configDO);
-        return R.ok(entity);
+    @GetMapping(value = "/{merchantId}", params = "deliveryMethod=express")
+    public R<FreightConfigCO> create(@PathVariable Long merchantId) {
+        FreightConfigCO expressConfig = configQryExe.execute(merchantId, DeliveryMethod.EXPRESS_DELIVERY.getCode());
+        return R.ok(expressConfig);
     }
 }

@@ -17,6 +17,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class RuleBulkDiscount implements Rule {
 
+    private final String type = "BULK";
+
     /**
      * 满足金额
      */
@@ -31,5 +33,10 @@ public class RuleBulkDiscount implements Rule {
     @Override
     public String toJson() {
         return new JSONObject(this).toString();
+    }
+
+    @Override
+    public String type() {
+        return type;
     }
 }
