@@ -1,0 +1,1 @@
+ALTER TABLE `merchant_nearby`.`tb_sku` ADD INDEX `spuid`(`spu_id` ASC) USING BTREE;
