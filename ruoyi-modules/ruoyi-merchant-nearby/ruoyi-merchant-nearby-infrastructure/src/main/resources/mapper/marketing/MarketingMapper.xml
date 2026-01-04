@@ -30,7 +30,7 @@
   <select id="queryPages" resultType="org.dromara.merchant.client.marketing.dto.data.client.MarketingPageCo">
       select
       <include refid="Base_Column_List"/>,
-      (select count(*) from tb_marketing_spu where tb_marketing_spu.id = tb_marketing.id) as spu_count
+      (select count(*) from tb_marketing_spu where tb_marketing_spu.marketing_id = tb_marketing.id) as spu_count
       from tb_marketing
       <where>
           <if test="qry.name != null">
