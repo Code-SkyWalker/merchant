@@ -23,12 +23,14 @@
         <!--@mbg.generated-->
         tb_marketing_spu.id      as tb_marketing_spu_id,
         tb_marketing_spu.marketing_id as tb_marketing_spu_rule_id,
-        tb_marketing_spu.spu_id  as tb_marketing_spu_spu_id
+        tb_marketing_spu.spu_id  as tb_marketing_spu_spu_id,
+        tb_marketing_spu.kill_price  as tb_marketing_spu_kill_price
     </sql>
     <resultMap id="JoinResultMap" type="org.dromara.merchant.infrastructure.marketing.mapper.dataobject.MarketingSpuDO">
         <!--@mbg.generated-->
         <id column="tb_marketing_spu_id" property="id"/>
         <result column="tb_marketing_spu_rule_id" property="marketingId"/>
         <result column="tb_marketing_spu_spu_id" property="spuId"/>
+        <result column="tb_marketing_spu_kill_price" property="killPrice"/>
     </resultMap>
 </mapper>

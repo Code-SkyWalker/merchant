@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 /**
@@ -45,16 +46,6 @@ public class RuleMultiUnitDiscount implements Rule {
      * 具体优惠信息（循环式）
      */
     private Condition condition;
-
-    @Override
-    public String toJson() {
-        return new JSONObject(this).toString();
-    }
-
-    @Override
-    public String type() {
-        return type;
-    }
 
     /**
      * 优惠内容枚举
@@ -153,4 +144,182 @@ public class RuleMultiUnitDiscount implements Rule {
          */
         private BigDecimal discount;
     }
+
+
+    @Override
+    public String toJson() {
+        return new JSONObject(this).toString();
+    }
+
+    @Override
+    public String type() {
+        return type;
+    }
+
+    @Override
+    public BigDecimal calculate(BigDecimal originalUnitPrice, Integer quantity) {
+        if (originalUnitPrice == null || quantity == null || quantity <= 0) {
+            return originalUnitPrice;
+        }
+
+        // 获取原始总价
+        BigDecimal originalTotalPrice = originalUnitPrice.multiply(new BigDecimal(quantity));
+
+        // 根据优惠方式选择不同的计算逻辑
+        if (Way.TIERED.equals(this.way)) {
+            // 阶梯优惠计算
+            return calculateTieredDiscount(originalTotalPrice, quantity);
+        } else if (Way.LOOP.equals(this.way)) {
+            // 循环优惠计算
+            return calculateLoopDiscount(originalTotalPrice, quantity);
+        }
+
+        // 如果没有匹配的优惠方式，返回原价
+        return originalTotalPrice;
+    }
+
+    /**
+     * 计算阶梯优惠
+     *
+     * @param originalTotalPrice 原始总价
+     * @param quantity           购买数量
+     * @return 优惠后的价格
+     */
+    private BigDecimal calculateTieredDiscount(BigDecimal originalTotalPrice, Integer quantity) {
+        if (discounts == null || discounts.isEmpty()) return originalTotalPrice;
+
+        // 根据优惠内容确定比较基准
+        BigDecimal comparisonValue = getComparisonValue(originalTotalPrice, quantity);
+
+        // 找到满足条件的最大优惠
+        Condition bestCondition = null;
+        for (Condition condition : discounts) {
+            if (condition != null && comparisonValue.compareTo(condition.getAmount()) >= 0) {
+                if (bestCondition == null || condition.getAmount().compareTo(bestCondition.getAmount()) > 0) {
+                    bestCondition = condition;
+                }
+            }
+        }
+
+        if (bestCondition == null) {
+            return originalTotalPrice; // 没有满足任何条件
+        }
+
+        // 根据优惠条件计算优惠后的价格
+        return applyDiscount(originalTotalPrice, bestCondition);
+    }
+
+    /**
+     * 计算循环优惠
+     *
+     * @param originalTotalPrice 原始总价
+     * @param quantity           购买数量
+     * @return 优惠后的价格
+     */
+    private BigDecimal calculateLoopDiscount(BigDecimal originalTotalPrice, Integer quantity) {
+        if (condition == null) {
+            return originalTotalPrice;
+        }
+
+        // 根据优惠内容确定比较基准
+        BigDecimal comparisonValue = getComparisonValue(originalTotalPrice, quantity);
+
+        // 计算可以享受优惠的次数
+        BigDecimal conditionAmount = condition.getAmount();
+        if (conditionAmount.compareTo(BigDecimal.ZERO) <= 0) {
+            return originalTotalPrice; // 避免除零错误
+        }
+
+        // 计算满足条件的次数
+        int eligibleTimes = comparisonValue.divideToIntegralValue(conditionAmount).intValue();
+
+        if (eligibleTimes <= 0) {
+            return originalTotalPrice; // 不满足一次优惠条件
+        }
+
+        // 根据优惠条件计算优惠
+        return applyLoopDiscount(originalTotalPrice, eligibleTimes);
+    }
+
+    /**
+     * 获取比较基准值（根据优惠内容决定是总价还是数量）
+     *
+     * @param originalTotalPrice 原始总价
+     * @param quantity           购买数量
+     * @return 比较基准值
+     */
+    private BigDecimal getComparisonValue(BigDecimal originalTotalPrice, Integer quantity) {
+        if (Content.AMOUNT.equals(this.content)) {
+            // 满元优惠，使用总价作为比较基准
+            return originalTotalPrice;
+        } else if (Content.QUANTITY.equals(this.content)) {
+            // 满件优惠，使用数量作为比较基准
+            return new BigDecimal(quantity);
+        }
+        // 默认使用总价
+        return originalTotalPrice;
+    }
+
+    /**
+     * 应用优惠（根据优惠条件）
+     *
+     * @param originalTotalPrice 原始总价
+     * @param condition          优惠条件
+     * @return 优惠后的价格
+     */
+    private BigDecimal applyDiscount(BigDecimal originalTotalPrice, Condition condition) {
+        if (Requirement.PRICE.equals(this.requirement)) {
+            // 减钱优惠
+            BigDecimal discountAmount = condition.getDiscount();
+            BigDecimal finalPrice = originalTotalPrice.subtract(discountAmount);
+            // 确保价格不为负数
+            return finalPrice.compareTo(BigDecimal.ZERO) > 0 ? finalPrice : BigDecimal.ZERO;
+        } else if (Requirement.DISCOUNT.equals(this.requirement)) {
+            // 打折优惠
+            BigDecimal discountRate = condition.getDiscount();
+            // 将折扣率转换为0-1之间的数值（如果折扣率是0-10之间的值，需要除以10；如果是0-1之间的值则直接使用）
+            BigDecimal rate = discountRate.compareTo(BigDecimal.TEN) <= 0 ?
+                discountRate.divide(BigDecimal.TEN, 4, RoundingMode.HALF_UP) :
+                discountRate;
+            return originalTotalPrice.multiply(rate).setScale(2, RoundingMode.HALF_UP);
+        }
+        // 如果没有匹配的优惠条件，返回原价
+        return originalTotalPrice;
+    }
+
+    /**
+     * 应用循环优惠
+     *
+     * @param originalTotalPrice 原始总价
+     * @param eligibleTimes      满足条件的次数
+     * @return 优惠后的价格
+     */
+    private BigDecimal applyLoopDiscount(BigDecimal originalTotalPrice, int eligibleTimes) {
+        if (condition == null) {
+            return originalTotalPrice;
+        }
+
+        if (Requirement.PRICE.equals(this.requirement)) {
+            // 循环减钱优惠
+            BigDecimal discountPerLoop = condition.getDiscount();
+            BigDecimal totalDiscount = discountPerLoop.multiply(new BigDecimal(eligibleTimes));
+            BigDecimal finalPrice = originalTotalPrice.subtract(totalDiscount);
+            // 确保价格不为负数
+            return finalPrice.compareTo(BigDecimal.ZERO) > 0 ? finalPrice : BigDecimal.ZERO;
+        } else if (Requirement.DISCOUNT.equals(this.requirement)) {
+            // 循环打折优惠 - 这种情况相对少见，按单次折扣处理
+            // 实际上循环打折可能需要特殊处理，这里按单次折扣处理
+            BigDecimal discountRate = condition.getDiscount();
+            // 将折扣率转换为0-1之间的数值
+            BigDecimal rate = discountRate.compareTo(BigDecimal.TEN) <= 0 ?
+                discountRate.divide(BigDecimal.TEN, 4, RoundingMode.HALF_UP) :
+                discountRate;
+            // 循环打折通常指的是每满足一次条件就对满足条件的部分进行折扣
+            // 这里实现为对总价进行折扣，如果需要更复杂的逻辑可以调整
+            return originalTotalPrice.multiply(rate).setScale(2, RoundingMode.HALF_UP);
+        }
+        // 如果没有匹配的优惠条件，返回原价
+        return originalTotalPrice;
+    }
+
 }

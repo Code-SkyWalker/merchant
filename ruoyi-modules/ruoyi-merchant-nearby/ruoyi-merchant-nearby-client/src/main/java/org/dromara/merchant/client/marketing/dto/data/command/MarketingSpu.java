@@ -2,6 +2,8 @@ package org.dromara.merchant.client.marketing.dto.data.command;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 /**
  * @Description TODO
  * @Author Code Skywalker
@@ -24,6 +26,11 @@ public class MarketingSpu {
      * spuid
      */
     private Long spuId;
+
+    /**
+     * 秒杀价格 仅秒杀活动使用
+     */
+    private BigDecimal killPrice;
 
     /**
      * 删除标识

@@ -96,23 +96,13 @@ public interface MarketingConvertor {
         if (method == null) return null;
 
         // 使用JSON序列化/反序列化来转换客户端对象到领域对象
-        Rule rule = null;
         JSONObject jsonObject = new JSONObject(rulesJson);
 
-        switch (method) {
-            case BULK:
-                rule = jsonObject.toBean(RuleBulkDiscount.class);
-                break;
-            case MULTIUNIT:
-                rule = jsonObject.toBean(RuleMultiUnitDiscount.class);
-                break;
-            case QUANTITY:
-                rule = jsonObject.toBean(RuleQuantityDiscount.class);
-                break;
-            default:
-                break;
-        }
-
-        return rule;
+        return switch (method) {
+            case BULK -> jsonObject.toBean(RuleBulkDiscount.class);
+            case MULTIUNIT -> jsonObject.toBean(RuleMultiUnitDiscount.class);
+            case QUANTITY-> jsonObject.toBean(RuleQuantityDiscount.class);
+            default -> null;
+        };
     }
 }

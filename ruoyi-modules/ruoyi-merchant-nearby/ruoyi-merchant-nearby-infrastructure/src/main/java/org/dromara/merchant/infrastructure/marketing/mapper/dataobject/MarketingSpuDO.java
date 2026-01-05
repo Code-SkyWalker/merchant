@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 /**
  * 营销活动与商品关联表
  */
@@ -30,5 +32,10 @@ public class MarketingSpuDO {
      * spuid
      */
     private Long spuId;
+
+    /**
+     * 秒杀价格 仅秒杀活动使用
+     */
+    private BigDecimal killPrice;
 
 }

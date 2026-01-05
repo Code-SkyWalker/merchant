@@ -13,6 +13,7 @@ public enum MarketingType {
     BULK("BULK", "N元N件模式"),
     MULTIUNIT("MULTIUNIT", "满折满减模式"),
     QUANTITY("QUANTITY", "x件x折模式"),
+    SECONDKILL("SECONDKILL", "x件x折模式"),
     ;
 
     private final String code;

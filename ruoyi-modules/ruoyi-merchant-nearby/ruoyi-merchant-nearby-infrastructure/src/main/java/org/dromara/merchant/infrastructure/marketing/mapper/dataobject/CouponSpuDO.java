@@ -9,6 +9,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.dromara.common.mybatis.core.domain.BaseEntity;
 
+import java.math.BigDecimal;
+
 /**
  * 优惠券与商品关联表
  */
@@ -32,4 +34,9 @@ public class CouponSpuDO {
      * spuid
      */
     private Long spuId;
+
+    /**
+     * 秒杀价格 仅秒杀活动使用
+     */
+    private BigDecimal killPrice;
 }

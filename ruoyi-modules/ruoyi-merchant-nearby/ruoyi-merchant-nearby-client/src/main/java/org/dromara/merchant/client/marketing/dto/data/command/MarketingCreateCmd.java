@@ -34,7 +34,7 @@ public class MarketingCreateCmd {
     private Rule rules;
 
     /**
-     * 活动类型：QUANTITY:x件x折, MULTIUNIT:满折满减, BULK:n元n件
+     * 活动类型：QUANTITY:x件x折, MULTIUNIT:满折满减, BULK:n元n件，SECONDKILL:秒杀
      */
     private String type;
 

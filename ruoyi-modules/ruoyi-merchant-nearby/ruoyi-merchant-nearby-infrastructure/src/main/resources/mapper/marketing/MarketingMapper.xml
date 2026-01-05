@@ -17,15 +17,6 @@
     id, `name`, receive_begin, receive_end, rules, `type`, merchant_id
   </sql>
 
-<!--  <select id="queryById" resultType="org.dromara.merchant.client.marketing.dto.data.client.MarketingCO">-->
-<!--      select-->
-<!--      <include refid="Base_Column_List"/>-->
-<!--      from tb_marketing-->
-<!--      where id = #{id}-->
-<!--  </select>-->
-
-
-
 
   <select id="queryPages" resultType="org.dromara.merchant.client.marketing.dto.data.client.MarketingPageCo">
       select

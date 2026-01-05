@@ -38,4 +38,18 @@ public class RuleQuantityDiscount implements Rule {
     public String type() {
         return type;
     }
+
+    @Override
+    public BigDecimal calculate(BigDecimal originalUnitPrice, Integer quantity) {
+
+        // 购买数小于等于任选件数，返回原价*购买数
+        if (quantity < this.quantity) {
+            return originalUnitPrice.multiply(new BigDecimal(quantity));
+        }
+
+        // 购买数大于等于任选件数，返回 原价*(购买数-1)+原价*折扣价 （只有一件优惠）
+        BigDecimal originalPrice = originalUnitPrice.multiply(new BigDecimal(quantity - 1));
+        return originalUnitPrice.multiply(discount).add(originalPrice);
+
+    }
 }
