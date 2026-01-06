@@ -6,9 +6,20 @@ import org.dromara.common.mybatis.core.mapper.BaseMapperPlus;
 import org.dromara.merchant.client.marketing.dto.data.client.MarketingCO;
 import org.dromara.merchant.client.marketing.dto.data.client.MarketingPageCo;
 import org.dromara.merchant.client.marketing.dto.data.command.query.MarketingPageQry;
+import org.dromara.merchant.domain.marketing.model.Marketing;
 import org.dromara.merchant.infrastructure.marketing.mapper.dataobject.MarketingDO;
 
+import java.util.List;
+
 public interface MarketingMapper extends BaseMapperPlus<MarketingDO, MarketingDO> {
+
+    /**
+     * 根据SpuId查询可用的营销活动
+     *
+     * @param spuId SpuId
+     * @return 可用的营销活动
+     */
+    List<MarketingDO> selectAvailableMarketingsBySpuId(Long spuId);
 
     /**
      * 根据Id查询

@@ -1,6 +1,8 @@
 package org.dromara.merchant.domain.marketing.service;
 
+import lombok.RequiredArgsConstructor;
 import org.dromara.merchant.domain.commodity.model.Sku;
+import org.dromara.merchant.domain.marketing.gateway.IMarketingGateway;
 import org.dromara.merchant.domain.marketing.model.Marketing;
 import org.dromara.merchant.domain.marketing.model.Rule;
 import org.springframework.stereotype.Component;
@@ -14,23 +16,29 @@ import java.util.List;
  * @Date 2026/1/4 17:30
  */
 @Component
+@RequiredArgsConstructor
 public class BestDiscountStrategy implements PriceCalculationStrategy {
+
+    private final IMarketingGateway marketingGateway;
 
     /**
      * 计算最终价格
      *
      * @param sku           商品SKU
-     * @param marketingList 活动列表
      * @param quantity      购买数量
      * @return 最终价格
      */
     @Override
-    public BigDecimal calculateFinalPrice(Sku sku, List<Marketing> marketingList, Integer quantity) {
+    public BigDecimal calculateFinalPrice(Sku sku, Integer quantity) {
+
         // 获取商品原价
         BigDecimal originalPrice = sku.getPrice();
 
         // 计算原始总价
         BigDecimal originalTotalPrice = originalPrice.multiply(new BigDecimal(quantity));
+
+        // 查询可用的营销活动
+        List<Marketing> marketingList = this.marketingGateway.queryAvailableMarketing(sku.getId());
 
         // 如果没有活动，返回原价
         if (marketingList == null || marketingList.isEmpty()) {

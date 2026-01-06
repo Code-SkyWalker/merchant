@@ -1,16 +1,13 @@
 package org.dromara.merchant.infrastructure.marketing.gateway;
 
 import lombok.RequiredArgsConstructor;
-import org.dromara.merchant.domain.commodity.model.Sku;
 import org.dromara.merchant.domain.marketing.gateway.IMarketingGateway;
 import org.dromara.merchant.domain.marketing.model.Marketing;
-import org.dromara.merchant.domain.marketing.service.PriceCalculationStrategy;
 import org.dromara.merchant.infrastructure.marketing.converter.MarketingConvertor;
 import org.dromara.merchant.infrastructure.marketing.mapper.MarketingMapper;
 import org.dromara.merchant.infrastructure.marketing.mapper.dataobject.MarketingDO;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -24,8 +21,6 @@ public class MarketingGateway implements IMarketingGateway {
 
     private final MarketingMapper mapper;
     private final MarketingConvertor convertor;
-
-    private final PriceCalculationStrategy bestDiscountStrategy;
 
     /**
      * 保存营销活动规则
@@ -62,16 +57,10 @@ public class MarketingGateway implements IMarketingGateway {
         return convertor.toEntity(marketingDO);
     }
 
-    /**
-     * 计算最终价格, 使用最佳优惠(可替换其他计算方式)
-     *
-     * @param sku           商品SKU
-     * @param marketingList 营销活动列表
-     * @param quantity      商品数量
-     * @return 最终价格
-     */
     @Override
-    public BigDecimal calculateFinalPrice(Sku sku, List<Marketing> marketingList, Integer quantity) {
-        return bestDiscountStrategy.calculateFinalPrice(sku, marketingList, quantity);
+    public List<Marketing> queryAvailableMarketing(Long spuId) {
+        List<MarketingDO> marketingDOList = this.mapper.selectAvailableMarketingsBySpuId(spuId);
+        return convertor.toMarketingList(marketingDOList);
     }
+
 }

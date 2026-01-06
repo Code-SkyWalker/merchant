@@ -7,6 +7,8 @@ import org.dromara.merchant.domain.marketing.model.Rule;
 import org.dromara.merchant.infrastructure.marketing.mapper.dataobject.MarketingDO;
 import org.mapstruct.*;
 
+import java.util.List;
+
 /**
  * @Description Marketing转换器
  * @Author Code Skywalker
@@ -41,6 +43,10 @@ public interface MarketingConvertor {
      */
     @Mapping(target = "rules", ignore = true)
     Marketing toEntity(MarketingModifyCmd cmd);
+
+
+    @Mapping(target = "rules", ignore = true)
+    List<Marketing> toMarketingList(List<MarketingDO> dos);
 
     /**
      * MarketingCreateCmd转Marketing实体
