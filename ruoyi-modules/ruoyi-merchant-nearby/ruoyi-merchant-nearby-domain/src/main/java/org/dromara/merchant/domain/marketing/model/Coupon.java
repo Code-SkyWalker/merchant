@@ -104,34 +104,4 @@ public class Coupon {
      */
     List<CouponSpu> couponSpus;
 
-
-    /**
-     * 计算 优惠后的价格
-     *
-     * @param originalPrice 原价
-     * @return 优惠后的价格
-     */
-    public BigDecimal finalPriceCalculate(BigDecimal originalPrice) {
-
-        //  判断优惠券是否可用
-        if (this.serviceBegin.isAfter(LocalDateTime.now()) || this.serviceEnd.isBefore(LocalDateTime.now())) {
-            return originalPrice;
-        }
-
-        //  判断优惠券是否满足使用门槛
-        if (originalPrice.compareTo(this.actuatingThreshold) < 0) {
-            return originalPrice;
-        }
-
-        //   判断优惠券类型, 满减元
-        if (this.discountType == DISCOUNT_TYPE_FULL_REDUCTION) {
-            return originalPrice.subtract(this.discount);
-        }
-
-        //   判断优惠券类型, 满打折
-        return originalPrice.multiply(this.discount);
-    }
-
-
-
 }

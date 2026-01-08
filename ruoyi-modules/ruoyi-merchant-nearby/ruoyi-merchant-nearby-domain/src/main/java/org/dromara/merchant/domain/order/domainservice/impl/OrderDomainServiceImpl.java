@@ -1,11 +1,10 @@
 package org.dromara.merchant.domain.order.domainservice.impl;
 
 import com.alibaba.cola.statemachine.StateMachine;
-import com.alibaba.cola.statemachine.StateMachineFactory;
 import lombok.RequiredArgsConstructor;
 import org.dromara.merchant.domain.order.domainservice.IOrderDomainService;
 import org.dromara.merchant.domain.order.gateway.IOrderGateway;
-import org.dromara.merchant.domain.order.marketing.MarketingCalculationService;
+
 import org.dromara.merchant.domain.order.model.Order;
 import org.dromara.merchant.domain.order.model.OrderStatus;
 import org.dromara.merchant.domain.order.statemachine.OrderEvent;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import static org.dromara.merchant.domain.order.statemachine.OrderStateMachineConfig.ORDER_STATE_MACHINE_ID;
 
 /**
  * @Description 订单领域服务实现
@@ -26,8 +24,8 @@ import static org.dromara.merchant.domain.order.statemachine.OrderStateMachineCo
 public class OrderDomainServiceImpl implements IOrderDomainService {
 
     private final IOrderGateway orderGateway;
-    private final MarketingCalculationService marketingCalculationService;
     private final StateMachine<OrderStatus, OrderEvent, Order> stateMachine;
+
 
     @Override
     public Long createOrder(Order order) {
@@ -86,16 +84,12 @@ public class OrderDomainServiceImpl implements IOrderDomainService {
     @Override
     public boolean deliverOrder(Long orderId, String expressCompany, String expressNo) {
         Order order = orderGateway.queryById(orderId);
-        if (order == null) {
-            return false;
-        }
+        if (order == null) return false;
 
         OrderStatus currentState = order.getStatus();
         OrderStatus result = stateMachine.fireEvent(currentState, OrderEvent.DELIVER, order);
 
-        if (result == null) {
-            return false;
-        }
+        if (result == null) return false;
 
         order.setUpdateTime(LocalDateTime.now());
         // 添加物流信息到扩展信息
@@ -167,13 +161,6 @@ public class OrderDomainServiceImpl implements IOrderDomainService {
 
         // 设置商品总金额
         order.setGoodsAmount(totalFinalAmount.add(discountAmount));
-
-        // 设置营销活动优惠金额
-        order.setDiscountAmount(marketingCalculationService.calculateMarketingDiscount(order));
-
-        // 计算应付金额
-        BigDecimal payableAmount = marketingCalculationService.calculatePayableAmount(order);
-        order.setPayableAmount(payableAmount);
 
         // 实付金额默认等于应付金额（实际支付可能通过支付回调更新）
         order.setPaidAmount(order.getPayableAmount());

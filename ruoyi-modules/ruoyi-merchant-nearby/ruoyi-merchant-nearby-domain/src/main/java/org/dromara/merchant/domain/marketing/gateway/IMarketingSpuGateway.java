@@ -26,4 +26,12 @@ public interface IMarketingSpuGateway {
      * @return 删除结果
      */
     boolean deleteByMarketingId(Long marketingId);
+
+    /**
+     * 根据商品ID查询营销ID列表
+     *
+     * @param spuId 商品ID
+     * @return 营销ID列表
+     */
+    List<Long> queryMarketingIdsBySpuId(Long spuId);
 }

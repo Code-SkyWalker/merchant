@@ -27,4 +27,11 @@ public interface ICouponSpuGateway {
      */
     boolean deleteByCouponId(Long couponId);
 
+    /**
+     * 根据商品ID查询优惠券ID列表
+     *
+     * @param spuId 商品ID
+     * @return 优惠券ID列表
+     */
+    List<Long> queryCouponIdsBySpuId(Long spuId);
 }
