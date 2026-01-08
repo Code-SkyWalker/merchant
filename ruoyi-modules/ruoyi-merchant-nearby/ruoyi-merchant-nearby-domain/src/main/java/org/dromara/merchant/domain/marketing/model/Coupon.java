@@ -20,16 +20,6 @@ import java.util.List;
 public class Coupon {
 
     /**
-     * 折扣类型满减
-     */
-    public static final int DISCOUNT_TYPE_FULL_REDUCTION = 0;
-
-    /**
-     * 折扣类型满折
-     */
-    public static final int DISCOUNT_TYPE_FULL_DISCOUNT = 1;
-
-    /**
      * 优惠券主键
      */
     private Long id = SnowflakeIdGenerator.generateId();
@@ -62,7 +52,7 @@ public class Coupon {
     /**
      * 使用范围：'ONLINE'线上，'OFFLINE'线下，'NON_LIMIT'无限制
      */
-    private String actuatingRange;
+    private CouponType actuatingRange;
 
     /**
      * 使用门槛：0无门槛
@@ -92,7 +82,7 @@ public class Coupon {
     /**
      * 商品作用范围：'ALL'所有商品,'INCLUDE'指定商品,'EXCLUDE'排除商品
      */
-    private String goodsRange;
+    private CouponScope goodsRange;
 
     /**
      * 商家Id
@@ -103,5 +93,14 @@ public class Coupon {
      * 优惠券与商品关联 列表
      */
     List<CouponSpu> couponSpus;
+
+    /**
+     * 是否可用
+     */
+    public boolean isApplicable() {
+        LocalDateTime now = LocalDateTime.now();
+        return this.serviceBegin.isBefore(now) && this.serviceEnd.isAfter(now)
+            && !CouponType.OFFLINE.equals(this.actuatingRange);
+    }
 
 }
