@@ -61,6 +61,16 @@ public class SkuService implements ISkuService {
     public List<SkuCreateCmd> generateSkus(Long spuId, Map<String, List<String>> specItems, SkuGenCmd.SpuInfo baseSku) {
         List<SkuCreateCmd> skuList = new ArrayList<>();
 
+        // 如果属性为空，则根据baseInfo创建sku
+        if (specItems == null || specItems.isEmpty()) {
+            SkuCreateCmd sku = new SkuCreateCmd();
+            BeanUtils.copyProperties(baseSku, sku);
+            sku.setSpuId(spuId);
+            sku.setSpec("{}");
+            skuList.add(sku);
+            return skuList;
+        }
+
         // 获取所有规格项的键
         List<String> specKeys = new ArrayList<>(specItems.keySet());
 

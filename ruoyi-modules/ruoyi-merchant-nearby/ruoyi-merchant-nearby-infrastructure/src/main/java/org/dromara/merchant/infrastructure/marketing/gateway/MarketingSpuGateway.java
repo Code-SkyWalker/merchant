@@ -57,4 +57,9 @@ public class MarketingSpuGateway implements IMarketingSpuGateway {
     public boolean deleteByMarketingId(Long marketingId) {
         return this.mapper.deleteByMarketingId(marketingId) > 0;
     }
+
+    @Override
+    public List<Long> queryMarketingIdsBySpuId(Long spuId) {
+        return this.mapper.selectMarketingIdsBySpuId(spuId);
+    }
 }

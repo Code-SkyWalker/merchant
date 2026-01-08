@@ -33,4 +33,10 @@
         <result column="tb_marketing_spu_spu_id" property="spuId"/>
         <result column="tb_marketing_spu_kill_price" property="killPrice"/>
     </resultMap>
+
+    <select id="selectMarketingIdsBySpuId" resultType="java.lang.Long">
+        select marketing_id
+        from tb_marketing_spu
+        where spu_id = #{spuId}
+    </select>
 </mapper>

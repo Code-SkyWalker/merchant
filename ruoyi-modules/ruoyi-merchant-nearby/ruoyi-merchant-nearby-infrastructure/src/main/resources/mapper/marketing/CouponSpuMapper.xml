@@ -32,4 +32,10 @@
         <result column="tb_coupon_spu_coupon_id" property="couponId"/>
         <result column="tb_coupon_spu_spu_id" property="spuId"/>
     </resultMap>
+
+  <select id="selectCouponIdsBySpuId" resultType="java.lang.Long">
+      select coupon_id
+      from tb_coupon_spu
+      where spu_id = #{spuId}
+    </select>
 </mapper>

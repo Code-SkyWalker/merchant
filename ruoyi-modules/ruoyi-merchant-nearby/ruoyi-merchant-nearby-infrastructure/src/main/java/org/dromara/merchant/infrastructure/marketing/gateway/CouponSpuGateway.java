@@ -58,4 +58,9 @@ public class CouponSpuGateway implements ICouponSpuGateway {
     public boolean deleteByCouponId(Long couponId) {
         return this.mapper.deleteByCouponId(couponId) > 0;
     }
+
+    @Override
+    public List<Long> queryCouponIdsBySpuId(Long spuId) {
+        return this.mapper.selectCouponIdsBySpuId(spuId);
+    }
 }
