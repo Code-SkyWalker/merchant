@@ -42,15 +42,11 @@ public class RuleBulkDiscount implements Rule {
 
     @Override
     public BigDecimal calculate(BigDecimal originalUnitPrice, Integer quantity) {
+        // 购买数小于等于任选件数，返回0
+        if (quantity < unit) return BigDecimal.ZERO;
 
-        // 购买数小于等于任选件数，返回原价*购买数
-        if (quantity < unit) {
-            return originalUnitPrice.multiply(new BigDecimal(quantity));
-        }
-
-        // 购买数大于等于任选件数，计算超出任选件数的价格 （原价）
-        BigDecimal overflowPrice = originalUnitPrice.multiply(new BigDecimal(quantity - unit));
-        return amount.add(overflowPrice);
+        // 计算优惠金额 unit * originalUnitPrice - amount
+        return originalUnitPrice.multiply(new BigDecimal(unit)).subtract(this.amount);
 
     }
 }

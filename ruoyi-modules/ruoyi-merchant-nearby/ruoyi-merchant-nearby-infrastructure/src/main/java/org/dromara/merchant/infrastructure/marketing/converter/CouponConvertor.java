@@ -2,7 +2,7 @@ package org.dromara.merchant.infrastructure.marketing.converter;
 
 import org.dromara.merchant.client.marketing.dto.data.command.CouponCreateCmd;
 import org.dromara.merchant.client.marketing.dto.data.command.CouponModifyCmd;
-import org.dromara.merchant.domain.marketing.model.Coupon;
+import org.dromara.merchant.domain.marketing.model.activity.Coupon;
 import org.dromara.merchant.infrastructure.marketing.mapper.dataobject.CouponDO;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;

@@ -5,11 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.dromara.common.core.utils.SnowflakeIdGenerator;
-import org.dromara.merchant.domain.marketing.model.Coupon;
-import org.dromara.merchant.domain.marketing.model.Marketing;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * @Description 订单项实体

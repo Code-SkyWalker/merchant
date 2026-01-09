@@ -1,6 +1,6 @@
 package org.dromara.merchant.domain.marketing.gateway;
 
-import org.dromara.merchant.domain.marketing.model.Coupon;
+import org.dromara.merchant.domain.marketing.model.activity.Coupon;
 
 /**
  * @Description 优惠券网关

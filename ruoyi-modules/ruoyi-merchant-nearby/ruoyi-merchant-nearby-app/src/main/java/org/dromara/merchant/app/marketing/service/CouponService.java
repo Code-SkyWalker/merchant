@@ -8,7 +8,7 @@ import org.dromara.merchant.app.marketing.executor.CouponModifyExe;
 import org.dromara.merchant.client.marketing.dto.data.command.CouponCreateCmd;
 import org.dromara.merchant.client.marketing.dto.data.command.CouponModifyCmd;
 import org.dromara.merchant.domain.marketing.gateway.ICouponGateway;
-import org.dromara.merchant.domain.marketing.model.Coupon;
+import org.dromara.merchant.domain.marketing.model.activity.Coupon;
 import org.springframework.stereotype.Component;
 
 /**

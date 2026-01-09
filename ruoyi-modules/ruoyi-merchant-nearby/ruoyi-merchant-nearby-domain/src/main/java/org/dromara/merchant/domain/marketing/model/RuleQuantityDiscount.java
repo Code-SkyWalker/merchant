@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * @Description x件x折模式
@@ -43,13 +44,11 @@ public class RuleQuantityDiscount implements Rule {
     public BigDecimal calculate(BigDecimal originalUnitPrice, Integer quantity) {
 
         // 购买数小于等于任选件数，返回原价*购买数
-        if (quantity < this.quantity) {
-            return originalUnitPrice.multiply(new BigDecimal(quantity));
-        }
+        if (quantity < this.quantity) return BigDecimal.ZERO;
 
-        // 购买数大于等于任选件数，返回 原价*(购买数-1)+原价*折扣价 （只有一件优惠）
-        BigDecimal originalPrice = originalUnitPrice.multiply(new BigDecimal(quantity - 1));
-        return originalUnitPrice.multiply(discount).add(originalPrice);
+        // 购买数大于等于任选件数，返回 原价*(1-discount)（只有一件优惠）
+        BigDecimal discountRate = originalUnitPrice.multiply(BigDecimal.ONE.subtract(this.discount.divide(BigDecimal.TEN, 4, RoundingMode.HALF_UP)));
+        return originalUnitPrice.multiply(discountRate);
 
     }
 }

@@ -36,12 +36,20 @@ public interface Rule {
     String toJson();
 
     /**
-     * 计算优惠后的价格
+     * 计算优惠价格
      *
      * @param originalUnitPrice 单件原价
      * @param quantity          购买数量
      * @return 优惠后的价格
      */
     BigDecimal calculate(BigDecimal originalUnitPrice, Integer quantity);
+
+    /**
+     * 批量优惠计算
+     *
+     * @param originalTotalPrice 单件原价
+     * @return 优惠后的价格
+     */
+    BigDecimal calculateForMultiUnit(BigDecimal originalTotalPrice);
 
 }

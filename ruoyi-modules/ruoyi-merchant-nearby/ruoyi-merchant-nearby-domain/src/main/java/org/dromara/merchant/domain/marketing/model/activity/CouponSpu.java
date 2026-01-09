@@ -1,4 +1,4 @@
-package org.dromara.merchant.domain.marketing.model;
+package org.dromara.merchant.domain.marketing.model.activity;
 
 import lombok.Data;
 

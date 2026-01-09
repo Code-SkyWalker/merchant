@@ -1,6 +1,8 @@
 package org.dromara.merchant.domain.marketing.discount;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Description 商城活动接口
@@ -10,15 +12,39 @@ import java.math.BigDecimal;
 public interface Activities {
 
     /**
-     * 是否可用
-     * @return true/false
+     * 判断活动是否适用于当前购物车
+     * @param products 商品列表
+     * @param currentPrices 当前各商品的价格
+     * @return 如果适用返回true，否则返回false
      */
-    boolean isApplicable();
+    boolean isApplicable(List<Product> products, Map<Product, BigDecimal> currentPrices);
 
     /**
-     * 计算优惠金额
-     * @return 优惠的金额
+     * 计算总优惠金额
+     * @param products 商品列表
+     * @param currentPrices 当前各商品的价格
+     * @return 总优惠金额
      */
-    BigDecimal calculateDiscount();
+    BigDecimal calculateTotalDiscount(List<Product> products, Map<Product, BigDecimal> currentPrices);
+
+    /**
+     * 判断商品是否符合活动条件
+     * @param product 待检查的商品
+     * @return 如果符合条件返回true，否则返回false
+     */
+    boolean isProductEligible(Product product);
+
+    /**
+     * 计算符合条件商品的总价值
+     * @param products 商品列表
+     * @param currentPrices 当前各商品的价格
+     * @return 符合条件商品的总价值
+     */
+    default BigDecimal calculateEligibleTotal(List<Product> products, Map<Product, BigDecimal> currentPrices) {
+        return products.stream()
+            .filter(this::isProductEligible)  // 过滤符合条件的商品
+            .map(p -> currentPrices.getOrDefault(p, p.getTotalPrice()))  // 映射为价格
+            .reduce(BigDecimal.ZERO, BigDecimal::add);  // 求和
+    }
 
 }

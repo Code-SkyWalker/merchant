@@ -2,7 +2,7 @@ package org.dromara.merchant.infrastructure.marketing.gateway;
 
 import lombok.RequiredArgsConstructor;
 import org.dromara.merchant.domain.marketing.gateway.ICouponGateway;
-import org.dromara.merchant.domain.marketing.model.Coupon;
+import org.dromara.merchant.domain.marketing.model.activity.Coupon;
 import org.dromara.merchant.infrastructure.marketing.converter.CouponConvertor;
 import org.dromara.merchant.infrastructure.marketing.mapper.CouponMapper;
 import org.dromara.merchant.infrastructure.marketing.mapper.dataobject.CouponDO;
