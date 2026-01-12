@@ -1,9 +1,8 @@
 package org.dromara.merchant.app.marketing;
 
-import org.dromara.merchant.client.marketing.dto.data.client.MarketingCO;
 import org.dromara.merchant.client.marketing.dto.data.command.MarketingCreateCmd;
 import org.dromara.merchant.client.marketing.dto.data.command.MarketingModifyCmd;
-import org.dromara.merchant.domain.marketing.model.Marketing;
+import org.dromara.merchant.domain.marketing.model.activity.Marketing;
 
 /**
  * @Description 营销活动服务接口

@@ -4,7 +4,6 @@ import cn.hutool.json.JSONObject;
 import org.dromara.merchant.client.freight.dto.data.command.FreightConfigCreateCmd;
 import org.dromara.merchant.client.freight.dto.data.command.FreightConfigModifyCmd;
 import org.dromara.merchant.domain.freight.model.*;
-import org.dromara.merchant.domain.marketing.model.Rule;
 import org.dromara.merchant.infrastructure.freight.mapper.dataobject.FreightConfigDO;
 import org.mapstruct.*;
 

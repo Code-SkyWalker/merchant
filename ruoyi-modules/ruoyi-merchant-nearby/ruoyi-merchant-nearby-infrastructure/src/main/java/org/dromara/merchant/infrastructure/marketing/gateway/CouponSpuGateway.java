@@ -3,7 +3,7 @@ package org.dromara.merchant.infrastructure.marketing.gateway;
 import cn.hutool.core.collection.CollUtil;
 import lombok.RequiredArgsConstructor;
 import org.dromara.merchant.domain.marketing.gateway.ICouponSpuGateway;
-import org.dromara.merchant.domain.marketing.model.activity.CouponSpu;
+import org.dromara.merchant.domain.marketing.model.coupon.CouponSpu;
 import org.dromara.merchant.infrastructure.marketing.converter.CouponSpuConvertor;
 import org.dromara.merchant.infrastructure.marketing.mapper.CouponSpuMapper;
 import org.springframework.stereotype.Component;

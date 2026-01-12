@@ -9,7 +9,7 @@ import java.util.Map;
  * @Author Code Skywalker
  * @Date 2026/1/8 16:35
  */
-public interface Activities {
+public interface Activity {
 
     /**
      * 判断活动是否适用于当前购物车
@@ -45,6 +45,18 @@ public interface Activities {
             .filter(this::isProductEligible)  // 过滤符合条件的商品
             .map(p -> currentPrices.getOrDefault(p, p.getTotalPrice()))  // 映射为价格
             .reduce(BigDecimal.ZERO, BigDecimal::add);  // 求和
+    }
+
+    /**
+     * 计算符合条件商品的总数量
+     * @param products 商品列表
+     * @return 符合条件商品的总价值
+     */
+    default int calculateEligibleTotal(List<Product> products) {
+        return products.stream()
+            .filter(this::isProductEligible)
+            .map(Product::getQuantity)
+            .reduce(0, Integer::sum);
     }
 
 }

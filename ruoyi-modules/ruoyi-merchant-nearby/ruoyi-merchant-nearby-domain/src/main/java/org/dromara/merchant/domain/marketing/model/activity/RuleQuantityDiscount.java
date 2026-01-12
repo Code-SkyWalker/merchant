@@ -1,4 +1,4 @@
-package org.dromara.merchant.domain.marketing.model;
+package org.dromara.merchant.domain.marketing.model.activity;
 
 import cn.hutool.json.JSONObject;
 import lombok.AllArgsConstructor;
@@ -40,15 +40,21 @@ public class RuleQuantityDiscount implements Rule {
         return type;
     }
 
+    /**
+     * 根据商品数量计算优惠金额
+     *
+     * @param unitPrice 商品总原价
+     * @param quantity  商品总数量
+     * @return 优惠金额
+     */
     @Override
-    public BigDecimal calculate(BigDecimal originalUnitPrice, Integer quantity) {
-
-        // 购买数小于等于任选件数，返回原价*购买数
+    public BigDecimal calculate(BigDecimal unitPrice, Integer quantity) {
         if (quantity < this.quantity) return BigDecimal.ZERO;
 
         // 购买数大于等于任选件数，返回 原价*(1-discount)（只有一件优惠）
-        BigDecimal discountRate = originalUnitPrice.multiply(BigDecimal.ONE.subtract(this.discount.divide(BigDecimal.TEN, 4, RoundingMode.HALF_UP)));
-        return originalUnitPrice.multiply(discountRate);
+        BigDecimal discount = this.discount.compareTo(BigDecimal.TEN) > 0 ? this.discount.divide(BigDecimal.TEN, 2, RoundingMode.HALF_UP) : this.discount;
+        BigDecimal discountRate = unitPrice.multiply(BigDecimal.ONE.subtract(discount));
+        return unitPrice.multiply(discountRate);
 
     }
 }

@@ -23,7 +23,7 @@ public interface CouponSpuConvertor {
      * @param couponDOList CouponSpuDO列表
      * @return CouponSpu列表
      */
-    List<org.dromara.merchant.domain.marketing.model.activity.CouponSpu> toEntity(List<CouponDO> couponDOList);
+    List<org.dromara.merchant.domain.marketing.model.coupon.CouponSpu> toEntity(List<CouponDO> couponDOList);
 
     /**
      * CouponSpu 转 CouponSpuDO
@@ -31,7 +31,7 @@ public interface CouponSpuConvertor {
      * @param couponSpuList CouponSpu
      * @return CouponSpuDO列表
      */
-    List<CouponSpuDO> toDO(List<org.dromara.merchant.domain.marketing.model.activity.CouponSpu> couponSpuList);
+    List<CouponSpuDO> toDO(List<org.dromara.merchant.domain.marketing.model.coupon.CouponSpu> couponSpuList);
 
     /**
      * CouponSpuCmd 转 CouponSpu
@@ -39,6 +39,6 @@ public interface CouponSpuConvertor {
      * @param couponSpuList CouponSpuCmd列表
      * @return CouponSpu列表
      */
-    List<org.dromara.merchant.domain.marketing.model.activity.CouponSpu> cmdToEntity(List<CouponSpu> couponSpuList);
+    List<org.dromara.merchant.domain.marketing.model.coupon.CouponSpu> cmdToEntity(List<CouponSpu> couponSpuList);
 
 }

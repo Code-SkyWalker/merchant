@@ -5,13 +5,10 @@ import org.dromara.merchant.app.marketing.IMarketingService;
 import org.dromara.merchant.app.marketing.executor.MarketingCreateExe;
 import org.dromara.merchant.app.marketing.executor.MarketingDeleteExe;
 import org.dromara.merchant.app.marketing.executor.MarketingModifyExe;
-import org.dromara.merchant.client.marketing.dto.data.client.MarketingCO;
 import org.dromara.merchant.client.marketing.dto.data.command.MarketingCreateCmd;
 import org.dromara.merchant.client.marketing.dto.data.command.MarketingModifyCmd;
 import org.dromara.merchant.domain.marketing.gateway.IMarketingGateway;
-import org.dromara.merchant.domain.marketing.model.Marketing;
-import org.dromara.merchant.infrastructure.marketing.converter.MarketingConvertor;
-import org.dromara.merchant.infrastructure.marketing.mapper.MarketingMapper;
+import org.dromara.merchant.domain.marketing.model.activity.Marketing;
 import org.springframework.stereotype.Component;
 
 /**

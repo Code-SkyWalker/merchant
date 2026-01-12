@@ -1,5 +1,6 @@
-package org.dromara.merchant.domain.marketing.model;
+package org.dromara.merchant.domain.marketing.model.activity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -10,6 +11,7 @@ import java.math.BigDecimal;
  * @Date 2025/12/29 11:32
  */
 @Data
+@AllArgsConstructor
 public class MarketingSpu {
 
     /**

@@ -1,4 +1,4 @@
-package org.dromara.merchant.domain.marketing.model;
+package org.dromara.merchant.domain.marketing.model.activity;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -36,20 +36,13 @@ public interface Rule {
     String toJson();
 
     /**
-     * 计算优惠价格
+     * 根据商品数量计算优惠金额
      *
-     * @param originalUnitPrice 单件原价
-     * @param quantity          购买数量
-     * @return 优惠后的价格
+     * @param unitPrice 商品总原价
+     * @param quantity  商品总数量
+     * @return 优惠金额
      */
-    BigDecimal calculate(BigDecimal originalUnitPrice, Integer quantity);
+    BigDecimal calculate(BigDecimal unitPrice, Integer quantity);
 
-    /**
-     * 批量优惠计算
-     *
-     * @param originalTotalPrice 单件原价
-     * @return 优惠后的价格
-     */
-    BigDecimal calculateForMultiUnit(BigDecimal originalTotalPrice);
 
 }

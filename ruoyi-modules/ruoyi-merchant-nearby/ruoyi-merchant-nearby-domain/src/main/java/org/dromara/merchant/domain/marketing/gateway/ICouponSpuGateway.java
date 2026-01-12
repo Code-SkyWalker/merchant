@@ -1,6 +1,6 @@
 package org.dromara.merchant.domain.marketing.gateway;
 
-import org.dromara.merchant.domain.marketing.model.activity.CouponSpu;
+import org.dromara.merchant.domain.marketing.model.coupon.CouponSpu;
 
 import java.util.List;
 

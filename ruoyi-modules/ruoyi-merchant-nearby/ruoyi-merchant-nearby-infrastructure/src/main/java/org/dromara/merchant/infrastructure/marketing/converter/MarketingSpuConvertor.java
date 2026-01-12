@@ -19,19 +19,19 @@ public interface MarketingSpuConvertor {
      * @param marketingDOs marketingDO列表
      * @return marketingSpus列表
      */
-    List<org.dromara.merchant.domain.marketing.model.MarketingSpu> toEntity(List<MarketingSpuDO> marketingDOs);
+    List<org.dromara.merchant.domain.marketing.model.activity.MarketingSpu> toEntity(List<MarketingSpuDO> marketingDOs);
 
     /**
      * MarketingSpus 转 MarketingSpuDOs
      * @param marketingSpus marketingSpus列表
      * @return marketingDO列表
      */
-    List<MarketingSpuDO> toDO(List<org.dromara.merchant.domain.marketing.model.MarketingSpu> marketingSpus);
+    List<MarketingSpuDO> toDO(List<org.dromara.merchant.domain.marketing.model.activity.MarketingSpu> marketingSpus);
 
     /**
      * MarketingSpuCmds 转 MarketingSpus
      * @param marketingSpus marketingSpuCmds列表
      * @return marketingSpus列表
      */
-    List<org.dromara.merchant.domain.marketing.model.MarketingSpu> cmdToEntity(List<MarketingSpu> marketingSpus);
+    List<org.dromara.merchant.domain.marketing.model.activity.MarketingSpu> cmdToEntity(List<MarketingSpu> marketingSpus);
 }

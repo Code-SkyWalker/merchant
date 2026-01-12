@@ -2,7 +2,7 @@ package org.dromara.merchant.app.marketing;
 
 import org.dromara.merchant.client.marketing.dto.data.command.CouponCreateCmd;
 import org.dromara.merchant.client.marketing.dto.data.command.CouponModifyCmd;
-import org.dromara.merchant.domain.marketing.model.activity.Coupon;
+import org.dromara.merchant.domain.marketing.model.coupon.Coupon;
 
 /**
  * @Description 优惠券服务接口

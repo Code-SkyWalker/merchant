@@ -1,4 +1,4 @@
-package org.dromara.merchant.domain.marketing.model.activity;
+package org.dromara.merchant.domain.marketing.model.coupon;
 
 import lombok.Data;
 

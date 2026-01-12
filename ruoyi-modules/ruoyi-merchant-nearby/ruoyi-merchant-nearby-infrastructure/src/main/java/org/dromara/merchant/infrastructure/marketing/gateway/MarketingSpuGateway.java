@@ -3,7 +3,7 @@ package org.dromara.merchant.infrastructure.marketing.gateway;
 import cn.hutool.core.collection.CollUtil;
 import lombok.RequiredArgsConstructor;
 import org.dromara.merchant.domain.marketing.gateway.IMarketingSpuGateway;
-import org.dromara.merchant.domain.marketing.model.MarketingSpu;
+import org.dromara.merchant.domain.marketing.model.activity.MarketingSpu;
 import org.dromara.merchant.infrastructure.marketing.converter.MarketingSpuConvertor;
 import org.dromara.merchant.infrastructure.marketing.mapper.MarketingSpuMapper;
 import org.springframework.stereotype.Component;

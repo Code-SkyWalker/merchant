@@ -2,8 +2,8 @@ package org.dromara.merchant.infrastructure.marketing.converter;
 
 import cn.hutool.json.JSONObject;
 import org.dromara.merchant.client.marketing.dto.data.command.*;
-import org.dromara.merchant.domain.marketing.model.*;
-import org.dromara.merchant.domain.marketing.model.Rule;
+import org.dromara.merchant.domain.marketing.model.activity.*;
+import org.dromara.merchant.domain.marketing.model.activity.Rule;
 import org.dromara.merchant.infrastructure.marketing.mapper.dataobject.MarketingDO;
 import org.mapstruct.*;
 

@@ -1,15 +1,17 @@
-package org.dromara.merchant.domain.marketing.model.activity;
+package org.dromara.merchant.domain.marketing.model.coupon;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.dromara.common.core.utils.SnowflakeIdGenerator;
-import org.dromara.merchant.domain.marketing.discount.Activities;
+import org.dromara.merchant.domain.marketing.discount.Activity;
 import org.dromara.merchant.domain.marketing.discount.Product;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +23,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Coupon implements Activities {
+public class Coupon implements Activity {
 
     /**
      * 折扣类型满减
@@ -184,6 +186,54 @@ public class Coupon implements Activities {
             included = !included;
         }
         return included;
+    }
+
+    /**
+     * 按比例分配优惠金额
+     * @param totalDiscount 总优惠金额
+     * @param products 商品列表
+     * @param currentPrices 当前各商品的价格
+     * @return 每个商品对应的优惠金额
+     */
+    public Map<Product, BigDecimal> allocateByProportion(BigDecimal totalDiscount, List<Product> products, Map<Product, BigDecimal> currentPrices) {
+        // 计算所有商品的总价值
+        BigDecimal total = BigDecimal.ZERO;
+        for (Product product : products) {
+            // 使用当前价格，如果不存在则使用商品原始价格
+            BigDecimal price = currentPrices.getOrDefault(product, product.getTotalPrice());
+            total = total.add(price);
+        }
+
+        // 如果总价值为0，返回空映射
+        if (total.compareTo(BigDecimal.ZERO) == 0) {
+            return Collections.emptyMap();
+        }
+
+        Map<Product, BigDecimal> result = new HashMap<>();
+        BigDecimal allocated = BigDecimal.ZERO;
+
+        // 按比例分配优惠金额
+        for (int i = 0; i < products.size(); i++) {
+            Product product = products.get(i);
+            // 使用当前价格，如果不存在则使用商品原始价格
+            BigDecimal price = currentPrices.getOrDefault(product, product.getTotalPrice());
+            // 计算该商品价格占总价值的比例
+            BigDecimal ratio = price.divide(total, 4, RoundingMode.HALF_UP);
+            // 按比例计算该商品应分配的优惠金额
+            BigDecimal discount = totalDiscount.multiply(ratio).setScale(2, RoundingMode.HALF_UP);
+
+            result.put(product, discount);
+            allocated = allocated.add(discount);
+        }
+
+        // 处理因四舍五入导致的小数点差异，将差额加到最后一个商品上
+        if (allocated.compareTo(totalDiscount) != 0 && !products.isEmpty()) {
+            Product lastProduct = products.get(products.size() - 1);
+            BigDecimal diff = totalDiscount.subtract(allocated);
+            result.put(lastProduct, result.getOrDefault(lastProduct, BigDecimal.ZERO).add(diff));
+        }
+
+        return result;
     }
 
 

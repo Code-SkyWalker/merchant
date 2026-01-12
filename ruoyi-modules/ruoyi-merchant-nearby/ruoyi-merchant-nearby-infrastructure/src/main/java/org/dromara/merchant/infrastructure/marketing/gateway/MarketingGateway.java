@@ -2,7 +2,7 @@ package org.dromara.merchant.infrastructure.marketing.gateway;
 
 import lombok.RequiredArgsConstructor;
 import org.dromara.merchant.domain.marketing.gateway.IMarketingGateway;
-import org.dromara.merchant.domain.marketing.model.Marketing;
+import org.dromara.merchant.domain.marketing.model.activity.Marketing;
 import org.dromara.merchant.infrastructure.marketing.converter.MarketingConvertor;
 import org.dromara.merchant.infrastructure.marketing.mapper.MarketingMapper;
 import org.dromara.merchant.infrastructure.marketing.mapper.dataobject.MarketingDO;
