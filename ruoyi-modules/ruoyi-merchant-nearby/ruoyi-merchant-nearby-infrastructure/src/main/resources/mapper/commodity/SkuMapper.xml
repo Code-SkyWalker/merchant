@@ -19,8 +19,6 @@
     <result column="volume" property="volume" />
     <result column="min_purchase" property="minPurchase" />
     <result column="max_purchase" property="maxPurchase" />
-    <result column="create_time" property="createTime" />
-    <result column="update_time" property="updateTime" />
     <result column="spu_id" property="spuId" />
     <result column="category_id" property="categoryId" />
     <result column="category_name" property="categoryName" />
@@ -92,4 +90,14 @@
         <result column="tb_sku_category_id" property="categoryId"/>
         <result column="tb_sku_category_name" property="categoryName"/>
     </resultMap>
+
+  <select id="queryByIdList" resultType="org.dromara.merchant.domain.commodity.model.Sku">
+      select
+      <include refid="Base_Column_List"/>
+      from tb_sku
+      where id in
+      <foreach item="id" collection="skuIds" separator="," open="(" close=")">
+        #{id}
+      </foreach>
+    </select>
 </mapper>

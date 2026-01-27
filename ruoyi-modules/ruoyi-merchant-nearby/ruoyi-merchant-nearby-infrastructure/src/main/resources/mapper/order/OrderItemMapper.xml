@@ -27,18 +27,42 @@
         order_id,
         spu_id,
         sku_id,
-        spu_name,
         sku_name,
         sku_pic,
         sku_spec,
         price,
         quantity,
-        subtotal,
         discount_amount,
         final_amount,
         commission_rate,
         commission_amount,
+        post_fee,
+        subtotal,
         ext_info
     </sql>
 
+    <resultMap id="COResultMap" type="org.dromara.merchant.client.order.dto.data.clientobject.OrderItemCO">
+        <id column="order_item_id" property="orderItemId"/>
+        <result column="order_id" property="orderId"/>
+        <result column="spu_id" property="spuId"/>
+        <result column="sku_id" property="skuId"/>
+        <result column="sku_name" property="skuName"/>
+        <result column="sku_pic" property="skuPic"/>
+        <result column="sku_spec" property="skuSpec"/>
+        <result column="price" property="unitPrice"/>
+        <result column="quantity" property="quantity"/>
+        <result column="discount_amount" property="discountAmount"/>
+        <result column="final_amount" property="finalAmount"/>
+        <result column="commission_rate" property="commissionRate"/>
+        <result column="commission_amount" property="commissionAmount"/>
+        <result column="post_fee" property="postFee"/>
+        <result column="subtotal" property="subtotal"/>
+        <result column="ext_info" property="extInfo"/>
+    </resultMap>
+
+    <select id="queryOrderItemByOrderId" resultMap="COResultMap">
+        select <include refid="Base_Column_List"/>
+        from tb_order_item
+        where order_id = #{orderId}
+    </select>
 </mapper>

@@ -33,22 +33,31 @@ public class MarketingCalculator implements PriceCalculator {
         // 获取当前价格映射
         Map<Product, BigDecimal> currentPrices = context.getCurrentPrices();
 
+        BigDecimal marketingDiscountTotal = BigDecimal.ZERO;
+
         // 对每个阶梯价活动进行处理
         for (Marketing marketing : marketings) {
 
             // 计算总优惠金额
             BigDecimal totalDiscount = marketing.calculateTotalDiscount(products, currentPrices);
+
+            marketingDiscountTotal = marketingDiscountTotal.add(totalDiscount);
+
             // 分配优惠金额到各个商品
             Map<Product, BigDecimal> allocated = marketing.allocateByProportion(totalDiscount, products, currentPrices);
 
             // 更新商品价格
             for (Product product : products) {
-                BigDecimal current = currentPrices.get(product);
-                BigDecimal discount = allocated.getOrDefault(product, BigDecimal.ZERO);
-                currentPrices.put(product, current.subtract(discount));
+                    BigDecimal current = currentPrices.get(product);
+                    BigDecimal discount = allocated.getOrDefault(product, BigDecimal.ZERO);
+                    currentPrices.put(product, current.subtract(discount));
             }
 
         }
+
+        // 添加总优惠金额到上下文中
+        context.setMarketingDiscountAmount(marketingDiscountTotal);
+
 
         // 如果还有下一个处理器，继续传递请求
         if (nextCalculator != null) {
@@ -56,7 +65,7 @@ public class MarketingCalculator implements PriceCalculator {
         }
 
         // 如果这是最后一个处理器，创建并返回结果
-        return createFinalResult(products, context);
+        return createFinalResult(context);
     }
 
     /**

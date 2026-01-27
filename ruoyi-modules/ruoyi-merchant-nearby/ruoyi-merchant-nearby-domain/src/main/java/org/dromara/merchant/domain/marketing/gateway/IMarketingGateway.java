@@ -43,4 +43,11 @@ public interface IMarketingGateway {
      */
     List<Marketing> queryAvailableMarketing(Long spuId);
 
+    /**
+     * 根据营销活动ID列表查询营销活动
+     *
+     * @param marketingIds 营销活动ID列表
+     * @return 营销活动列表
+     */
+    List<Marketing> queryByIds(List<Long> marketingIds);
 }

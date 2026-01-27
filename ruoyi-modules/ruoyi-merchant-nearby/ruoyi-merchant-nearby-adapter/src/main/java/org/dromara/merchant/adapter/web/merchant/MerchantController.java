@@ -31,7 +31,7 @@ public class MerchantController {
      */
     @GetMapping("/{merchantId}")
     public R<MerchantCO> queryById(@PathVariable Long merchantId) {
-        MerchantCO merchantCO = this.merchantService.queryById(merchantId);
+        MerchantCO merchantCO = this.merchantService.queryCOById(merchantId);
         return R.ok(merchantCO);
     }
 

@@ -54,4 +54,9 @@ public class ExpressAreaGateway implements IExpressAreaGateway {
     public boolean deleteByTemplateId(Long templateId) {
         return mapper.deleteByTemplateId(templateId) > 0;
     }
+
+    @Override
+    public List<ExpressArea> queryExpressAreaByTemplateId(Long templateId) {
+        return convertor.toEntityList(mapper.selectByTemplateId(templateId));
+    }
 }

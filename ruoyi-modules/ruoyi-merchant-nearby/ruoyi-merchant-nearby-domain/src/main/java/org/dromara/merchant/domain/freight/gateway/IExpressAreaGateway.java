@@ -59,4 +59,12 @@ public interface IExpressAreaGateway {
      */
     boolean deleteByTemplateId(Long templateId);
 
+    /**
+     * 根据模板ID查询商户配送区域
+     *
+     * @param templateId 模板ID
+     * @return 配送区域列表
+     */
+    List<ExpressArea> queryExpressAreaByTemplateId(Long templateId);
+
 }

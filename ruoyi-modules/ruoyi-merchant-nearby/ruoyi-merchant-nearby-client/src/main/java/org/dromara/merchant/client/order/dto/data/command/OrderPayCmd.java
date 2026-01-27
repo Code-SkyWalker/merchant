@@ -11,7 +11,7 @@ import java.math.BigDecimal;
  * @Date 2026-01-05
  */
 @Data
-public class OrderPayCmd implements Command {
+public class OrderPayCmd {
 
     /**
      * 订单ID

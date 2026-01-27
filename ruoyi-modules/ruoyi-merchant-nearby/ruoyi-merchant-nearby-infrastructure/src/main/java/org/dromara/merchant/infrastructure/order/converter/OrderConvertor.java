@@ -3,6 +3,7 @@ package org.dromara.merchant.infrastructure.order.converter;
 import cn.hutool.json.JSONObject;
 import org.dromara.merchant.client.order.dto.data.clientobject.OrderCO;
 import org.dromara.merchant.client.order.dto.data.clientobject.OrderItemCO;
+import org.dromara.merchant.client.order.dto.data.command.OrderCancelCmd;
 import org.dromara.merchant.client.order.dto.data.command.OrderCreateCmd;
 import org.dromara.merchant.domain.freight.model.DeliveryMethod;
 import org.dromara.merchant.domain.order.model.InvoiceInfo;
@@ -46,6 +47,8 @@ public interface OrderConvertor {
      * @return 订单实体
      */
     Order toEntity(OrderCreateCmd cmd);
+
+    Order toEntity(OrderCancelCmd cmd);
 
     /**
      * 将订单实体转换为数据对象

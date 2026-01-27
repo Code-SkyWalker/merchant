@@ -13,6 +13,8 @@ import org.dromara.merchant.client.merchant.dto.data.clientobject.MerchantCO;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantCreateCmd;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantModifyCmd;
 import org.dromara.merchant.client.merchant.dto.data.command.query.MerchantPageQry;
+import org.dromara.merchant.domain.merchant.gateway.IMerchantGateway;
+import org.dromara.merchant.domain.merchant.model.Merchant;
 import org.springframework.stereotype.Service;
 
 /**
@@ -30,6 +32,8 @@ public class MerchantService implements IMerchantService {
     private final MerchantDetailQryExecutor detailQryExecutor;
     private final MerchantPageQryExecutor pageQryExecutor;
 
+    private final IMerchantGateway merchantGateway;
+
     @Override
     public boolean create(MerchantCreateCmd cmd) {
         return createExecutor.execute(cmd);
@@ -46,7 +50,12 @@ public class MerchantService implements IMerchantService {
     }
 
     @Override
-    public MerchantCO queryById(Long merchantId) {
+    public Merchant queryById(Long merchantId) {
+        return this.merchantGateway.findById(merchantId);
+    }
+
+    @Override
+    public MerchantCO queryCOById(Long merchantId) {
         return detailQryExecutor.execute(merchantId);
     }
 

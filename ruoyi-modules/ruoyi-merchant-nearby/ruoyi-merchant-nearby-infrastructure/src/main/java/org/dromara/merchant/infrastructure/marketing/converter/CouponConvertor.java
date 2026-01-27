@@ -8,6 +8,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.List;
+
 /**
  * @Description Coupon转换器
  * @Author Code Skywalker
@@ -47,5 +49,13 @@ public interface CouponConvertor {
      * @return 优惠券实体
      */
     Coupon toEntity(CouponModifyCmd cmd);
+
+    /**
+     * CouponDO列表转Coupon列表
+     *
+     * @param couponDOList 优惠券数据对象列表
+     * @return 优惠券实体列表
+     */
+    List<Coupon> toEntityList(List<CouponDO> couponDOList);
 
 }

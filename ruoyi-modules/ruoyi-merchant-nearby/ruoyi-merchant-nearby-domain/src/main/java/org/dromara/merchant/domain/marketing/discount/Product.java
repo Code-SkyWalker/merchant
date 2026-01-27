@@ -1,6 +1,8 @@
 package org.dromara.merchant.domain.marketing.discount;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
@@ -10,6 +12,8 @@ import java.math.BigDecimal;
  * @Date 2026/1/8 17:26
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
 
     private Long spuId;

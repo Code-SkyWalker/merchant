@@ -19,7 +19,6 @@ import java.util.List;
 @Data
 public class PricingEngine {
 
-
     /**
      * 优惠活动列表
      */
@@ -36,19 +35,19 @@ public class PricingEngine {
     private BigDecimal shippingFee = BigDecimal.ZERO;
 
     /**
-     * 责任链处理器
-     */
-    private PriceCalculator calculatorChain;
-
-    /**
      * 积分抵扣金额
      */
-    private BigDecimal integralDiscountAmount;
+    private BigDecimal integralDiscountAmount = BigDecimal.ZERO;
 
     /**
      * 佣金抵扣金额
      */
-    private BigDecimal commDiscountAmount;
+    private BigDecimal commDiscountAmount = BigDecimal.ZERO;
+
+    /**
+     * 责任链处理器
+     */
+    private PriceCalculator calculatorChain;
 
     /**
      * 默认构造函数
@@ -63,8 +62,8 @@ public class PricingEngine {
      * 按照处理顺序连接各个计算器
      */
     private void buildCalculatorChain() {
-        CouponCalculator couponCalculator = new CouponCalculator();           // 阶梯价活动处理器
-        MarketingCalculator marketingCalculator = new MarketingCalculator();   // 单品券处理器
+        CouponCalculator couponCalculator = new CouponCalculator();           // 优惠券处理器
+        MarketingCalculator marketingCalculator = new MarketingCalculator();   // 优惠活动处理器
 
         // 构建责任链：优惠券 -> 优惠活动
         couponCalculator.setNext(marketingCalculator);
@@ -95,7 +94,7 @@ public class PricingEngine {
      */
     public CalculationResult calculate(List<Product> products) {
         // 创建计算上下文
-        CalculationContext context = new CalculationContext(products, marketings, coupons, shippingFee);
+        CalculationContext context = new CalculationContext(products, marketings, coupons, shippingFee, integralDiscountAmount, commDiscountAmount);
         // 通过责任链计算最终结果
         return calculatorChain.calculate(products, context);
     }

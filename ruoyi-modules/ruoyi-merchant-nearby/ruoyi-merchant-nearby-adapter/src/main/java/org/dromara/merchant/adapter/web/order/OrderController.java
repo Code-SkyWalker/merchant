@@ -1,16 +1,20 @@
 package org.dromara.merchant.adapter.web.order;
 
 import lombok.RequiredArgsConstructor;
+import org.dromara.common.core.domain.R;
+import org.dromara.common.mybatis.core.page.PageQuery;
+import org.dromara.common.mybatis.core.page.TableDataInfo;
 import org.dromara.merchant.app.order.executor.OrderCancelExecutor;
 import org.dromara.merchant.app.order.executor.OrderCreateExecutor;
 import org.dromara.merchant.app.order.executor.OrderPayExecutor;
 import org.dromara.merchant.app.order.executor.OrderRefundExecutor;
-import org.dromara.merchant.app.order.executor.query.OrderQueryExecutor;
 import org.dromara.merchant.client.order.dto.data.clientobject.OrderCO;
+import org.dromara.merchant.client.order.dto.data.clientobject.OrderPageCO;
 import org.dromara.merchant.client.order.dto.data.command.OrderCancelCmd;
 import org.dromara.merchant.client.order.dto.data.command.OrderCreateCmd;
 import org.dromara.merchant.client.order.dto.data.command.OrderPayCmd;
 import org.dromara.merchant.client.order.dto.data.command.query.OrderQry;
+import org.dromara.merchant.infrastructure.order.mapper.OrderMapper;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,83 +30,73 @@ public class OrderController {
 
     private final OrderCreateExecutor orderCreateExecutor;
     private final OrderPayExecutor orderPayExecutor;
-    private final OrderCancelExecutor orderCancelExecutor;
-    private final OrderQueryExecutor orderQueryExecutor;
     private final OrderRefundExecutor orderRefundExecutor;
+    private final OrderCancelExecutor orderCancelExecutor;
+
+    private final OrderMapper orderMapper;
 
     /**
      * 创建订单
      */
     @PostMapping("/create")
-    public Long createOrder(@Validated @RequestBody OrderCreateCmd cmd) {
-        return orderCreateExecutor.execute(cmd);
+    public R<Long> createOrder(@Validated @RequestBody OrderCreateCmd cmd) {
+        return R.ok(orderCreateExecutor.execute(cmd));
     }
 
     /**
      * 支付订单
      */
     @PostMapping("/pay")
-    public Boolean payOrder(@Validated @RequestBody OrderPayCmd cmd) {
-        return orderPayExecutor.execute(cmd);
+    public R<Boolean> payOrder(@Validated @RequestBody OrderPayCmd cmd) {
+        return R.ok(orderPayExecutor.execute(cmd));
     }
 
     /**
      * 取消订单
      */
     @PostMapping("/cancel")
-    public Boolean cancelOrder(@Validated @RequestBody OrderCancelCmd cmd) {
-        return orderCancelExecutor.execute(cmd);
+    public R<Boolean> cancelOrder(@Validated @RequestBody OrderCancelCmd cmd) {
+        return R.ok(orderCancelExecutor.execute(cmd));
     }
 
     /**
      * 申请退款
      */
     @PostMapping("/apply-refund")
-    public Boolean applyRefund(@RequestParam Long orderId, @RequestParam String refundReason) {
-        return orderRefundExecutor.applyRefund(orderId, refundReason);
+    public R<Boolean> applyRefund(@RequestParam Long orderId, @RequestParam String refundReason) {
+        return R.ok(orderRefundExecutor.applyRefund(orderId, refundReason));
     }
 
     /**
      * 同意退款
      */
     @PostMapping("/approve-refund")
-    public Boolean approveRefund(@RequestParam Long orderId, @RequestParam String refundOrderNo) {
-        return orderRefundExecutor.approveRefund(orderId, refundOrderNo);
+    public R<Boolean> approveRefund(@RequestParam Long orderId, @RequestParam String refundOrderNo) {
+        return R.ok(orderRefundExecutor.approveRefund(orderId, refundOrderNo));
     }
 
     /**
      * 拒绝退款
      */
     @PostMapping("/reject-refund")
-    public Boolean rejectRefund(@RequestParam Long orderId, @RequestParam String rejectReason) {
-        return orderRefundExecutor.rejectRefund(orderId, rejectReason);
+    public R<Boolean> rejectRefund(@RequestParam Long orderId, @RequestParam String rejectReason) {
+        return R.ok(orderRefundExecutor.rejectRefund(orderId, rejectReason));
     }
 
     /**
      * 查询订单
      */
-    @GetMapping("/query")
-    public OrderCO queryOrder(OrderQry qry) {
-        return orderQueryExecutor.execute(qry);
+    @GetMapping("/page")
+    public TableDataInfo<OrderPageCO> queryOrder(@ModelAttribute OrderQry qry, @ModelAttribute PageQuery page) {
+        return TableDataInfo.build(this.orderMapper.queryOrderPage(page.build(), qry));
     }
 
     /**
      * 根据ID查询订单
      */
     @GetMapping("/{orderId}")
-    public OrderCO queryOrderById(@PathVariable Long orderId) {
-        OrderQry qry = new OrderQry();
-        qry.setOrderId(orderId);
-        return orderQueryExecutor.execute(qry);
+    public R<OrderCO> queryOrderById(@PathVariable Long orderId) {
+        return R.ok(this.orderMapper.queryOrderByOrderId(orderId));
     }
 
-    /**
-     * 根据订单编号查询订单
-     */
-    @GetMapping("/no/{orderNo}")
-    public OrderCO queryOrderByNo(@PathVariable String orderNo) {
-        OrderQry qry = new OrderQry();
-        qry.setOrderNo(orderNo);
-        return orderQueryExecutor.execute(qry);
-    }
 }

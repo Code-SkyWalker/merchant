@@ -8,6 +8,8 @@ import org.dromara.merchant.client.marketing.dto.data.client.CouponPageCO;
 import org.dromara.merchant.client.marketing.dto.data.command.query.CouponPageQry;
 import org.dromara.merchant.infrastructure.marketing.mapper.dataobject.CouponDO;
 
+import java.util.List;
+
 public interface CouponMapper extends BaseMapperPlus<CouponDO, CouponDO> {
 
     /**
@@ -27,4 +29,11 @@ public interface CouponMapper extends BaseMapperPlus<CouponDO, CouponDO> {
      */
     CouponCO selectByCouponId(Long id);
 
+    /**
+     * 根据优惠券Id列表查询优惠券
+     *
+     * @param couponIds 优惠券Id列表
+     * @return 优惠券列表
+     */
+    List<CouponDO> selectByIdList(@Param("couponIds") List<Long> couponIds);
 }

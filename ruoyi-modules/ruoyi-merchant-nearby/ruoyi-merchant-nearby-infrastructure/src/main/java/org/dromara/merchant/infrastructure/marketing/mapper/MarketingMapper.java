@@ -6,6 +6,7 @@ import org.dromara.common.mybatis.core.mapper.BaseMapperPlus;
 import org.dromara.merchant.client.marketing.dto.data.client.MarketingCO;
 import org.dromara.merchant.client.marketing.dto.data.client.MarketingPageCo;
 import org.dromara.merchant.client.marketing.dto.data.command.query.MarketingPageQry;
+import org.dromara.merchant.domain.marketing.model.activity.Marketing;
 import org.dromara.merchant.infrastructure.marketing.mapper.dataobject.MarketingDO;
 
 import java.util.List;
@@ -37,4 +38,11 @@ public interface MarketingMapper extends BaseMapperPlus<MarketingDO, MarketingDO
      */
     Page<MarketingPageCo> queryPages(@Param("qry") MarketingPageQry qry, Page<MarketingDO> page);
 
+    /**
+     * 根据Id列表查询
+     *
+     * @param marketingIds 营销活动Id列表
+     * @return 营销活动
+     */
+    List<Marketing> selectByIdList(@Param("marketingIds") List<Long> marketingIds);
 }

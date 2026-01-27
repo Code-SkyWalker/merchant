@@ -25,34 +25,9 @@ public class OrderItem {
     private Long orderItemId = SnowflakeIdGenerator.generateId();
 
     /**
-     * 商家ID
-     */
-    private Long merchantId;
-
-    /**
-     * 商家名称
-     */
-    private String merchantName;
-
-    /**
      * 订单ID
      */
     private Long orderId;
-
-    /**
-     * 商品分类ID1
-     */
-    private Long categoryId1;
-
-    /**
-     * 商品分类ID2
-     */
-    private Long categoryId2;
-
-    /**
-     * 商品分类ID3
-     */
-    private Long categoryId3;
 
     /**
      * SPU ID
@@ -90,11 +65,6 @@ public class OrderItem {
     private Integer quantity;
 
     /**
-     * 小计金额
-     */
-    private BigDecimal subtotal;
-
-    /**
      * 优惠金额
      */
     private BigDecimal discountAmount;
@@ -118,6 +88,11 @@ public class OrderItem {
      * 邮费
      */
     private BigDecimal postFee;
+
+    /**
+     * 小计金额
+     */
+    private BigDecimal subtotal;
 
     /**
      * 扩展信息

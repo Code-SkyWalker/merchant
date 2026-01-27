@@ -2,6 +2,8 @@ package org.dromara.merchant.domain.marketing.gateway;
 
 import org.dromara.merchant.domain.marketing.model.coupon.Coupon;
 
+import java.util.List;
+
 /**
  * @Description 优惠券网关
  * @Author Code Skywalker
@@ -33,4 +35,11 @@ public interface ICouponGateway {
      */
     Coupon queryById(Long id);
 
+    /**
+     * 根据优惠券Id列表查询优惠券
+     *
+     * @param couponIds 优惠券Id列表
+     * @return 优惠券列表
+     */
+    List<Coupon> queryByIds(List<Long> couponIds);
 }

@@ -149,6 +149,7 @@ tenant:
     - tb_coupon_spu
     - tb_marketing_spu
     - tb_merchant_shipping_area
+    - tb_order_item
 
 # MyBatisPlus配置
 # https://baomidou.com/config/

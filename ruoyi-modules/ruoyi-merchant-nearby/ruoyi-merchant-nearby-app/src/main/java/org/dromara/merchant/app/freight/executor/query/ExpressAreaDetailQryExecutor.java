@@ -21,7 +21,7 @@ public class ExpressAreaDetailQryExecutor {
 
     public ExpressAreaCO execute(Long areaId) {
         ExpressAreaDO area = mapper.selectById(areaId);
-        return this.convertor.toMerchantShippingAreaCO(area);
+        return this.convertor.toCO(area);
     }
 
 }

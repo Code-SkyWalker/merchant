@@ -1,11 +1,9 @@
 package org.dromara.merchant.app.marketing.executor;
 
 import lombok.RequiredArgsConstructor;
-import org.dromara.merchant.app.Executor;
-import org.dromara.merchant.client.marketing.dto.data.command.MarketingCreateCmd;
+import org.dromara.common.core.domain.Executor;
 import org.dromara.merchant.domain.marketing.gateway.IMarketingGateway;
 import org.dromara.merchant.domain.marketing.gateway.IMarketingSpuGateway;
-import org.dromara.merchant.infrastructure.marketing.converter.MarketingConvertor;
 import org.springframework.stereotype.Component;
 
 /**

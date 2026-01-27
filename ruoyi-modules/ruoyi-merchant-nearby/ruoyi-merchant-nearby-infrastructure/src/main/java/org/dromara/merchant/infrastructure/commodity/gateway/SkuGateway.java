@@ -1,5 +1,6 @@
 package org.dromara.merchant.infrastructure.commodity.gateway;
 
+import cn.hutool.core.collection.CollUtil;
 import lombok.RequiredArgsConstructor;
 import org.dromara.merchant.domain.commodity.gateway.ISkuGateway;
 import org.dromara.merchant.domain.commodity.model.Sku;
@@ -8,6 +9,7 @@ import org.dromara.merchant.infrastructure.commodity.mapper.SkuMapper;
 import org.dromara.merchant.infrastructure.commodity.mapper.dataobject.SkuDO;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -41,6 +43,18 @@ public class SkuGateway implements ISkuGateway {
     public Sku queryById(Long id) {
         SkuDO skuDO = this.skuMapper.selectById(id);
         return this.skuConvertor.toEntity(skuDO);
+    }
+
+    /**
+     * 根据skuIds查询
+     *
+     * @param skuIds skuIds
+     * @return 商品sku列表
+     */
+    @Override
+    public List<Sku> queryBySkuIds(Collection<Long> skuIds) {
+        if (CollUtil.isEmpty(skuIds)) return List.of();
+        return this.skuMapper.queryByIdList(skuIds);
     }
 
     @Override

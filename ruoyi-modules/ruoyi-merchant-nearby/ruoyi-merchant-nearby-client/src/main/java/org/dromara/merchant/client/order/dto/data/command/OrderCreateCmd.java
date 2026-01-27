@@ -2,6 +2,7 @@ package org.dromara.merchant.client.order.dto.data.command;
 
 import lombok.Data;
 import org.dromara.merchant.client.Command;
+import org.dromara.merchant.client.marketing.dto.data.command.PriceCalculationCmd;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
  * @Date 2026-01-05
  */
 @Data
-public class OrderCreateCmd implements Command {
+public class OrderCreateCmd {
 
     /**
      * 用户ID
@@ -20,112 +21,56 @@ public class OrderCreateCmd implements Command {
     private Long userId;
 
     /**
-     * 用户昵称
-     */
-    private String userName;
-
-    /**
-     * 商户ID
+     * 商家id
      */
     private Long merchantId;
 
     /**
-     * 商户名称
+     * 商品列表
      */
-    private String merchantName;
+    private List<PriceCalculationCmd.Product> products;
 
     /**
-     * 订单类型
+     * 优惠券id列表
      */
-    private String orderType;
+    private List<Long> coupons;
 
     /**
-     * 订单来源
+     * 营销活动id列表
      */
-    private String orderSource;
-
-    /**
-     * 商品总金额
-     */
-    private BigDecimal goodsAmount;
-
-    /**
-     * 运费金额
-     */
-    private BigDecimal freightAmount;
-
-    /**
-     * 优惠金额
-     */
-    private BigDecimal discountAmount;
-
-    /**
-     * 优惠券抵扣金额
-     */
-    private BigDecimal couponAmount;
+    private List<Long> marketings;
 
     /**
      * 积分抵扣金额
      */
-    private BigDecimal pointAmount;
+    private BigDecimal integralDiscountAmount;
 
     /**
-     * 应付金额
+     * 佣金抵扣金额
      */
-    private BigDecimal payableAmount;
+    private BigDecimal commDiscountAmount;
 
     /**
-     * 实付金额
+     * 用户地址id
      */
-    private BigDecimal paidAmount;
+    private Long addressId;
 
     /**
-     * 支付方式
+     * 是否在配送范围内
      */
-    private String paymentMethod;
+    private Boolean withinRange;
 
-    /**
-     * 收货人姓名
-     */
-    private String receiverName;
 
-    /**
-     * 收货人电话
-     */
-    private String receiverPhone;
+    public PriceCalculationCmd toPriceCalculationCmd() {
+        return new PriceCalculationCmd()
+                .setMerchantId(merchantId)
+                .setProducts(products)
+                .setCoupons(coupons)
+                .setMarketings(marketings)
+                .setIntegralDiscountAmount(integralDiscountAmount)
+                .setCommDiscountAmount(commDiscountAmount)
+                .setAddressId(addressId)
+                .setWithinRange(withinRange);
+    }
 
-    /**
-     * 收货人地址
-     */
-    private String receiverAddress;
-
-    /**
-     * 配送方式
-     */
-    private String deliveryMethod;
-
-    /**
-     * 订单备注
-     */
-    private String remark;
-
-    /**
-     * 订单项列表
-     */
-    private List<OrderItemCreateCmd> orderItems;
-
-    /**
-     * 发票信息
-     */
-    private InvoiceInfoCreateCmd invoiceInfo;
-
-    /**
-     * 营销信息
-     */
-    private OrderMarketingInfoCmd marketingInfo;
-
-    /**
-     * 扩展信息
-     */
-    private String extInfo;
 }

@@ -1,8 +1,11 @@
 package org.dromara.merchant.app.marketing;
 
+import lombok.NonNull;
 import org.dromara.merchant.client.marketing.dto.data.command.MarketingCreateCmd;
 import org.dromara.merchant.client.marketing.dto.data.command.MarketingModifyCmd;
 import org.dromara.merchant.domain.marketing.model.activity.Marketing;
+
+import java.util.List;
 
 /**
  * @Description 营销活动服务接口
@@ -43,4 +46,11 @@ public interface IMarketingService {
      */
     Marketing queryByMarketingId(Long id);
 
+    /**
+     * 根据营销活动ID列表查询营销活动
+     *
+     * @param marketingIds 营销活动ID列表
+     * @return 营销活动列表
+     */
+    List<Marketing> queryByIds(@NonNull List<Long> marketingIds);
 }

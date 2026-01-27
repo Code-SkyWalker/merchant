@@ -37,11 +37,18 @@
             <artifactId>javax.el-api</artifactId>
         </dependency>
         <!-- JSR 303 Validation End-->
-        
+
         <!-- System Module -->
         <dependency>
             <groupId>org.dromara</groupId>
             <artifactId>ruoyi-system</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.dromara</groupId>
+            <artifactId>ruoyi-express-100</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
     </dependencies>
 </project>

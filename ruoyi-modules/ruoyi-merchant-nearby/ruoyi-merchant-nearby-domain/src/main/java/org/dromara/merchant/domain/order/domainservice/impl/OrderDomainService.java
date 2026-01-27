@@ -10,7 +10,6 @@ import org.dromara.merchant.domain.order.model.OrderStatus;
 import org.dromara.merchant.domain.order.statemachine.OrderEvent;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 
@@ -21,16 +20,18 @@ import java.time.LocalDateTime;
  */
 @Service
 @RequiredArgsConstructor
-public class OrderDomainServiceImpl implements IOrderDomainService {
+public class OrderDomainService implements IOrderDomainService {
 
     private final IOrderGateway orderGateway;
     private final StateMachine<OrderStatus, OrderEvent, Order> stateMachine;
 
-
+    /**
+     * 创建订单
+     * @param order 订单实体
+     * @return 创建的订单ID
+     */
     @Override
     public Long createOrder(Order order) {
-        // 计算订单金额
-        order = calculateOrderAmount(order);
         // 设置订单状态为待付款
         order.setStatus(OrderStatus.PENDING_PAYMENT);
         // 设置订单编号
@@ -44,6 +45,13 @@ public class OrderDomainServiceImpl implements IOrderDomainService {
         return result ? order.getOrderId() : null;
     }
 
+    /**
+     * 支付订单
+     * @param orderId 订单ID
+     * @param paymentMethod 支付方式
+     * @param paymentOrderNo 支付订单号
+     * @return 是否支付成功
+     */
     @Override
     public boolean payOrder(Long orderId, String paymentMethod, String paymentOrderNo) {
         Order order = orderGateway.queryById(orderId);
@@ -61,6 +69,12 @@ public class OrderDomainServiceImpl implements IOrderDomainService {
         return orderGateway.save(order);
     }
 
+    /**
+     * 取消订单
+     * @param orderId 订单ID
+     * @param cancelReason 取消原因
+     * @return 是否取消成功
+     */
     @Override
     public boolean cancelOrder(Long orderId, String cancelReason) {
         Order order = orderGateway.queryById(orderId);
@@ -81,6 +95,13 @@ public class OrderDomainServiceImpl implements IOrderDomainService {
         return orderGateway.save(order);
     }
 
+    /**
+     * 发货订单
+     * @param orderId 订单ID
+     * @param expressCompany 快递公司
+     * @param expressNo 快递单号
+     * @return 是否发货成功
+     */
     @Override
     public boolean deliverOrder(Long orderId, String expressCompany, String expressNo) {
         Order order = orderGateway.queryById(orderId);
@@ -97,6 +118,11 @@ public class OrderDomainServiceImpl implements IOrderDomainService {
         return orderGateway.save(order);
     }
 
+    /**
+     * 确认收货订单
+     * @param orderId 订单ID
+     * @return 是否确认收货成功
+     */
     @Override
     public boolean confirmReceipt(Long orderId) {
         Order order = orderGateway.queryById(orderId);
@@ -115,6 +141,11 @@ public class OrderDomainServiceImpl implements IOrderDomainService {
         return orderGateway.save(order);
     }
 
+    /**
+     * 完成订单
+     * @param orderId 订单ID
+     * @return 是否完成订单成功
+     */
     @Override
     public boolean completeOrder(Long orderId) {
         Order order = orderGateway.queryById(orderId);
@@ -131,41 +162,6 @@ public class OrderDomainServiceImpl implements IOrderDomainService {
 
         order.setUpdateTime(LocalDateTime.now());
         return orderGateway.save(order);
-    }
-
-    @Override
-    public Order calculateOrderAmount(Order order) {
-        if (order.getOrderItems() == null || order.getOrderItems().isEmpty()) {
-            return order;
-        }
-
-        BigDecimal goodsAmount = BigDecimal.ZERO; // 商品总金额
-        BigDecimal discountAmount = BigDecimal.ZERO; // 优惠总金额
-        BigDecimal totalFinalAmount = BigDecimal.ZERO; // 订单项优惠后总金额
-
-        for (org.dromara.merchant.domain.order.model.OrderItem item : order.getOrderItems()) {
-            // 计算小计金额：单价 * 数量
-            BigDecimal subtotal = item.getUnitPrice().multiply(new BigDecimal(item.getQuantity()));
-            item.setSubtotal(subtotal);
-
-            // 计算优惠金额
-            if (item.getDiscountAmount() != null) {
-                discountAmount = discountAmount.add(item.getDiscountAmount());
-            }
-
-            // 计算优惠后金额
-            BigDecimal finalAmount = subtotal.subtract(item.getDiscountAmount() != null ? item.getDiscountAmount() : BigDecimal.ZERO);
-            item.setFinalAmount(finalAmount);
-            totalFinalAmount = totalFinalAmount.add(finalAmount);
-        }
-
-        // 设置商品总金额
-        order.setGoodsAmount(totalFinalAmount.add(discountAmount));
-
-        // 实付金额默认等于应付金额（实际支付可能通过支付回调更新）
-        order.setPaidAmount(order.getPayableAmount());
-
-        return order;
     }
 
     /**

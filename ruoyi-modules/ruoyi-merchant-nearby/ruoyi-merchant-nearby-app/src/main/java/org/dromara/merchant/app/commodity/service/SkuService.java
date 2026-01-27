@@ -13,10 +13,7 @@ import org.dromara.merchant.domain.commodity.model.Sku;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Description TODO
@@ -50,6 +47,17 @@ public class SkuService implements ISkuService {
     @Override
     public Sku queryById(Long id) {
         return this.skuGateway.queryById(id);
+    }
+
+    /**
+     * 根据skuIds查询商品sku
+     *
+     * @param skuIds skuIds
+     * @return 商品sku
+     */
+    @Override
+    public List<Sku> queryBySkuIds(Collection<Long> skuIds) {
+        return this.skuGateway.queryBySkuIds(skuIds);
     }
 
     @Override

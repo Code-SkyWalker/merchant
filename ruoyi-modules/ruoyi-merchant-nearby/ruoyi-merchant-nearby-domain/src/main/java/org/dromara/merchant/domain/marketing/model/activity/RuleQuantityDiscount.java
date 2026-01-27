@@ -52,9 +52,9 @@ public class RuleQuantityDiscount implements Rule {
         if (quantity < this.quantity) return BigDecimal.ZERO;
 
         // 购买数大于等于任选件数，返回 原价*(1-discount)（只有一件优惠）
-        BigDecimal discount = this.discount.compareTo(BigDecimal.TEN) > 0 ? this.discount.divide(BigDecimal.TEN, 2, RoundingMode.HALF_UP) : this.discount;
-        BigDecimal discountRate = unitPrice.multiply(BigDecimal.ONE.subtract(discount));
-        return unitPrice.multiply(discountRate);
+        BigDecimal discount = this.discount.divide(BigDecimal.TEN, 2, RoundingMode.HALF_UP);
+        BigDecimal discountTotal = unitPrice.multiply(BigDecimal.ONE.subtract(discount));
+        return discountTotal.compareTo(BigDecimal.ZERO) > 0 ? discountTotal : BigDecimal.ZERO;
 
     }
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.dromara.common.core.utils.SnowflakeIdGenerator;
 import org.dromara.common.mybatis.core.domain.BaseEntity;
+import org.dromara.merchant.client.marketing.dto.data.command.PriceCalculationCmd;
 import org.dromara.merchant.domain.freight.model.DeliveryMethod;
 
 import java.math.BigDecimal;
@@ -96,6 +97,11 @@ public class Order extends BaseEntity {
     private BigDecimal pointAmount;
 
     /**
+     * 佣金抵扣金额
+     */
+    private BigDecimal commAmount;
+
+    /**
      * 应付金额
      */
     private BigDecimal payableAmount;
@@ -174,4 +180,6 @@ public class Order extends BaseEntity {
      * 版本号，用于乐观锁
      */
     private Integer version = 0;
+
+
 }

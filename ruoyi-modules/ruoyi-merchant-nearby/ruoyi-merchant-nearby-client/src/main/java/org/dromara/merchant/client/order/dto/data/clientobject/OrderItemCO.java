@@ -33,11 +33,6 @@ public class OrderItemCO {
     private Long skuId;
 
     /**
-     * SPU名称
-     */
-    private String spuName;
-
-    /**
      * SKU名称
      */
     private String skuName;
@@ -55,17 +50,12 @@ public class OrderItemCO {
     /**
      * 商品单价
      */
-    private BigDecimal price;
+    private BigDecimal unitPrice;
 
     /**
      * 购买数量
      */
     private Integer quantity;
-
-    /**
-     * 小计金额
-     */
-    private BigDecimal subtotal;
 
     /**
      * 优惠金额
@@ -86,6 +76,16 @@ public class OrderItemCO {
      * 佣金金额
      */
     private BigDecimal commissionAmount;
+
+    /**
+     * 邮费
+     */
+    private BigDecimal postFee;
+
+    /**
+     * 小计金额
+     */
+    private BigDecimal subtotal;
 
     /**
      * 扩展信息

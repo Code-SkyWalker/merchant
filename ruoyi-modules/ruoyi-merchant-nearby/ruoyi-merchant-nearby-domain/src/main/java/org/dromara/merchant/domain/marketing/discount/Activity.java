@@ -43,7 +43,7 @@ public interface Activity {
     default BigDecimal calculateEligibleTotal(List<Product> products, Map<Product, BigDecimal> currentPrices) {
         return products.stream()
             .filter(this::isProductEligible)  // 过滤符合条件的商品
-            .map(p -> currentPrices.getOrDefault(p, p.getTotalPrice()))  // 映射为价格
+            .map(Product::getTotalPrice)  // 映射为价格
             .reduce(BigDecimal.ZERO, BigDecimal::add);  // 求和
     }
 

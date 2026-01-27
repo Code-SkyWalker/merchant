@@ -13,7 +13,7 @@ import org.dromara.merchant.client.Command;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MerCategoryDefaultCreateCmd implements Command {
+public class MerCategoryDefaultCreateCmd {
     private String categoryName;
     private String categoryImage;
     private Integer categorySort;

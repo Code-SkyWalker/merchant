@@ -6,6 +6,9 @@ import org.dromara.merchant.client.freight.dto.data.clientobject.ExpressTemplate
 import org.dromara.merchant.client.freight.dto.data.command.ExpressTemplateCreateCmd;
 import org.dromara.merchant.client.freight.dto.data.command.ExpressTemplateModifyCmd;
 import org.dromara.merchant.client.freight.dto.data.command.query.ExpressTemplatePageQry;
+import org.dromara.merchant.domain.freight.model.ExpressArea;
+
+import java.util.List;
 
 /**
  * @Description 商户运费模板服务接口
@@ -46,6 +49,14 @@ public interface IExpressTemplateService {
      * @return 是否设置成功
      */
     boolean setDefault(Long templateId, Long merchantId);
+
+    /**
+     * 根据模板ID查询运费区域
+     *
+     * @param templateId 模板ID
+     * @return 运费区域列表
+     */
+    List<ExpressArea> queryExpressAreaByTemplateId(Long templateId);
 
     /**
      * 分页查询商户运费模板

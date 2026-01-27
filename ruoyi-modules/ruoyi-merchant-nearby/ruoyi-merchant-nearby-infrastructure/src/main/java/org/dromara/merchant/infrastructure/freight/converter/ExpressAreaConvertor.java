@@ -82,7 +82,7 @@ public interface ExpressAreaConvertor {
      * @param dataObject 配送区域DO对象
      * @return 客户端对象
      */
-    ExpressAreaCO toMerchantShippingAreaCO(ExpressAreaDO dataObject);
+    ExpressAreaCO toCO(ExpressAreaDO dataObject);
 
     /**
      * 批量转换DO对象到客户端对象
@@ -90,7 +90,7 @@ public interface ExpressAreaConvertor {
      * @param dataObject 配送区域DO对象
      * @return 批量客户端对象
      */
-    List<ExpressAreaCO> toMerchantShippingAreaListCO(List<ExpressAreaDO> dataObject);
+    List<ExpressAreaCO> toListCO(List<ExpressAreaDO> dataObject);
 
     /**
      * 批量转换DO对象到客户端对象
@@ -100,4 +100,11 @@ public interface ExpressAreaConvertor {
      */
     Page<ExpressAreaCO> toMerchantShippingAreaPageCO(Page<ExpressAreaDO> dataObject);
 
+    /**
+     * 转换DO对象到实体对象
+     *
+     * @param expressAreaDOS 配送区域DO对象
+     * @return 实体对象
+     */
+    List<ExpressArea> toEntityList(List<ExpressAreaDO> expressAreaDOS);
 }

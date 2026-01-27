@@ -1,10 +1,18 @@
 package org.dromara.merchant.app.order;
 
+import org.dromara.merchant.client.marketing.dto.data.command.PriceCalculationCmd;
 import org.dromara.merchant.client.order.dto.data.clientobject.OrderCO;
 import org.dromara.merchant.client.order.dto.data.command.OrderCancelCmd;
 import org.dromara.merchant.client.order.dto.data.command.OrderCreateCmd;
 import org.dromara.merchant.client.order.dto.data.command.OrderPayCmd;
 import org.dromara.merchant.client.order.dto.data.command.query.OrderQry;
+import org.dromara.merchant.domain.marketing.discount.Product;
+import org.dromara.merchant.domain.order.model.Order;
+import org.dromara.merchant.domain.order.model.OrderItem;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Description 订单应用服务接口
@@ -35,23 +43,26 @@ public interface IOrderService {
     boolean cancelOrder(OrderCancelCmd cmd);
 
     /**
-     * 根据ID查询订单
+     * 发货订单
      * @param orderId 订单ID
-     * @return 订单客户端对象
+     * @param expressCompany 快递公司
+     * @param expressNo 快递单号
+     * @return 是否发货成功
      */
-    OrderCO queryById(Long orderId);
+    boolean deliverOrder(Long orderId, String expressCompany, String expressNo);
 
     /**
-     * 根据订单编号查询订单
-     * @param orderNo 订单编号
-     * @return 订单客户端对象
+     * 确认收货订单
+     * @param orderId 订单ID
+     * @return 是否确认收货成功
      */
-    OrderCO queryByOrderNo(String orderNo);
+    boolean confirmReceipt(Long orderId);
 
     /**
-     * 查询订单
-     * @param qry 订单查询命令
-     * @return 订单客户端对象
+     * 完成订单
+     * @param orderId 订单ID
+     * @return 是否完成订单成功
      */
-    OrderCO queryOrder(OrderQry qry);
+    boolean completeOrder(Long orderId);
+
 }

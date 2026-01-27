@@ -27,30 +27,12 @@ public class OrderGateway implements IOrderGateway {
 
     @Override
     public Order queryById(Long orderId) {
-        OrderDO orderDO = mapper.selectById(orderId);
-        return this.convertor.toEntity(orderDO);
-    }
-
-    @Override
-    public Order queryByOrderNo(String orderNo) {
-        // 这里需要根据实际的查询条件来实现
-        // 可以通过自定义查询或使用Wrapper
-        OrderDO orderDO = mapper.selectByOrderNo(orderNo);
-        return this.convertor.toEntity(orderDO);
+        return this.convertor.toEntity(mapper.selectById(orderId));
     }
 
     @Override
     public boolean delete(Long orderId) {
         return mapper.deleteById(orderId) > 0;
     }
-
-    @Override
-    public boolean updateStatus(Long orderId, String status) {
-        OrderDO orderDO = new OrderDO();
-        orderDO.setOrderId(orderId);
-        orderDO.setStatus(status);
-        return mapper.updateById(orderDO) > 0;
-    }
-
 
 }

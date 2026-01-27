@@ -1,8 +1,8 @@
 package org.dromara.merchant.app.order.executor;
 
 import lombok.RequiredArgsConstructor;
-import org.dromara.merchant.app.order.IOrderService;
 import org.dromara.merchant.client.order.dto.data.command.OrderPayCmd;
+import org.dromara.merchant.domain.order.domainservice.IOrderDomainService;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,9 +14,9 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OrderPayExecutor {
 
-    private final IOrderService orderService;
+    private final IOrderDomainService orderDomainService;
 
     public Boolean execute(OrderPayCmd cmd) {
-        return orderService.payOrder(cmd);
+        return orderDomainService.payOrder(cmd.getOrderId(), cmd.getPaymentMethod(), cmd.getPaymentOrderNo());
     }
 }

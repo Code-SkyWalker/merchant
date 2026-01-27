@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * @Description 同城配送配置
@@ -25,9 +26,11 @@ public class DeliveryConfigLocal implements DeliveryConfig {
     private String preciseLocation;
 
     /**
-     * 配送范围
+     * 配送范围, 单位公里
      */
     private BigDecimal deliveryRange;
+
+    private LocalDateTime deliveryTime;
 
     /**
      * 配送费规则

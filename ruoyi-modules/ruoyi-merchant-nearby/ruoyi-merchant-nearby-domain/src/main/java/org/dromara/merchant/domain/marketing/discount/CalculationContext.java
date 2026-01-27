@@ -25,32 +25,32 @@ public class CalculationContext {
     /**
      * 优惠券优惠金额
      */
-    private BigDecimal couponDiscountAmount;
+    private BigDecimal couponDiscountAmount = BigDecimal.ZERO;
 
     /**
      * 活动优惠金额
      */
-    private BigDecimal marketingDiscountAmount;
+    private BigDecimal marketingDiscountAmount = BigDecimal.ZERO;
 
     /**
      * 积分抵扣金额
      */
-    private BigDecimal integralDiscountAmount;
+    private BigDecimal integralDiscountAmount = BigDecimal.ZERO;
 
     /**
      * 佣金抵扣金额
      */
-    private BigDecimal commDiscountAmount;
+    private BigDecimal commDiscountAmount = BigDecimal.ZERO;
 
     /**
      * 原始总价，所有商品的原始价格总和
      */
-    private BigDecimal originalTotal;
+    private BigDecimal originalTotal = BigDecimal.ZERO;
 
     /**
      * 运费金额
      */
-    private BigDecimal shippingFee;
+    private BigDecimal shippingFee = BigDecimal.ZERO;
 
     /**
      * 可用的优惠活动列表
@@ -70,10 +70,11 @@ public class CalculationContext {
      * @param coupons 优惠券列表
      * @param shippingFee 运费
      */
-    public CalculationContext(List<Product> products, List<Marketing> marketings, List<Coupon> coupons, BigDecimal shippingFee) {
+    public CalculationContext(List<Product> products, List<Marketing> marketings, List<Coupon> coupons, BigDecimal shippingFee,
+                              BigDecimal integralDiscountAmount, BigDecimal commDiscountAmount) {
         this.currentPrices = new HashMap<>();
-        this.originalTotal = BigDecimal.ZERO;
         // 初始化当前价格为商品原始价格
+
         for (Product product : products) {
             BigDecimal totalPrice = product.getTotalPrice();
             this.currentPrices.put(product, totalPrice);
@@ -82,6 +83,8 @@ public class CalculationContext {
         this.marketings = marketings;
         this.coupons = coupons;
         this.shippingFee = shippingFee;
+        this.integralDiscountAmount = integralDiscountAmount;
+        this.commDiscountAmount = commDiscountAmount;
     }
 
 }

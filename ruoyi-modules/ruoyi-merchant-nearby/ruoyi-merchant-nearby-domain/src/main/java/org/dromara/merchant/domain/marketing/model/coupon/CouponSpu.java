@@ -1,6 +1,8 @@
 package org.dromara.merchant.domain.marketing.model.coupon;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @Description 优惠券与商品关联实体
@@ -8,6 +10,8 @@ import lombok.Data;
  * @Date 2025/12/29 11:29
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CouponSpu {
 
     /**

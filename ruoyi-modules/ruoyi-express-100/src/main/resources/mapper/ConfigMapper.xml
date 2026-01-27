@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.dromara.express.infrastructure.mapper.ConfigMapper">
+
+    <resultMap id="Base_Config_ResultMap" type="org.dromara.express.infrastructure.mapper.dataobject.ConfigDO">
+        <id column="id" property="id"/>
+        <result column="merchant_id" property="merchantId"/>
+        <result column="customer" property="customer"/>
+        <result column="key" property="key"/>
+        <result column="status" property="status"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+</mapper>

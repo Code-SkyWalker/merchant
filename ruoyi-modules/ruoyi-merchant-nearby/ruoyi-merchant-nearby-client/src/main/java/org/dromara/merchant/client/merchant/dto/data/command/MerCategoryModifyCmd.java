@@ -13,7 +13,7 @@ import org.dromara.merchant.client.Command;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MerCategoryModifyCmd implements Command {
+public class MerCategoryModifyCmd {
     private Long categoryId;
     private String tenantId;
     private Long parentId;

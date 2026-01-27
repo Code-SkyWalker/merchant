@@ -1,8 +1,11 @@
 package org.dromara.merchant.infrastructure.order.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 import org.dromara.common.mybatis.core.mapper.BaseMapperPlus;
+import org.dromara.merchant.client.order.dto.data.clientobject.OrderItemCO;
 import org.dromara.merchant.infrastructure.order.mapper.dataobject.OrderItemDO;
+
+import java.util.List;
 
 /**
  * @Description 订单项Mapper接口
@@ -10,4 +13,13 @@ import org.dromara.merchant.infrastructure.order.mapper.dataobject.OrderItemDO;
  * @Date 2026-01-05
  */
 public interface OrderItemMapper extends BaseMapperPlus<OrderItemDO, OrderItemDO> {
+
+    /**
+     * 根据订单ID查询订单项
+     *
+     * @param orderId 订单ID
+     * @return 订单项列表
+     */
+    List<OrderItemCO> queryOrderItemByOrderId(@Param("orderId") Long orderId);
+
 }

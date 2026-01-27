@@ -56,10 +56,4 @@ public interface IOrderDomainService {
      */
     boolean completeOrder(Long orderId);
 
-    /**
-     * 计算订单金额
-     * @param order 订单实体
-     * @return 计算后的订单实体
-     */
-    Order calculateOrderAmount(Order order);
 }

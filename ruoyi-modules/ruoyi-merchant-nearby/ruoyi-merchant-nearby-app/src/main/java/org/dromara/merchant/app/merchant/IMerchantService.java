@@ -6,6 +6,7 @@ import org.dromara.merchant.client.merchant.dto.data.clientobject.MerchantCO;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantCreateCmd;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantModifyCmd;
 import org.dromara.merchant.client.merchant.dto.data.command.query.MerchantPageQry;
+import org.dromara.merchant.domain.merchant.model.Merchant;
 
 /**
  * @Description 商户服务接口
@@ -42,9 +43,17 @@ public interface IMerchantService {
      * 根据ID查询商户
      *
      * @param merchantId 商户ID
+     * @return 商户对象
+     */
+    Merchant queryById(Long merchantId);
+
+    /**
+     * 根据ID查询商户
+     *
+     * @param merchantId 商户ID
      * @return 商户客户端对象
      */
-    MerchantCO queryById(Long merchantId);
+    MerchantCO queryCOById(Long merchantId);
 
     /**
      * 分页查询商户

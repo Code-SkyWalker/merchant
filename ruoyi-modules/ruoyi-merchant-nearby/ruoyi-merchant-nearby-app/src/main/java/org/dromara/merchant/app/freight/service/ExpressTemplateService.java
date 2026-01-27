@@ -10,8 +10,12 @@ import org.dromara.merchant.client.freight.dto.data.clientobject.ExpressTemplate
 import org.dromara.merchant.client.freight.dto.data.command.ExpressTemplateCreateCmd;
 import org.dromara.merchant.client.freight.dto.data.command.ExpressTemplateModifyCmd;
 import org.dromara.merchant.client.freight.dto.data.command.query.ExpressTemplatePageQry;
+import org.dromara.merchant.domain.freight.gateway.IExpressAreaGateway;
+import org.dromara.merchant.domain.freight.model.ExpressArea;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @Description 商户运费模板服务实现
@@ -30,6 +34,8 @@ public class ExpressTemplateService implements IExpressTemplateService {
 
     private final ExpressAreaCreateExecutor areaCreateExecutor;
     private final ExpressAreaModifyExecutor areaModifyExecutor;
+
+    private final IExpressAreaGateway expressAreaGateway;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -71,6 +77,10 @@ public class ExpressTemplateService implements IExpressTemplateService {
         return setDefaultExecutor.execute(templateId, merchantId);
     }
 
+    @Override
+    public List<ExpressArea> queryExpressAreaByTemplateId(Long templateId) {
+        return expressAreaGateway.queryExpressAreaByTemplateId(templateId);
+    }
 
     @Override
     public Page<ExpressTemplateCO> queryPage(ExpressTemplatePageQry qry, PageQuery pageQuery) {

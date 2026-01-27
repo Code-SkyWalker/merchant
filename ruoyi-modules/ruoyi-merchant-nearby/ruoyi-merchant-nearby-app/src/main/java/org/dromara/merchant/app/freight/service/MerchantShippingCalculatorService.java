@@ -1,8 +1,8 @@
-//package org.dromara.merchant.app.merchant.service;
+//package org.dromara.merchant.app.freight.service;
 //
 //import lombok.RequiredArgsConstructor;
 //import org.dromara.merchant.domain.freight.model.BillingMethod;
-//import org.dromara.merchant.domain.freight.model.MerchantShippingTemplate;
+//import org.dromara.merchant.domain.freight.model.ExpressTemplate;
 //import org.springframework.stereotype.Service;
 //
 //import java.math.BigDecimal;
@@ -25,7 +25,7 @@
 //     * @param volume   体积(m³)
 //     * @return 运费金额
 //     */
-//    public BigDecimal calculateShippingFee(MerchantShippingTemplate template, BigDecimal weight, Integer quantity, BigDecimal volume) {
+//    public BigDecimal calculateShippingFee(ExpressTemplate template, BigDecimal weight, Integer quantity, BigDecimal volume) {
 //        // 检查是否满足包邮条件
 //        if (Boolean.TRUE.equals(template.getFreeShipping())) {
 //            // 检查包邮金额条件

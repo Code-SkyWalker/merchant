@@ -1,7 +1,6 @@
 package org.dromara.merchant.client.order.dto.data.command;
 
 import lombok.Data;
-import org.dromara.merchant.client.Command;
 
 /**
  * @Description 订单取消命令
@@ -9,7 +8,7 @@ import org.dromara.merchant.client.Command;
  * @Date 2026-01-05
  */
 @Data
-public class OrderCancelCmd implements Command {
+public class OrderCancelCmd {
 
     /**
      * 订单ID

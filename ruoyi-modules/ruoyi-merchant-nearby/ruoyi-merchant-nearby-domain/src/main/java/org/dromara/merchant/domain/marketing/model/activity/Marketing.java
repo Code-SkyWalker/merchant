@@ -103,7 +103,7 @@ public class Marketing implements Activity {
         }
 
         return products.stream().filter(this::isProductEligible)
-            .map(product -> rules.calculate(currentPrices.get(product), product.getQuantity()))
+            .map(product -> rules.calculate(product.getOriginalPrice(), product.getQuantity()))
             .reduce(BigDecimal::add)
             .orElse(BigDecimal.ZERO);
 
@@ -119,7 +119,7 @@ public class Marketing implements Activity {
     public boolean isProductEligible(Product product) {
         // 判断商品是否在优惠券的指定商品列表中
         return this.marketingSpus.stream()
-            .anyMatch(couponSpu -> couponSpu.getSpuId().equals(product.getSpuId()));
+            .anyMatch(marketingSpu -> marketingSpu.getSpuId().equals(product.getSpuId()));
     }
 
     /**
@@ -143,7 +143,7 @@ public class Marketing implements Activity {
         // 获取符合条件的商品列表
         List<Product> eligibleProducts = products.stream()
             .filter(this::isProductEligible)
-            .collect(Collectors.toList());
+            .toList();
 
         // 按比例分配优惠金额
         for (int i = 0; i < eligibleProducts.size(); i++) {

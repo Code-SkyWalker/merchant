@@ -23,7 +23,7 @@ public class ExpressAreaListQryExecutor {
 
     public List<ExpressAreaCO> execute(Long templateId) {
         List<ExpressAreaDO> areas = mapper.selectByTemplateId(templateId);
-        return this.convertor.toMerchantShippingAreaListCO(areas);
+        return this.convertor.toListCO(areas);
     }
 
 }

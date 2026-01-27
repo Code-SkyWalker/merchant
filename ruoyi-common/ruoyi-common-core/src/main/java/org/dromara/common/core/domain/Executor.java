@@ -1,4 +1,4 @@
-package org.dromara.merchant.app;
+package org.dromara.common.core.domain;
 
 /**
  * @Description 定义命令接口
