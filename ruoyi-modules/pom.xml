@@ -16,6 +16,7 @@
         <module>ruoyi-workflow</module>
         <module>ruoyi-merchant-nearby</module>
         <module>ruoyi-express-100</module>
+        <module>ruoyi-huifu-payment</module>
     </modules>
 
     <artifactId>ruoyi-modules</artifactId>

@@ -1,4 +1,4 @@
-import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
 import com.kuaidi100.sdk.api.*;
 import com.kuaidi100.sdk.contant.ApiInfoConstant;
 import com.kuaidi100.sdk.contant.CompanyConstant;
@@ -49,7 +49,7 @@ public class BaseServiceTest {
         queryTrackParam.setCom(CompanyConstant.YT);
         queryTrackParam.setNum("YT9383342193097");
         queryTrackParam.setPhone("17725390266");
-        String param = JSON.toJSONString(queryTrackParam);
+        String param = new Gson().toJson(queryTrackParam);
 
         queryTrackReq.setParam(param);
         queryTrackReq.setCustomer(customer);
@@ -73,7 +73,7 @@ public class BaseServiceTest {
         queryTrackParam.setFrom("河北保定市");
         queryTrackParam.setTo("湖南岳阳市");
         queryTrackParam.setResultv2("2");
-        String param = JSON.toJSONString(queryTrackParam);
+        String param = new Gson().toJson(queryTrackParam);
 
         queryTrackReq.setParam(param);
         queryTrackReq.setCustomer(customer);
@@ -82,7 +82,7 @@ public class BaseServiceTest {
         IBaseClient baseClient = new QueryTrackMap();
         HttpResult result = baseClient.execute(queryTrackReq);
 
-        QueryTrackMapResp queryTrackMapResp = JSON.parseObject(result.getBody(), QueryTrackMapResp.class);
+        QueryTrackMapResp queryTrackMapResp = new Gson().fromJson(result.getBody(), QueryTrackMapResp.class);
         System.out.println(queryTrackMapResp);
     }
 
@@ -103,7 +103,7 @@ public class BaseServiceTest {
 
         SubscribeReq subscribeReq = new SubscribeReq();
         subscribeReq.setSchema(ApiInfoConstant.SUBSCRIBE_SCHEMA);
-        subscribeReq.setParam(JSON.toJSONString(subscribeParam));
+        subscribeReq.setParam(new Gson().toJson(subscribeParam));
 
         IBaseClient subscribe = new Subscribe();
         System.out.println(subscribe.execute(subscribeReq));
@@ -150,7 +150,7 @@ public class BaseServiceTest {
 
         orderReq.setPrintType(PrintType.CLOUD);
 
-        String param = JSON.toJSONString(orderReq);
+        String param = new Gson().toJson(orderReq);
         String t = System.currentTimeMillis() + "";
 
         PrintReq printReq = new PrintReq();
@@ -179,7 +179,7 @@ public class BaseServiceTest {
         backOrderReq.setKuaidicom(CompanyConstant.SF);
         backOrderReq.setKuaidinum("SF1234567");
         backOrderReq.setPhone("13088888888");
-        String param = JSON.toJSONString(backOrderReq);
+        String param = new Gson().toJson(backOrderReq);
         String t = System.currentTimeMillis() + "";
         PrintReq printReq = new PrintReq();
         printReq.setT(t);
@@ -217,7 +217,7 @@ public class BaseServiceTest {
         interceptOrderReq.setInterceptPayType("THIRDPARTY");
         interceptOrderReq.setSalt("kuaidi1000api@salt");
         interceptOrderReq.setCallbackUrl("http://api.kuaidi100.com/test/callback");
-        String param = JSON.toJSONString(interceptOrderReq);
+        String param = new Gson().toJson(interceptOrderReq);
         String t = System.currentTimeMillis() + "";
         PrintReq printReq = new PrintReq();
         printReq.setT(t);
@@ -246,7 +246,7 @@ public class BaseServiceTest {
         // addressResolutionParam.setImageUrl("http://api.kuaidi100.com/label/getImage/20240621/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
         // addressResolutionParam.setPdfUrl("http://api.kuaidi100.com/label/xxx/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
         // addressResolutionParam.setHtmlUrl("http://api.kuaidi100.com/label/xxx/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-        String param = JSON.toJSONString(addressResolutionParam);
+        String param = new Gson().toJson(addressResolutionParam);
         String t = System.currentTimeMillis() + "";
         AddressResolutionReq addressResolutionReq = new AddressResolutionReq();
         addressResolutionReq.setT(t);
@@ -269,7 +269,7 @@ public class BaseServiceTest {
         intAddressResolutionParam.setCode("US");
         intAddressResolutionParam.setAddress("5430 Fredericksburg Rd Ste 310 San Antonio TX 78229 USA");
         intAddressResolutionParam.setLanguage("zh");
-        String param = JSON.toJSONString(intAddressResolutionParam);
+        String param = new Gson().toJson(intAddressResolutionParam);
         String t = System.currentTimeMillis() + "";
         AddressResolutionReq req = new AddressResolutionReq();
         req.setT(t);
@@ -292,7 +292,7 @@ public class BaseServiceTest {
 
         repeatPrintReq.setTaskId("027B34AD22DE4F299643A13642B70D5F");
 
-        String param = JSON.toJSONString(repeatPrintReq);
+        String param = new Gson().toJson(repeatPrintReq);
         String t = System.currentTimeMillis() + "";
 
         PrintReq printReq = new PrintReq();
@@ -322,7 +322,7 @@ public class BaseServiceTest {
         customParam.put("qrcode", "888888888");
         customReq.setCustomParam(customParam);
 
-        String param = JSON.toJSONString(customReq);
+        String param = new Gson().toJson(customReq);
         String t = System.currentTimeMillis() + "";
 
         PrintReq printReq = new PrintReq();
@@ -355,7 +355,7 @@ public class BaseServiceTest {
         labelCancelParam.setExpType("标准快递");
 
         labelCancelParam.setReason("暂时不寄了");
-        String param = JSON.toJSONString(labelCancelParam);
+        String param = new Gson().toJson(labelCancelParam);
         String t = System.currentTimeMillis() + "";
 
         PrintReq printReq = new PrintReq();
@@ -384,7 +384,7 @@ public class BaseServiceTest {
         deliveryTimeReq.setExpType("特惠送");
 
 
-        String param = JSON.toJSONString(deliveryTimeReq);
+        String param = new Gson().toJson(deliveryTimeReq);
         String t = System.currentTimeMillis() + "";
 
         PrintReq printReq = new PrintReq();
@@ -415,7 +415,7 @@ public class BaseServiceTest {
         printImgParam.setTempid("180c7c8f646742ca871a92c976392b05");
         printImgParam.setCount("1");
 
-        String param = JSON.toJSONString(printImgParam);
+        String param = new Gson().toJson(printImgParam);
         String t = System.currentTimeMillis() + "";
         String sign = SignUtils.printSign(param, t, key, secret);
 
@@ -455,7 +455,7 @@ public class BaseServiceTest {
         printHtmlParam.setRecMan(recManInfo);
 
         String t = System.currentTimeMillis() + "";
-        String param = JSON.toJSONString(printHtmlParam);
+        String param = new Gson().toJson(printHtmlParam);
         String sign = SignUtils.printSign(param, t, key, secret);
 
         PrintReq printReq = new PrintReq();
@@ -492,7 +492,7 @@ public class BaseServiceTest {
         printCloudParam.setSendMan(sendManInfo);
         printCloudParam.setRecMan(recManInfo);
 
-        String param = JSON.toJSONString(printCloudParam);
+        String param = new Gson().toJson(printCloudParam);
         String t = System.currentTimeMillis() + "";
 
         PrintReq printReq = new PrintReq();
@@ -517,7 +517,7 @@ public class BaseServiceTest {
         cloudPrintCustomParam.setTempid("180c7c8f646742ca871a92c976392b05");
 
         String t = System.currentTimeMillis() + "";
-        String param = JSON.toJSONString(cloudPrintCustomParam);
+        String param = new Gson().toJson(cloudPrintCustomParam);
 
         PrintReq printReq = new PrintReq();
         printReq.setKey(key);
@@ -540,7 +540,7 @@ public class BaseServiceTest {
         cloudPrintAttachmentParam.setCallBackUrl("http://www.baidu.com");
 
         String t = System.currentTimeMillis() + "";
-        String param = JSON.toJSONString(cloudPrintAttachmentParam);
+        String param = new Gson().toJson(cloudPrintAttachmentParam);
         CloudAttachmentReq cloudPrintAttachmentReq = new CloudAttachmentReq();
 
         cloudPrintAttachmentReq.setKey(key);
@@ -564,7 +564,7 @@ public class BaseServiceTest {
         cloudPrintOldParam.setTaskId("A32AA6754669C14CBE26EB79664D2266");
 
         String t = System.currentTimeMillis() + "";
-        String param = JSON.toJSONString(cloudPrintOldParam);
+        String param = new Gson().toJson(cloudPrintOldParam);
 
         printReq.setKey(key);
         printReq.setMethod(ApiInfoConstant.CLOUD_PRINT_OLD_METHOD);
@@ -588,7 +588,7 @@ public class BaseServiceTest {
         thirdAuthReq.setView("web");
 
         String t = System.currentTimeMillis() + "";
-        String param = JSON.toJSONString(thirdAuthReq);
+        String param = new Gson().toJson(thirdAuthReq);
 
         printReq.setKey(key);
         printReq.setT(t);
@@ -608,7 +608,7 @@ public class BaseServiceTest {
         sendSmsReq.setCallback("http://www.baidu.com");
         Map<String, String> content = new HashMap<String, String>();
         content.put("username", "测试用户");
-        sendSmsReq.setContent(JSON.toJSONString(content));
+        sendSmsReq.setContent(new Gson().toJson(content));
         sendSmsReq.setPhone("15994708912");
         sendSmsReq.setSeller("贵司名称");
         sendSmsReq.setUserid(userid);
@@ -636,7 +636,7 @@ public class BaseServiceTest {
 
 
         String t = System.currentTimeMillis() + "";
-        String param = JSON.toJSONString(cloudPrintParcelsBillReq);
+        String param = new Gson().toJson(cloudPrintParcelsBillReq);
 
         PrintReq printReq = new PrintReq();
         printReq.setKey(key);
@@ -659,7 +659,7 @@ public class BaseServiceTest {
 
         OrcParam orcParam = new OrcParam();
         orcParam.setImageUrl("https://cdn.kuaidi100.com/images/openapi/document/ocr_tem.png");
-        String param = JSON.toJSONString(orcParam);
+        String param = new Gson().toJson(orcParam);
 
         PrintReq printReq = new PrintReq();
         printReq.setKey(key);
@@ -691,7 +691,7 @@ public class BaseServiceTest {
 
 
         String t = System.currentTimeMillis() + "";
-        String param = JSON.toJSONString(expressReachableReq);
+        String param = new Gson().toJson(expressReachableReq);
 
         printReq.setKey(key);
         printReq.setMethod(ApiInfoConstant.REACHABLE_METHOD);
@@ -746,7 +746,7 @@ public class BaseServiceTest {
         bsamecityOrderReq.setGoods(goods_list);
 
         String t = System.currentTimeMillis() + "";
-        String param = JSON.toJSONString(bsamecityOrderReq);
+        String param = new Gson().toJson(bsamecityOrderReq);
 
         printReq.setKey(key);
         printReq.setMethod(ApiInfoConstant.PRICE);
@@ -802,7 +802,7 @@ public class BaseServiceTest {
         bsamecityOrderReq.setSalt("");
 
         String t = System.currentTimeMillis() + "";
-        String param = JSON.toJSONString(bsamecityOrderReq);
+        String param = new Gson().toJson(bsamecityOrderReq);
 
         printReq.setKey(key);
         printReq.setMethod(ApiInfoConstant.BSAMECITY_ORDER);
@@ -830,7 +830,7 @@ public class BaseServiceTest {
         bsamecityCancelReq.setTaskId("3B8E825DCCEE4F28B4A93685DA62F7F2");
 
         String t = System.currentTimeMillis() + "";
-        String param = JSON.toJSONString(bsamecityCancelReq);
+        String param = new Gson().toJson(bsamecityCancelReq);
 
         printReq.setKey(key);
         printReq.setMethod(ApiInfoConstant.BSAMECITY_PRECANCEL);
@@ -858,7 +858,7 @@ public class BaseServiceTest {
         bsamecityCancelReq.setTaskId("BEA8285B6A014A1A94707CE3CF484D0A");
 
         String t = System.currentTimeMillis() + "";
-        String param = JSON.toJSONString(bsamecityCancelReq);
+        String param = new Gson().toJson(bsamecityCancelReq);
 
         printReq.setKey(key);
         printReq.setMethod(ApiInfoConstant.BSAMECITY_CANCEL);
@@ -886,7 +886,7 @@ public class BaseServiceTest {
         bsamecityAddfeeReq.setTips("10");
 
         String t = System.currentTimeMillis() + "";
-        String param = JSON.toJSONString(bsamecityAddfeeReq);
+        String param = new Gson().toJson(bsamecityAddfeeReq);
 
         printReq.setKey(key);
         printReq.setMethod(ApiInfoConstant.BSAMECITY_ADDFEE);
@@ -914,7 +914,7 @@ public class BaseServiceTest {
         // TODO 请替换为真实的月卡号，非必传，跨越必传
         priceQueryParam.setMonthlyCard("123456789012");
 
-        String param = JSON.toJSONString(priceQueryParam);
+        String param = new Gson().toJson(priceQueryParam);
         String t = System.currentTimeMillis() + "";
         printReq.setKey(key);
         printReq.setMethod(ApiInfoConstant.PRICE);

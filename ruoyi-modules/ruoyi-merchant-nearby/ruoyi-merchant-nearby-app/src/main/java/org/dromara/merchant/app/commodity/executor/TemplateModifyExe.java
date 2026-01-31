@@ -1,7 +1,6 @@
 package org.dromara.merchant.app.commodity.executor;
 
 import lombok.RequiredArgsConstructor;
-import org.dromara.merchant.client.commodity.dto.data.command.TemplateCreateCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.TemplateModifyCmd;
 import org.dromara.merchant.domain.commodity.gateway.ITemplateGateway;
 import org.dromara.merchant.domain.commodity.model.Template;

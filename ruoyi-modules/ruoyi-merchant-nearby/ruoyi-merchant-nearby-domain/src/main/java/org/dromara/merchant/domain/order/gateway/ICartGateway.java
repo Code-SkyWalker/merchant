@@ -2,7 +2,6 @@ package org.dromara.merchant.domain.order.gateway;
 
 import org.dromara.merchant.domain.order.model.OrderItem;
 
-import java.util.List;
 import java.util.Set;
 
 /**

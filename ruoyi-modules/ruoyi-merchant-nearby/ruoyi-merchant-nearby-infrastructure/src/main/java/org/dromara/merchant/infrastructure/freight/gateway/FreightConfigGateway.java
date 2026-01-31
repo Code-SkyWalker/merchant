@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.dromara.merchant.domain.freight.gateway.IFreightConfigGateway;
 import org.dromara.merchant.domain.freight.model.FreightConfig;
 import org.dromara.merchant.infrastructure.freight.converter.FreightConfigConvertor;
-import org.dromara.merchant.infrastructure.freight.mapper.dataobject.FreightConfigDO;
 import org.dromara.merchant.infrastructure.freight.mapper.FreightConfigMapper;
+import org.dromara.merchant.infrastructure.freight.mapper.dataobject.FreightConfigDO;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

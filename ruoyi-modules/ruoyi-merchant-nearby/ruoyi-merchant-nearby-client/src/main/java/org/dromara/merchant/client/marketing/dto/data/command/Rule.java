@@ -3,8 +3,6 @@ package org.dromara.merchant.client.marketing.dto.data.command;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-import javax.lang.model.type.NullType;
-
 /**
  * @Description TODO
  * @Author Code Skywalker

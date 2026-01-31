@@ -1,6 +1,7 @@
 package org.dromara.common.core.domain.model;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.dromara.common.core.enums.UserType;
@@ -16,9 +17,15 @@ import org.dromara.common.core.validate.AddGroup;
 public class InternalLoginBody extends LoginBody {
 
     /**
+     * 用户登录类型 2-商户管理员 1-租户管理员 0-普通用户
+     */
+    @NotNull(message = "用户登录类型不能为空", groups = {AddGroup.class})
+    private Integer loginUserType;
+
+    /**
      * 用户类型
      */
-    @NotBlank(message = "用户类型不能为空", groups = {AddGroup.class})
+    @NotNull(message = "用户类型不能为空", groups = {AddGroup.class})
     private UserType userType;
 
     /**

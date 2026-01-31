@@ -1,7 +1,6 @@
 package org.dromara.merchant.app.commodity.service;
 
 import lombok.RequiredArgsConstructor;
-import org.dromara.common.core.constant.CacheNames;
 import org.dromara.common.core.utils.TreeIfyUtils;
 import org.dromara.merchant.app.commodity.ICategoryService;
 import org.dromara.merchant.app.commodity.executor.CategoryCreateExe;

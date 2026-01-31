@@ -1,7 +1,5 @@
 package org.dromara.web.service.impl;
 
-import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.crypto.digest.BCrypt;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -12,13 +10,10 @@ import org.dromara.common.core.constant.TenantConstants;
 import org.dromara.common.core.domain.model.InternalLoginBody;
 import org.dromara.common.core.domain.model.LoginUser;
 import org.dromara.common.core.enums.LoginType;
-import org.dromara.common.core.enums.UserType;
 import org.dromara.common.core.exception.user.UserException;
-import org.dromara.common.core.utils.MapstructUtils;
 import org.dromara.common.core.utils.StringUtils;
 import org.dromara.common.core.utils.ValidatorUtils;
 import org.dromara.common.json.utils.JsonUtils;
-import org.dromara.common.satoken.utils.LoginHelper;
 import org.dromara.common.tenant.exception.TenantException;
 import org.dromara.common.tenant.helper.TenantHelper;
 import org.dromara.system.domain.SysUser;
@@ -33,7 +28,6 @@ import org.dromara.system.service.ISysUserService;
 import org.dromara.web.domain.vo.LoginVo;
 import org.dromara.web.service.IAuthStrategy;
 import org.dromara.web.service.SysLoginService;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -60,41 +54,29 @@ public class InternalAuthStrategy implements IAuthStrategy {
         String tenantId = loginBody.getTenantId();
 
         // 校验租户
-        boolean tenantExists = checkTenant(tenantId, loginBody);
+        boolean tenantExists = checkTenant(tenantId);
 
         String username = loginBody.getUsername();
-        String password = loginBody.getPassword();
+        Integer loginUserType = loginBody.getLoginUserType();
 
         // 如果租户不存在，则创建租户和管理员用户
         if (!tenantExists) {
-            createTenantAndUser(loginBody);
+            createTenant(loginBody, loginUserType);
             // 使用创建的管理员用户登录
-            return loginAsAdmin(client, tenantId, username, password);
+            return login(client, tenantId, username);
         }
 
         // 租户存在，检查用户是否存在
-        SysUserVo user = TenantHelper.dynamic(tenantId, () -> {
-            return userMapper.selectVoOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUserName, username));
-        });
+        SysUserVo user = TenantHelper.dynamic(tenantId, () -> userMapper.selectVoOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUserName, username)));
 
         // 如果用户不存在，则创建普通用户
         if (ObjectUtil.isNull(user)) {
             createUser(loginBody, tenantId);
             // 使用创建的普通用户登录
-            return loginAsUser(client, tenantId, username, password);
+            return login(client, tenantId, username);
         }
 
-        // 用户存在，正常登录流程
-        LoginUser loginUser = TenantHelper.dynamic(tenantId, () -> {
-            loginService.checkLogin(
-                LoginType.PASSWORD, tenantId, username,
-                () -> !BCrypt.checkpw(password, user.getPassword())
-            );
-            // 此处可根据登录用户的数据不同 自行创建 loginUser
-            return loginService.buildLoginUser(user);
-        });
-
-        return IAuthStrategy.generateLoginVO(client, loginUser);
+        return login(client, tenantId, username);
     }
 
     /**
@@ -103,50 +85,21 @@ public class InternalAuthStrategy implements IAuthStrategy {
      * @param client   客户端信息
      * @param tenantId 租户ID
      * @param username 用户名
-     * @param password 密码
      * @return 登录结果
      */
-    private LoginVo loginAsAdmin(SysClientVo client, String tenantId, String username, String password) {
+    private LoginVo login(SysClientVo client, String tenantId, String username) {
         LoginUser loginUser = TenantHelper.dynamic(tenantId, () -> {
             SysUserVo user = loadUserByUsername(username);
             loginService.checkLogin(
                 LoginType.PASSWORD, tenantId, username,
-                () -> !BCrypt.checkpw(password, user.getPassword())
+                () -> false
             );
             // 此处可根据登录用户的数据不同 自行创建 loginUser
             return loginService.buildLoginUser(user);
         });
 
         // 设置登录信息
-        LoginVo loginVo = IAuthStrategy.generateLoginVO(client, loginUser);
-
-        return loginVo;
-    }
-
-    /**
-     * 使用普通用户身份登录
-     *
-     * @param client   客户端信息
-     * @param tenantId 租户ID
-     * @param username 用户名
-     * @param password 密码
-     * @return 登录结果
-     */
-    private LoginVo loginAsUser(SysClientVo client, String tenantId, String username, String password) {
-        LoginUser loginUser = TenantHelper.dynamic(tenantId, () -> {
-            SysUserVo user = loadUserByUsername(username);
-            loginService.checkLogin(
-                LoginType.PASSWORD, tenantId, username,
-                () -> !BCrypt.checkpw(password, user.getPassword())
-            );
-            // 此处可根据登录用户的数据不同 自行创建 loginUser
-            return loginService.buildLoginUser(user);
-        });
-
-        // 设置登录信息
-        LoginVo loginVo = IAuthStrategy.generateLoginVO(client, loginUser);
-
-        return loginVo;
+        return IAuthStrategy.generateLoginVO(client, loginUser);
     }
 
     /**
@@ -154,7 +107,7 @@ public class InternalAuthStrategy implements IAuthStrategy {
      *
      * @param loginBody 登录信息
      */
-    private void createTenantAndUser(InternalLoginBody loginBody) {
+    private void createTenant(InternalLoginBody loginBody, Integer loginUserType) {
         // 创建租户
         SysTenantBo tenantBo = new SysTenantBo();
         tenantBo.setTenantId(loginBody.getTenantId());
@@ -163,7 +116,11 @@ public class InternalAuthStrategy implements IAuthStrategy {
         tenantBo.setCompanyName(loginBody.getCompanyName());
         tenantBo.setUsername(loginBody.getUsername());
         tenantBo.setPassword(loginBody.getPassword());
-        tenantBo.setPackageId(2001925927655182338L);
+
+        // 根据登录用户类型设置租户套餐
+        if (loginUserType == 1) tenantBo.setPackageId(2001925927655182338L);        // 租户管理员
+        else if (loginUserType == 2) tenantBo.setPackageId(2017113387925131265L);   // 商户管理员
+        else tenantBo.setPackageId(2017146296534978561L);                           // 普通用户
         tenantService.insertByBo(tenantBo);
     }
 
@@ -181,20 +138,16 @@ public class InternalAuthStrategy implements IAuthStrategy {
         userBo.setUserType(loginBody.getUserType().getUserType());
 
         // 在对应的租户下创建用户
-        TenantHelper.dynamic(tenantId, () -> {
-            userService.registerUser(userBo, tenantId);
-            return null;
-        });
+        TenantHelper.dynamic(tenantId, () -> userService.registerUser(userBo, tenantId));
     }
 
     /**
      * 校验租户
      *
      * @param tenantId   租户ID
-     * @param loginBody  登录信息
      * @return 租户是否存在
      */
-    public boolean checkTenant(String tenantId, InternalLoginBody loginBody) {
+    public boolean checkTenant(String tenantId) {
         if (!TenantHelper.isEnable()) return true;
         if (StringUtils.isBlank(tenantId)) {
             throw new TenantException("tenant.number.not.blank");

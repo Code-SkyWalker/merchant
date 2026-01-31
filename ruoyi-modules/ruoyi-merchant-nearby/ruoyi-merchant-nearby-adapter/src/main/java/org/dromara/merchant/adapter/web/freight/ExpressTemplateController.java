@@ -13,7 +13,6 @@ import org.dromara.merchant.client.freight.dto.data.command.ExpressTemplateCreat
 import org.dromara.merchant.client.freight.dto.data.command.ExpressTemplateModifyCmd;
 import org.dromara.merchant.client.freight.dto.data.command.query.ExpressTemplatePageQry;
 import org.dromara.merchant.infrastructure.freight.mapper.ExpressTemplateMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,5 +1,5 @@
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.kuaidi100.sdk.api.*;
 import com.kuaidi100.sdk.contant.ApiInfoConstant;
 import com.kuaidi100.sdk.contant.CompanyConstant;
@@ -38,7 +38,7 @@ public class ElecWaybill extends BaseServiceTest{
         printImgParam.setTempid("180c7c8f646742ca871a92c976392b05");
         printImgParam.setCount("1");
 
-        String param = JSON.toJSONString(printImgParam);
+        String param = new Gson().toJson(printImgParam);
         String t = System.currentTimeMillis() + "";
         String sign = SignUtils.printSign(param,t,key,secret);
 
@@ -78,7 +78,7 @@ public class ElecWaybill extends BaseServiceTest{
         printHtmlParam.setRecMan(recManInfo);
 
         String t = System.currentTimeMillis() + "";
-        String param = JSON.toJSONString(printHtmlParam);
+        String param = new Gson().toJson(printHtmlParam);
         String sign = SignUtils.printSign(param,t,key,secret);
 
         PrintReq printReq = new PrintReq();
@@ -115,7 +115,7 @@ public class ElecWaybill extends BaseServiceTest{
         printCloudParam.setSendMan(sendManInfo);
         printCloudParam.setRecMan(recManInfo);
 
-        String param = JSON.toJSONString(printCloudParam);
+        String param = new Gson().toJson(printCloudParam);
         String t = System.currentTimeMillis() + "";
 
         PrintReq printReq = new PrintReq();
@@ -142,7 +142,7 @@ public class ElecWaybill extends BaseServiceTest{
        labelCancelParam.setOrderId("01639366271685GNkZEX");
 
        labelCancelParam.setReason("暂时不寄了");
-        String param = JSON.toJSONString(labelCancelParam);
+        String param = new Gson().toJson(labelCancelParam);
         String t = System.currentTimeMillis() + "";
 
         PrintReq printReq = new PrintReq();
@@ -166,7 +166,7 @@ public class ElecWaybill extends BaseServiceTest{
         thirdPlatformRestReq.setCom(CompanyConstant.SF);
         thirdPlatformRestReq.setPartnerKey("123456");
         thirdPlatformRestReq.setNet("jdalpha");
-        String param = JSON.toJSONString(thirdPlatformRestReq);
+        String param = new Gson().toJson(thirdPlatformRestReq);
         String t = System.currentTimeMillis() + "";
 
         PrintReq printReq = new PrintReq();
@@ -179,7 +179,7 @@ public class ElecWaybill extends BaseServiceTest{
         IBaseClient baseClient = new ThirdPlatformRest();
 
         HttpResult result = baseClient.execute(printReq);
-        BaseResponse<List<ThirdPlatformRestData>> resp= JSON.parseObject(result.getBody(), new TypeReference<BaseResponse<List<ThirdPlatformRestData>>>() {
+        BaseResponse<List<ThirdPlatformRestData>> resp= new Gson().fromJson(result.getBody(), new TypeToken<BaseResponse<List<ThirdPlatformRestData>>>() {
         }.getType());
         System.out.println(result);
     }

@@ -13,7 +13,6 @@ import org.dromara.merchant.domain.order.model.Order;
 import org.dromara.merchant.domain.order.model.OrderItem;
 import org.dromara.merchant.domain.order.model.OrderSource;
 import org.dromara.merchant.domain.order.model.OrderType;
-import org.dromara.merchant.infrastructure.order.converter.OrderItemConverter;
 import org.dromara.system.domain.vo.SysUserVo;
 import org.dromara.system.service.ISysUserService;
 import org.springframework.stereotype.Component;

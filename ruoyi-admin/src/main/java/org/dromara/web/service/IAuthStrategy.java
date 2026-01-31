@@ -9,7 +9,6 @@ import org.dromara.common.core.utils.SpringUtils;
 import org.dromara.common.satoken.utils.LoginHelper;
 import org.dromara.system.domain.vo.SysClientVo;
 import org.dromara.web.domain.vo.LoginVo;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * 授权策略

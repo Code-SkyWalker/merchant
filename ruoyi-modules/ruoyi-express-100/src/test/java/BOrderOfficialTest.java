@@ -1,4 +1,4 @@
-import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
 import com.kuaidi100.sdk.api.BOrderOfficial;
 import com.kuaidi100.sdk.contant.ApiInfoConstant;
 import com.kuaidi100.sdk.contant.CompanyConstant;
@@ -33,7 +33,7 @@ public class BOrderOfficialTest extends BaseServiceTest{
         bOrderReq.setWeight("1");
 
         String t = String.valueOf(System.currentTimeMillis());
-        String param = JSON.toJSONString(bOrderReq);
+        String param = new Gson().toJson(bOrderReq);
 
         printReq.setKey(key);
         printReq.setSign(SignUtils.printSign(param,t,key,secret));
@@ -57,7 +57,7 @@ public class BOrderOfficialTest extends BaseServiceTest{
         bOrderCancelReq.setCancelMsg("测试单取消");
 
         String t = String.valueOf(System.currentTimeMillis());
-        String param = JSON.toJSONString(bOrderCancelReq);
+        String param = new Gson().toJson(bOrderCancelReq);
 
         printReq.setKey(key);
         printReq.setSign(SignUtils.printSign(param,t,key,secret));
@@ -81,7 +81,7 @@ public class BOrderOfficialTest extends BaseServiceTest{
         officialQueryPriceReq.setRecManPrintAddr("福建省厦门市");
 
         String t = String.valueOf(System.currentTimeMillis());
-        String param = JSON.toJSONString(officialQueryPriceReq);
+        String param = new Gson().toJson(officialQueryPriceReq);
 
         printReq.setKey(key);
         printReq.setSign(SignUtils.printSign(param,t,key,secret));
@@ -103,7 +103,7 @@ public class BOrderOfficialTest extends BaseServiceTest{
         officialQueryPriceReq.setTaskId("8CE30D*******4E2F5F");
 
         String t = String.valueOf(System.currentTimeMillis());
-        String param = JSON.toJSONString(officialQueryPriceReq);
+        String param = new Gson().toJson(officialQueryPriceReq);
 
         printReq.setKey(key);
         printReq.setSign(SignUtils.printSign(param,t,key,secret));

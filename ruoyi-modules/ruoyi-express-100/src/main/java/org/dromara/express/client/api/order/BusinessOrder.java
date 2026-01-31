@@ -10,7 +10,6 @@ import com.kuaidi100.sdk.request.BOrderOfficialQueryPriceReq;
 import com.kuaidi100.sdk.request.BOrderReq;
 import com.kuaidi100.sdk.request.PrintReq;
 import com.kuaidi100.sdk.response.PrintBaseResp;
-import com.kuaidi100.sdk.response.bsamecity.BsamecityPriceResp;
 import org.dromara.express.client.api.ExpressBasis;
 import org.dromara.express.domain.model.Config;
 import org.springframework.stereotype.Component;

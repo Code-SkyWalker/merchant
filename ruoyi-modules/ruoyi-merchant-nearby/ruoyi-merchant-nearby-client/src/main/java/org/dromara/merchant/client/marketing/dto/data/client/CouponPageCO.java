@@ -1,6 +1,7 @@
 package org.dromara.merchant.client.marketing.dto.data.client;
 
 import lombok.Data;
+
 import java.time.LocalDateTime;
 
 /**

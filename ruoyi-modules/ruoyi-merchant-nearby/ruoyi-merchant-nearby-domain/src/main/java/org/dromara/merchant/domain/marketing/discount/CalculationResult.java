@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import org.dromara.merchant.domain.marketing.model.activity.Marketing;
 import org.dromara.merchant.domain.marketing.model.coupon.Coupon;
 import org.dromara.merchant.domain.order.model.Order;
-import org.dromara.merchant.domain.order.model.OrderItem;
 
 import java.math.BigDecimal;
 import java.util.List;

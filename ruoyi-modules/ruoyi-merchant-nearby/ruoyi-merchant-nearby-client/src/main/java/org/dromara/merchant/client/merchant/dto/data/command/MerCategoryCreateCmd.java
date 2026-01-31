@@ -3,7 +3,6 @@ package org.dromara.merchant.client.merchant.dto.data.command;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.dromara.merchant.client.Command;
 
 /**
  * @Description TODO

@@ -2,7 +2,9 @@ package org.dromara.merchant.infrastructure.marketing.converter;
 
 import org.dromara.merchant.client.marketing.dto.data.command.MarketingSpu;
 import org.dromara.merchant.infrastructure.marketing.mapper.dataobject.MarketingSpuDO;
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingConstants;
+import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 

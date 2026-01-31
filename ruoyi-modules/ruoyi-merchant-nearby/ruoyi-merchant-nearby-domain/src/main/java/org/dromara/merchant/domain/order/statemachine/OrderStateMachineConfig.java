@@ -1,12 +1,9 @@
 package org.dromara.merchant.domain.order.statemachine;
 
 import com.alibaba.cola.statemachine.Action;
-import com.alibaba.cola.statemachine.Condition;
 import com.alibaba.cola.statemachine.StateMachine;
-import com.alibaba.cola.statemachine.StateMachineFactory;
 import com.alibaba.cola.statemachine.builder.StateMachineBuilder;
 import com.alibaba.cola.statemachine.builder.StateMachineBuilderFactory;
-import jakarta.annotation.PostConstruct;
 import org.dromara.merchant.domain.order.model.Order;
 import org.dromara.merchant.domain.order.model.OrderStatus;
 import org.springframework.context.annotation.Bean;

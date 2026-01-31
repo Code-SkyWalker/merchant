@@ -122,6 +122,7 @@ security:
     - /warm-flow-ui/config
     - /merchant
     - /system/district/**
+    - /payment/huifu/**
 
 # 多租户配置
 tenant:

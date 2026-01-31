@@ -1,4 +1,4 @@
-import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
 import com.kuaidi100.sdk.api.SubscribeWithMap;
 import com.kuaidi100.sdk.contant.ApiInfoConstant;
 import com.kuaidi100.sdk.contant.CompanyConstant;
@@ -35,7 +35,7 @@ public class SubscribeWithMapTest extends BaseServiceTest{
 
         SubscribeReq subscribeReq = new SubscribeReq();
         subscribeReq.setSchema(ApiInfoConstant.SUBSCRIBE_SCHEMA);
-        subscribeReq.setParam(JSON.toJSONString(subscribeParam));
+        subscribeReq.setParam(new Gson().toJson(subscribeParam));
 
         IBaseClient subscribe = new SubscribeWithMap();
         System.out.println(subscribe.execute(subscribeReq));

@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.dromara.common.core.utils.SnowflakeIdGenerator;
 import org.dromara.common.mybatis.core.domain.BaseEntity;
-import org.dromara.merchant.client.marketing.dto.data.command.PriceCalculationCmd;
 import org.dromara.merchant.domain.freight.model.DeliveryMethod;
 
 import java.math.BigDecimal;

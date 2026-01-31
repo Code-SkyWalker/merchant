@@ -1,7 +1,6 @@
 package org.dromara.merchant.app.freight.executor;
 
 import lombok.RequiredArgsConstructor;
-import org.dromara.merchant.client.freight.dto.data.command.FreightConfigCreateCmd;
 import org.dromara.merchant.client.freight.dto.data.command.FreightConfigModifyCmd;
 import org.dromara.merchant.domain.freight.gateway.IFreightConfigGateway;
 import org.dromara.merchant.domain.freight.model.FreightConfig;

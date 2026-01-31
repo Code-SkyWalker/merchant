@@ -5,10 +5,7 @@ import org.dromara.merchant.domain.marketing.discount.CalculationResult;
 import org.dromara.merchant.domain.marketing.discount.Product;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Description TODO

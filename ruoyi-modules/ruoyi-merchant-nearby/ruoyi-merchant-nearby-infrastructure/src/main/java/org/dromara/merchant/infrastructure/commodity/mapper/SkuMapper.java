@@ -1,13 +1,12 @@
 package org.dromara.merchant.infrastructure.commodity.mapper;
+
 import org.apache.ibatis.annotations.Param;
-
-import java.util.Collection;
-import java.util.List;
-
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.dromara.common.mybatis.core.mapper.BaseMapperPlus;
 import org.dromara.merchant.domain.commodity.model.Sku;
 import org.dromara.merchant.infrastructure.commodity.mapper.dataobject.SkuDO;
+
+import java.util.Collection;
+import java.util.List;
 
 public interface SkuMapper extends BaseMapperPlus<SkuDO, SkuDO> {
 

@@ -2,7 +2,6 @@ package org.dromara.express.app.excutor;
 
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.domain.Executor;
-import org.dromara.express.client.dto.data.command.ConfigCreateCmd;
 import org.dromara.express.client.dto.data.command.ConfigModifyCmd;
 import org.dromara.express.domain.gateway.IConfigGateway;
 import org.dromara.express.infrastructure.convert.ConfigConverter;

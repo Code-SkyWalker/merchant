@@ -1,8 +1,8 @@
 package org.dromara.express.infrastructure.gateway;
 
 import lombok.RequiredArgsConstructor;
-import org.dromara.express.domain.model.Config;
 import org.dromara.express.domain.gateway.IConfigGateway;
+import org.dromara.express.domain.model.Config;
 import org.dromara.express.infrastructure.convert.ConfigConverter;
 import org.dromara.express.infrastructure.mapper.ConfigMapper;
 import org.springframework.stereotype.Component;

@@ -4,7 +4,6 @@ import com.alibaba.cola.statemachine.StateMachine;
 import lombok.RequiredArgsConstructor;
 import org.dromara.merchant.domain.order.domainservice.IOrderDomainService;
 import org.dromara.merchant.domain.order.gateway.IOrderGateway;
-
 import org.dromara.merchant.domain.order.model.Order;
 import org.dromara.merchant.domain.order.model.OrderStatus;
 import org.dromara.merchant.domain.order.statemachine.OrderEvent;

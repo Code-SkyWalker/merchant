@@ -1,6 +1,5 @@
 package org.dromara.merchant.app.commodity;
 
-import cn.hutool.core.lang.tree.Tree;
 import org.dromara.merchant.client.commodity.dto.data.clientobject.CategoryTreeCO;
 import org.dromara.merchant.client.commodity.dto.data.command.CategoryCreateCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.CategoryModifyCmd;

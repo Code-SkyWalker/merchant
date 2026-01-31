@@ -3,7 +3,6 @@ package org.dromara.merchant.app.marketing.service;
 import lombok.RequiredArgsConstructor;
 import org.dromara.merchant.app.address.IAddressService;
 import org.dromara.merchant.app.commodity.ISkuService;
-import org.dromara.merchant.app.freight.IExpressTemplateService;
 import org.dromara.merchant.app.freight.IFreightConfigService;
 import org.dromara.merchant.app.freight.service.BusinessExpressOrderService;
 import org.dromara.merchant.app.freight.service.CityDeliveryExpressOrderService;

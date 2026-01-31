@@ -1,16 +1,11 @@
 package org.dromara.merchant.infrastructure.commodity.mapper.dataobject;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.math.BigDecimal;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.dromara.common.mybatis.core.domain.BaseEntity;
+
+import java.math.BigDecimal;
 
 /**
  * 商品sku表

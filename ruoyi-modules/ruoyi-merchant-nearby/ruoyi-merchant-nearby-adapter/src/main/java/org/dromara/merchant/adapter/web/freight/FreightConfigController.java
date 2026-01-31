@@ -7,9 +7,6 @@ import org.dromara.merchant.app.freight.executor.query.FreightConfigQryExe;
 import org.dromara.merchant.client.freight.dto.data.clientobject.FreightConfigCO;
 import org.dromara.merchant.client.freight.dto.data.command.FreightConfigCreateCmd;
 import org.dromara.merchant.domain.freight.model.DeliveryMethod;
-import org.dromara.merchant.infrastructure.freight.mapper.ExpressAreaMapper;
-import org.dromara.merchant.infrastructure.freight.mapper.ExpressTemplateMapper;
-import org.dromara.merchant.infrastructure.freight.mapper.FreightConfigMapper;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

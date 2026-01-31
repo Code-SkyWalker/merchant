@@ -1,11 +1,11 @@
 package org.dromara.merchant.app.commodity.service;
 
 import lombok.RequiredArgsConstructor;
-import org.dromara.merchant.domain.commodity.gateway.ISpecGateway;
 import org.dromara.merchant.domain.commodity.gateway.IParaGateway;
+import org.dromara.merchant.domain.commodity.gateway.ISpecGateway;
 import org.dromara.merchant.domain.commodity.gateway.ITemplateGateway;
-import org.dromara.merchant.domain.commodity.model.Spec;
 import org.dromara.merchant.domain.commodity.model.Para;
+import org.dromara.merchant.domain.commodity.model.Spec;
 import org.dromara.merchant.domain.commodity.model.Template;
 import org.springframework.stereotype.Service;
 

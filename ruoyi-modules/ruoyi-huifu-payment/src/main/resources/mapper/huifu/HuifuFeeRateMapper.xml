@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dromara.huifu.infrastructure.mapper.HuifuFeeRateMapper">
+
+  <resultMap id="BaseResultMap" type="org.dromara.huifu.infrastructure.mapper.dataobject.HuifuFeeRateDO">
+    <!--@mbg.generated-->
+    <!--@Table tb_payment_huifu_fee_rate-->
+    <id column="tenant_id" property="tenantId" />
+    <result column="fee_rate" property="feeRate" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+      rate_id,
+      fee_rate,
+      type,
+      merchant_id
+  </sql>
+
+  <select id="queryByMerchantId" resultMap="BaseResultMap">
+      select <include refid="Base_Column_List"/>
+      from tb_payment_huifu_fee_rate
+      where merchant_id = #{merchantId}
+  </select>
+
+  <delete id="deleteByMerchantId">
+      delete
+      from tb_payment_huifu_fee_rate
+      where merchant_id = #{merchantId}
+    </delete>
+</mapper>

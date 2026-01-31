@@ -1,7 +1,6 @@
 package org.dromara.merchant.app.commodity.executor;
 
 import lombok.RequiredArgsConstructor;
-import org.dromara.merchant.client.commodity.dto.data.command.ParaCreateCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.ParaModifyCmd;
 import org.dromara.merchant.domain.commodity.gateway.IParaGateway;
 import org.dromara.merchant.domain.commodity.model.Para;

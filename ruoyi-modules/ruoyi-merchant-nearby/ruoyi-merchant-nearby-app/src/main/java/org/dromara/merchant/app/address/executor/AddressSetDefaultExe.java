@@ -1,8 +1,8 @@
 package org.dromara.merchant.app.address.executor;
 
 import lombok.RequiredArgsConstructor;
-import org.dromara.common.satoken.utils.LoginHelper;
 import org.dromara.common.core.domain.Executor;
+import org.dromara.common.satoken.utils.LoginHelper;
 import org.dromara.merchant.domain.address.gateway.IAddressGateway;
 import org.springframework.stereotype.Component;
 

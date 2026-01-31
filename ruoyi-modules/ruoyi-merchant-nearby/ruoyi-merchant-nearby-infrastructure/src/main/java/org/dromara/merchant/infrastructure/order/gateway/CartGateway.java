@@ -1,15 +1,12 @@
 package org.dromara.merchant.infrastructure.order.gateway;
 
 import lombok.RequiredArgsConstructor;
-import org.dromara.common.redis.config.RedisConfig;
 import org.dromara.common.redis.utils.RedisUtils;
 import org.dromara.common.satoken.utils.LoginHelper;
 import org.dromara.merchant.domain.order.gateway.ICartGateway;
 import org.dromara.merchant.domain.order.model.OrderItem;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 

@@ -1,4 +1,4 @@
-import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
 import com.kuaidi100.sdk.api.InternationalShipment;
 import com.kuaidi100.sdk.contant.ApiInfoConstant;
 import com.kuaidi100.sdk.core.IBaseClient;
@@ -83,7 +83,7 @@ public class InternationalShipmentTest  extends BaseServiceTest{
         customsClearance.setPurpose("GIFT");
         customsClearance.setDocument(true);
 
-        String param = JSON.toJSONString(shipmentReq);
+        String param = new Gson().toJson(shipmentReq);
         String t = System.currentTimeMillis() + "";
         String sign = SignUtils.printSign(param,t,key,secret);
 

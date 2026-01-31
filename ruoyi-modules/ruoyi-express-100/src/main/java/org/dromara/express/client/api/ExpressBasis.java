@@ -5,13 +5,9 @@ import com.google.gson.reflect.TypeToken;
 import com.kuaidi100.sdk.pojo.HttpResult;
 import com.kuaidi100.sdk.request.PrintReq;
 import com.kuaidi100.sdk.request.QueryTrackReq;
-import com.kuaidi100.sdk.response.BOrderQueryData;
-import com.kuaidi100.sdk.response.PrintBaseResp;
 import com.kuaidi100.sdk.utils.SignUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
-import org.dromara.common.core.exception.ServiceException;
-import org.dromara.common.json.utils.JsonUtils;
 import org.dromara.express.domain.model.Config;
 
 /**

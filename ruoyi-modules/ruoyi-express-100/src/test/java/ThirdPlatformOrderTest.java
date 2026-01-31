@@ -1,5 +1,5 @@
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson2.TypeReference;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.kuaidi100.sdk.api.ThirdPlatformOrderCommitTask;
 import com.kuaidi100.sdk.api.ThirdPlatformOrderUploadNum;
 import com.kuaidi100.sdk.api.ThirdPlatformStoreAuth;
@@ -35,7 +35,7 @@ public class ThirdPlatformOrderTest extends BaseServiceTest{
         storeAuthReq.setShopType(ThirdPlatformConstant.TAO_BAO);
         storeAuthReq.setCallbackUrl("http://www.baidu.com");
         storeAuthReq.setSalt("12345678");
-        String param = JSON.toJSONString(storeAuthReq);
+        String param = new Gson().toJson(storeAuthReq);
 
         PrintReq printReq = new PrintReq();
         printReq.setKey(key);
@@ -46,7 +46,7 @@ public class ThirdPlatformOrderTest extends BaseServiceTest{
         HttpResult result = baseClient.execute(printReq);
         System.out.println(result);
         if (result!=null && result.getStatus() == 200 && result.getBody()!= null){
-            ThirdPlatformBaseResp<StoreAuthResp> storeAuthResp = JSON.parseObject(result.getBody(),new TypeReference<ThirdPlatformBaseResp<StoreAuthResp>>(){}.getType());
+            ThirdPlatformBaseResp<StoreAuthResp> storeAuthResp = new Gson().fromJson(result.getBody(), new TypeToken<ThirdPlatformBaseResp<StoreAuthResp>>(){}.getType());
         }
     }
 
@@ -65,7 +65,7 @@ public class ThirdPlatformOrderTest extends BaseServiceTest{
         commitTaskReq.setUpdateAtMax("2022-02-17 16:30:00");
         commitTaskReq.setCallbackUrl("http://www.baidu.com");
         commitTaskReq.setSalt("12345678");
-        String param = JSON.toJSONString(commitTaskReq);
+        String param = new Gson().toJson(commitTaskReq);
 
         PrintReq printReq = new PrintReq();
         printReq.setKey(key);
@@ -76,7 +76,7 @@ public class ThirdPlatformOrderTest extends BaseServiceTest{
         HttpResult result = baseClient.execute(printReq);
         System.out.println(result);
         if (result!=null && result.getStatus() == 200 && result.getBody()!= null){
-            ThirdPlatformBaseResp<CommitTaskResp> commitTaskResp = JSON.parseObject(result.getBody(),new TypeReference<ThirdPlatformBaseResp<CommitTaskResp>>(){}.getType());
+            ThirdPlatformBaseResp<CommitTaskResp> commitTaskResp = new Gson().fromJson(result.getBody(), new TypeToken<ThirdPlatformBaseResp<CommitTaskResp>>(){}.getType());
         }
     }
 
@@ -93,7 +93,7 @@ public class ThirdPlatformOrderTest extends BaseServiceTest{
         uploadNumReq.setOrderNum("1232321");
         uploadNumReq.setKuaidiCom(CompanyConstant.YD);
         uploadNumReq.setKuaidiNum("12345678");
-        String param = JSON.toJSONString(uploadNumReq);
+        String param = new Gson().toJson(uploadNumReq);
 
         PrintReq printReq = new PrintReq();
         printReq.setKey(key);
@@ -104,7 +104,7 @@ public class ThirdPlatformOrderTest extends BaseServiceTest{
         HttpResult result = baseClient.execute(printReq);
         System.out.println(result);
         if (result!=null && result.getStatus() == 200 && result.getBody()!= null){
-            ThirdPlatformBaseResp baseResp = JSON.parseObject(result.getBody(),new TypeReference<ThirdPlatformBaseResp>(){}.getType());
+            ThirdPlatformBaseResp baseResp = new Gson().fromJson(result.getBody(), new TypeToken<ThirdPlatformBaseResp>(){}.getType());
         }
     }
 }

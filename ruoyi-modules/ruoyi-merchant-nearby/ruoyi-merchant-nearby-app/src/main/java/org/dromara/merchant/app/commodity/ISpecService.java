@@ -2,10 +2,9 @@ package org.dromara.merchant.app.commodity;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.dromara.common.mybatis.core.page.PageQuery;
-import org.dromara.merchant.client.commodity.dto.data.clientobject.ParaPageCO;
 import org.dromara.merchant.client.commodity.dto.data.clientobject.SpecPageCO;
-import org.dromara.merchant.client.commodity.dto.data.command.*;
-import org.dromara.merchant.client.commodity.dto.data.command.query.ParaQry;
+import org.dromara.merchant.client.commodity.dto.data.command.SpecCreateCmd;
+import org.dromara.merchant.client.commodity.dto.data.command.SpecModifyCmd;
 import org.dromara.merchant.client.commodity.dto.data.command.query.SpecQry;
 import org.dromara.merchant.domain.commodity.model.Spec;
 

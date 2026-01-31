@@ -2,8 +2,6 @@ package org.dromara.merchant.client.commodity.dto.data.command;
 
 import lombok.Data;
 
-import java.util.List;
-
 /**
  * @Description TODO
  * @Author Code Skywalker

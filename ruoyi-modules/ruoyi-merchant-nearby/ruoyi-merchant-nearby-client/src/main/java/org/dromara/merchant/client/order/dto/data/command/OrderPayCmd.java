@@ -1,7 +1,6 @@
 package org.dromara.merchant.client.order.dto.data.command;
 
 import lombok.Data;
-import org.dromara.merchant.client.Command;
 
 import java.math.BigDecimal;
 

@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.dromara.merchant.client.commodity.dto.data.command.BrandCreateCmd;
 import org.dromara.merchant.domain.commodity.gateway.IBrandGateway;
 import org.dromara.merchant.domain.commodity.gateway.ICategoryBrandGateway;
-import org.dromara.merchant.domain.commodity.model.Brand;
 import org.dromara.merchant.domain.commodity.model.CategoryBrand;
 import org.dromara.merchant.infrastructure.commodity.converter.BrandConvertor;
 import org.springframework.stereotype.Component;

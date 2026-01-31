@@ -2,7 +2,6 @@ package org.dromara.merchant.app.merchant.executor;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.dromara.merchant.app.merchant.service.AlbumService;
 import org.dromara.merchant.domain.merchant.gateway.IAlbumGateway;
 import org.springframework.stereotype.Component;
 

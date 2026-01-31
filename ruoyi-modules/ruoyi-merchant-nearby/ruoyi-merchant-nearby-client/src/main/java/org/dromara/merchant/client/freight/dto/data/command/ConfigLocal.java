@@ -3,7 +3,6 @@ package org.dromara.merchant.client.freight.dto.data.command;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 
 import java.math.BigDecimal;
 

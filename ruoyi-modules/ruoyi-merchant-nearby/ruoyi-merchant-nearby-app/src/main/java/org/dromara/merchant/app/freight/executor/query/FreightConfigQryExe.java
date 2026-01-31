@@ -6,13 +6,11 @@ import org.dromara.merchant.client.freight.dto.data.clientobject.ExpressTemplate
 import org.dromara.merchant.client.freight.dto.data.clientobject.FreightConfigCO;
 import org.dromara.merchant.client.freight.dto.data.clientobject.FreightConfigExpressCO;
 import org.dromara.merchant.domain.freight.model.DeliveryMethod;
-import org.dromara.merchant.infrastructure.freight.mapper.ExpressAreaMapper;
 import org.dromara.merchant.infrastructure.freight.mapper.ExpressTemplateMapper;
 import org.dromara.merchant.infrastructure.freight.mapper.FreightConfigMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static com.baomidou.mybatisplus.core.toolkit.StringPool.COMMA;

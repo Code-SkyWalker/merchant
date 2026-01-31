@@ -2,7 +2,6 @@ package org.dromara.merchant.client.freight.dto.data.clientobject;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.dromara.merchant.client.freight.dto.data.command.DeliveryConfig;
 
 import java.util.List;
 

@@ -6,18 +6,9 @@ import org.dromara.merchant.client.order.dto.data.clientobject.OrderItemCO;
 import org.dromara.merchant.client.order.dto.data.command.OrderCancelCmd;
 import org.dromara.merchant.client.order.dto.data.command.OrderCreateCmd;
 import org.dromara.merchant.domain.freight.model.DeliveryMethod;
-import org.dromara.merchant.domain.order.model.InvoiceInfo;
-import org.dromara.merchant.domain.order.model.Order;
-import org.dromara.merchant.domain.order.model.OrderItem;
-import org.dromara.merchant.domain.order.model.OrderSource;
-import org.dromara.merchant.domain.order.model.OrderStatus;
-import org.dromara.merchant.domain.order.model.OrderType;
+import org.dromara.merchant.domain.order.model.*;
 import org.dromara.merchant.infrastructure.order.mapper.dataobject.OrderDO;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 
 /**
  * @Description 订单转换器

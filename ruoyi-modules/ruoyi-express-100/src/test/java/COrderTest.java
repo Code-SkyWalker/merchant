@@ -1,4 +1,4 @@
-import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
 import com.kuaidi100.sdk.api.COrder;
 import com.kuaidi100.sdk.contant.ApiInfoConstant;
 import com.kuaidi100.sdk.contant.CompanyConstant;
@@ -37,7 +37,7 @@ public class COrderTest extends BaseServiceTest{
         cOrderReq.setSalt("123456");
 
         String t = String.valueOf(System.currentTimeMillis());
-        String param = JSON.toJSONString(cOrderReq);
+        String param = new Gson().toJson(cOrderReq);
 
         printReq.setKey(key);
         printReq.setSign(SignUtils.printSign(param,t,key,secret));
@@ -61,7 +61,7 @@ public class COrderTest extends BaseServiceTest{
         cOrderCancelReq.setCancelMsg("测试单取消");
 
         String t = String.valueOf(System.currentTimeMillis());
-        String param = JSON.toJSONString(cOrderCancelReq);
+        String param = new Gson().toJson(cOrderCancelReq);
 
         printReq.setKey(key);
         printReq.setSign(SignUtils.printSign(param,t,key,secret));
@@ -85,7 +85,7 @@ public class COrderTest extends BaseServiceTest{
         queryPriceReq.setRecManPrintAddr("广东省深圳市罗湖区火车站");
 
         String t = String.valueOf(System.currentTimeMillis());
-        String param = JSON.toJSONString(queryPriceReq);
+        String param = new Gson().toJson(queryPriceReq);
 
         printReq.setKey(key);
         printReq.setSign(SignUtils.printSign(param,t,key,secret));

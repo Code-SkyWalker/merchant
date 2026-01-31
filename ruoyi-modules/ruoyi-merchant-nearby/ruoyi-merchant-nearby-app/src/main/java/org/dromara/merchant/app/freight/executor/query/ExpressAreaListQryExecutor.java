@@ -3,8 +3,8 @@ package org.dromara.merchant.app.freight.executor.query;
 import lombok.RequiredArgsConstructor;
 import org.dromara.merchant.client.freight.dto.data.clientobject.ExpressAreaCO;
 import org.dromara.merchant.infrastructure.freight.converter.ExpressAreaConvertor;
-import org.dromara.merchant.infrastructure.freight.mapper.dataobject.ExpressAreaDO;
 import org.dromara.merchant.infrastructure.freight.mapper.ExpressAreaMapper;
+import org.dromara.merchant.infrastructure.freight.mapper.dataobject.ExpressAreaDO;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
 import com.kuaidi100.sdk.api.BOrder;
 import com.kuaidi100.sdk.contant.ApiInfoConstant;
 import com.kuaidi100.sdk.contant.CompanyConstant;
@@ -25,7 +25,7 @@ public class BOrderBestTest extends BaseServiceTest{
         bOrderQueryReq.setSendAddr("福田区华强南");
 
         String t = String.valueOf(System.currentTimeMillis());
-        String param = JSON.toJSONString(bOrderQueryReq);
+        String param = new Gson().toJson(bOrderQueryReq);
 
         PrintReq printReq = new PrintReq();
         printReq.setKey(key);
@@ -60,7 +60,7 @@ public class BOrderBestTest extends BaseServiceTest{
         bOrderReq.setServiceType("标准快递");
 
         String t = String.valueOf(System.currentTimeMillis());
-        String param = JSON.toJSONString(bOrderReq);
+        String param = new Gson().toJson(bOrderReq);
 
         printReq.setKey(key);
         printReq.setSign(SignUtils.printSign(param,t,key,secret));
@@ -83,7 +83,7 @@ public class BOrderBestTest extends BaseServiceTest{
         bOrderGetCodeReq.setOrderId("100012022010566");
 
         String t = String.valueOf(System.currentTimeMillis());
-        String param = JSON.toJSONString(bOrderGetCodeReq);
+        String param = new Gson().toJson(bOrderGetCodeReq);
 
         printReq.setKey(key);
         printReq.setSign(SignUtils.printSign(param,t,key,secret));
@@ -107,7 +107,7 @@ public class BOrderBestTest extends BaseServiceTest{
         bOrderCancelReq.setCancelMsg("测试单取消");
 
         String t = String.valueOf(System.currentTimeMillis());
-        String param = JSON.toJSONString(bOrderCancelReq);
+        String param = new Gson().toJson(bOrderCancelReq);
 
         printReq.setKey(key);
         printReq.setSign(SignUtils.printSign(param,t,key,secret));
