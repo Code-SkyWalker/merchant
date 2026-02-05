@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 /**
- * 快递配置控制器
+ * 快递配置
  */
 @RestController
 @RequestMapping("/express/config")
@@ -23,6 +23,9 @@ public class ExpressConfigController {
 
     private final ConfigMapper configMapper;
 
+    /**
+     * 根据商户ID查询快递配置
+     */
     @GetMapping("/{merchantId}")
     public R<ConfigCO> queryConfigByMerchantId(@PathVariable Long merchantId) {
         return R.ok(configMapper.queryByMerchantId(merchantId));

@@ -7,6 +7,7 @@ import com.huifu.bspay.sdk.opps.core.utils.SequenceTools;
 import org.dromara.common.core.domain.R;
 import org.dromara.huifu.client.api.merchant.MerchantImports;
 import org.dromara.huifu.client.api.merchant.PersonalImports;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,15 +27,15 @@ public class ImportController {
     private final MerchantImports merchantImports = new MerchantImports();
     private final PersonalImports PersonalImports = new PersonalImports();
 
-    /*https://paas.huifu.com/mer_register/?grantsId=35134c9cbeb5bd57afdefe86&encrypt_msg=UMI8jvPlNx6kPOKAaRjmJ%2BAroc%2BywFQjZR%2B288KcJ1hmCjKtEQ7Xk23RcNdgEovRUmyX6ZMuAiqCzOUJFmA090bhLajTnChXxeIr%2BHHh6ZuANFUFjaDySyIkMKOnl%2FWNyWHT2EBx3zwmRyWpEjk75A%3D%3D&version=1.0.0&presetType=T2&templateId=2739*/
-    private static final String default_import_url = "https://paas.huifu.com/mer_register/?grantsId=35134c9cbeb5bd57afdefe86&encrypt_msg=UMI8jvPlNx6kPOKAaRjmJ%2BAroc%2BywFQjZR%2B288KcJ1hmCjKtEQ7Xk23RcNdgEovRUmyX6ZMuAiqCzOUJFmA090bhLajTnChXxeIr%2BHHh6ZuANFUFjaDySyIkMKOnl%2FWNyWHT2EBx3zwmRyWpEjk75A%3D%3D&version=1.0.0&presetType=T2&templateId=2739";
+    @Value("${huifu.import.url}")
+    private String huifu_import_url;
 
     /**
      * 获取商户入驻链接
      */
     @PostMapping("/merchant/web")
     public R<String> webBasicDataImport() {
-        return R.ok(null, default_import_url);
+        return R.ok(null, huifu_import_url);
     }
 
     /**
@@ -50,4 +51,5 @@ public class ImportController {
         return R.ok(null, result);
     }
 
+    // TODO: 个人用户入驻，平台分账使用
 }

@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 /**
- * @Description 订单控制器
- * @Author 订单体系设计
+ * 订单
+ * @Author Code Skywalker
  * @Date 2026-01-05
  */
 @RestController
@@ -92,7 +92,7 @@ public class OrderController {
     }
 
     /**
-     * 查询订单
+     * 分页查询订单
      */
     @GetMapping("/page")
     public TableDataInfo<OrderPageCO> queryOrder(@ModelAttribute OrderQry qry, @ModelAttribute PageQuery page) {

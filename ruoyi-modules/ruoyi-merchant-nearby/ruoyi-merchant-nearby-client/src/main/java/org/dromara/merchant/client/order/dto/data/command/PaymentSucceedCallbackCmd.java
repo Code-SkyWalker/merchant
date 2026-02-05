@@ -21,7 +21,7 @@ public class PaymentSucceedCallbackCmd {
 
 
     /**
-     * 支付时间
+     * 支付金额
      */
-    private String paymentTime;
+    private String payAmount;
 }

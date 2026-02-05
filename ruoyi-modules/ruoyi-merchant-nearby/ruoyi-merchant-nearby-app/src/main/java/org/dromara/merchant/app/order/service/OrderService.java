@@ -103,9 +103,10 @@ public class OrderService implements IOrderService, IHuifuCallbackHandler {
     public void paymentCallBack(JSONObject paymentCallback) {
         String payOrderId = (String) paymentCallback.get("party_order_id");
         String transStat = (String) paymentCallback.get("trans_stat");
+        String transAmt = (String) paymentCallback.get("trans_amt");
 
         if (transStat.equalsIgnoreCase("S")) {
-            this.orderPayExecutor.execute(new PaymentSucceedCallbackCmd(payOrderId, ""));
+            this.orderPayExecutor.execute(new PaymentSucceedCallbackCmd(payOrderId, transAmt));
         }
     }
 

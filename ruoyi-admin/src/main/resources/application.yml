@@ -232,6 +232,12 @@ springdoc:
       packages-to-scan: org.dromara.merchant.adapter.web.commodity
     - group: 商城-营销模块
       packages-to-scan: org.dromara.merchant.adapter.web.marketing
+    - group: 商城-订单模块
+      packages-to-scan: org.dromara.merchant.adapter.web.order
+    - group: 汇付支付配置模块
+      packages-to-scan: org.dromara.huifu
+    - group: 快递100配置模块
+      packages-to-scan: org.dromara.express
 
 # 防止XSS攻击
 xss:
@@ -289,3 +295,6 @@ warm-flow:
 
 default:
   domain: https://merchant.dingyutx.com
+huifu:
+  import:
+    url: https://merchant.dingyutx.com/huifu/import    -- 伪链接

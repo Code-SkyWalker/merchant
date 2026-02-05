@@ -22,17 +22,17 @@ public class HuifuFeeRateCreateCmd {
     private Long merchantId;
 
     /**
-     * 商家比例
+     * 商家比例 百分比值如80% -> 80  三者之和必须等于100
      */
     private BigDecimal merchantRate;
 
     /**
-     * 平台比例
+     * 平台比例 百分比值如15% -> 15  三者之和必须等于100
      */
     private BigDecimal platformRate;
 
     /**
-     * 渠道比例
+     * 渠道比例 百分比值如5% -> 5  三者之和必须等于100
      */
     private BigDecimal channelRate;
 

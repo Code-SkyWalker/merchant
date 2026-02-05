@@ -30,6 +30,11 @@ public class WechatPayController {
 
     private final HuifuConfigService configService;
 
+    /**
+     * 获取用户openId
+     * @param merchantId    商户ID
+     * @param authCode      授权码
+     */
     @GetMapping("/openId")
     public R<Map<String, Object>> openId(@RequestParam Long merchantId, @RequestParam String authCode) throws BasePayException, IllegalAccessException {
 

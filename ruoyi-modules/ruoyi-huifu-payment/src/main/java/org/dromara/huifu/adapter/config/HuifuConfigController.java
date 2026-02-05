@@ -9,7 +9,7 @@ import org.dromara.huifu.domain.model.HuifuConfig;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * @Description TODO
+ * 汇付配置
  * @Author Code Skywalker
  * @Date 2025/11/13 17:23
  */
@@ -48,7 +48,7 @@ public class HuifuConfigController {
     }
 
     /**
-     * 根据商户id查询汇付配置
+     * 商户查询汇付配置
      */
     @GetMapping("/query/merchant")
     public R<HuifuConfig> queryByMerchantId(@RequestParam Long merchantId) {
@@ -56,7 +56,7 @@ public class HuifuConfigController {
     }
 
     /**
-     * 根据商户id查询汇付配置
+     * 租户查询汇付配置
      */
     @GetMapping("/query/tenant")
     public R<HuifuConfig> queryByTenantId(@RequestParam String tenantId) {
@@ -64,7 +64,7 @@ public class HuifuConfigController {
     }
 
     /**
-     * 根据商户号或用户子账号查询汇付配置
+     * 渠道服务商查询汇付配置
      */
     @GetMapping("/query/channel")
     public R<?> queryChannel() {

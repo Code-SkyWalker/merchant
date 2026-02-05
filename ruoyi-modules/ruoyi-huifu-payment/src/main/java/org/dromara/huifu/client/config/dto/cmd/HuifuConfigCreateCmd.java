@@ -21,14 +21,14 @@ public class HuifuConfigCreateCmd {
     @NotNull
     private Long huifuId;
 
-    /** product_id 如果是运营平台（租户），则不填 */
+    /** product_id */
     @NotBlank
     private String productId;
 
-    /** 商户私钥 如果是运营平台（租户），则不填 */
+    /** 商户私钥 如果是运营平台（租户），则不填; 商户和渠道商必填 */
     private String privateKey;
 
-    /** 汇付公钥 如果是运营平台（租户），则不填 */
+    /** 汇付公钥 如果是运营平台（租户），则不填; 商户和渠道商必填 */
     private String publicKey;
 
     /** 商家ID */

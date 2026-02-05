@@ -18,11 +18,11 @@ public interface IOrderDomainService {
 
     /**
      * 支付订单
-     * @param paymentTime 支付时间
+     * @param payAmount 支付金额
      * @param paymentOrderNo 支付订单号
      * @return 是否支付成功
      */
-    boolean payOrder(String paymentTime, String paymentOrderNo);
+    boolean payOrder(String payAmount, String paymentOrderNo);
 
     /**
      * 取消订单

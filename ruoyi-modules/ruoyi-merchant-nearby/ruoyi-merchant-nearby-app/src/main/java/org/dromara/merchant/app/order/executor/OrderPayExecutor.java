@@ -17,6 +17,6 @@ public class OrderPayExecutor {
     private final IOrderDomainService orderDomainService;
 
     public Boolean execute(PaymentSucceedCallbackCmd cmd) {
-        return orderDomainService.payOrder(cmd.getPaymentTime(), cmd.getPaymentOrderNo());
+        return orderDomainService.payOrder(cmd.getPayAmount(), cmd.getPaymentOrderNo());
     }
 }

@@ -11,6 +11,7 @@ import org.dromara.merchant.domain.order.statemachine.OrderEvent;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 
@@ -50,12 +51,12 @@ public class OrderDomainService implements IOrderDomainService {
     /**
      * 支付订单
 
-     * @param paymentTime 支付时间
+     * @param payAmount 支付金额
      * @param paymentOrderNo 支付订单号
      * @return 是否支付成功
      */
     @Override
-    public boolean payOrder(String paymentTime, String paymentOrderNo) {
+    public boolean payOrder(String payAmount, String paymentOrderNo) {
         Order order = orderGateway.queryOrderByPaymentOrderId(paymentOrderNo);
         if (order == null) return false;
 
@@ -64,6 +65,7 @@ public class OrderDomainService implements IOrderDomainService {
         if (result == null) return false;
 
         order.setPaymentTime(LocalDateTime.now());
+        order.setPaidAmount(new BigDecimal(payAmount));
         order.setPaymentOrderNo(paymentOrderNo);
 
         return orderGateway.save(order);

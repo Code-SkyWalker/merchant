@@ -12,7 +12,7 @@ import org.dromara.huifu.infrastructure.mapper.HuifuFeeRateMapper;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * @Description TODO
+ * 分账费率
  * @Author Code Skywalker
  * @Date 2025/11/14 15:43
  */
