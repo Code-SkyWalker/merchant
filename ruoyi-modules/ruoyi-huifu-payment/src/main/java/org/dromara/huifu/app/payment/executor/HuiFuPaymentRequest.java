@@ -38,11 +38,10 @@ public class HuiFuPaymentRequest {
 
     private String reqDate = DateTools.getCurrentDateYYYYMMDD();
     private String reqSeqId = SequenceTools.getReqSeqId32();
-    private Long tenantId;
-    private String shopId;
-    private String huifuId;
-    private String tradeType;
-    private String goodsDesc;
+    private String tenantId;
+    private Long merchantId;
+    private String paymentMethod;
+    private String goodsDesc = "商品信息";
     private String transAmt;
 
     private String inner_order_id;
@@ -53,4 +52,17 @@ public class HuiFuPaymentRequest {
     private List<CommodityDetail> commodityDetail;
 
     private Map<String, Object> extendInfos = Collections.emptyMap();
+
+    public HuiFuPaymentRequest(String tenantId, Long merchantId, String paymentMethod, String transAmt, String inner_order_id, String sub_appid, String sub_openid, List<CommodityDetail> commodityDetail) {
+        this.tenantId = tenantId;
+        this.merchantId = merchantId;
+        this.paymentMethod = paymentMethod.trim();
+        this.transAmt = transAmt;
+        this.inner_order_id = inner_order_id;
+        this.sub_appid = sub_appid;
+        this.sub_openid = sub_openid;
+        this.commodityDetail = commodityDetail;
+    }
+
+
 }

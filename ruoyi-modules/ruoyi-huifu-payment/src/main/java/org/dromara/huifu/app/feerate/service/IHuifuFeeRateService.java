@@ -28,7 +28,7 @@ public interface IHuifuFeeRateService {
     /**
      * 删除汇付配置
      */
-    boolean delete(Long huifuId);
+    boolean delete(Long merchantId);
 
     /**
      * 根据 租户编号 查询

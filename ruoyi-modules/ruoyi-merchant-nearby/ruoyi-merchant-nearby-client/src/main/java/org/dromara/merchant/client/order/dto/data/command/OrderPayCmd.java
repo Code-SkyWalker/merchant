@@ -18,32 +18,23 @@ public class OrderPayCmd {
     private Long orderId;
 
     /**
-     * 订单编号
-     */
-    private String orderNo;
-
-    /**
-     * 支付方式
+     * 支付方式：
+     * T_JSAPI: 微信公众号（pc、h5）
+     * T_MINIAPP: 微信小程序 (微信小程序、app）
+     * A_JSAPI: 支付宝JS（pc、支付宝小程序）
+     * A_NATIVE: 支付宝正扫（app，h5）
+     * U_NATIVE: 银联正扫
+     * U_JSAPI: 银联JS
      */
     private String paymentMethod;
 
     /**
-     * 支付金额
+     * 子商户应用ID（微信支付必填）
      */
-    private BigDecimal payAmount;
+    private String sub_appid;
 
     /**
-     * 支付订单号
+     * 子商户用户标识（微信支付必填）
      */
-    private String paymentOrderNo;
-
-    /**
-     * 第三方支付订单号
-     */
-    private String thirdPartyOrderNo;
-
-    /**
-     * 扩展信息
-     */
-    private String extInfo;
+    private String sub_openid;
 }

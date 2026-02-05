@@ -1,5 +1,6 @@
 package org.dromara.merchant.app.order.executor;
 
+import cn.hutool.json.JSONObject;
 import com.alibaba.cola.statemachine.StateMachine;
 import com.alibaba.cola.statemachine.StateMachineFactory;
 import lombok.RequiredArgsConstructor;
@@ -56,11 +57,14 @@ public class OrderRefundExecutor {
         order.setRefundTime(LocalDateTime.now());
         order.setUpdateTime(LocalDateTime.now());
         // 添加退款原因到扩展信息
+        JSONObject extInfo;
         if (order.getExtInfo() == null) {
-            order.setExtInfo("{\"refundReason\":\"" + refundReason + "\"}");
+            extInfo = new JSONObject();
         } else {
-            order.setExtInfo(order.getExtInfo() + ",\"refundReason\":\"" + refundReason + "\"}");
+            extInfo = new JSONObject(order.getExtInfo());
         }
+        extInfo.set("refundReason", refundReason);
+        order.setExtInfo(extInfo.toString());
 
         return orderGateway.save(order);
     }
@@ -112,11 +116,14 @@ public class OrderRefundExecutor {
 
         order.setUpdateTime(LocalDateTime.now());
         // 添加拒绝原因到扩展信息
+        JSONObject extInfo;
         if (order.getExtInfo() == null) {
-            order.setExtInfo("{\"rejectReason\":\"" + rejectReason + "\"}");
+            extInfo = new JSONObject();
         } else {
-            order.setExtInfo(order.getExtInfo() + ",\"rejectReason\":\"" + rejectReason + "\"}");
+            extInfo = new JSONObject(order.getExtInfo());
         }
+        extInfo.set("rejectReason", rejectReason);
+        order.setExtInfo(extInfo.toString());
 
         return orderGateway.save(order);
     }

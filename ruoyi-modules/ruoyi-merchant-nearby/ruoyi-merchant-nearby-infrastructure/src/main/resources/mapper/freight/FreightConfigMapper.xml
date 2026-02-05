@@ -63,4 +63,12 @@
         where merchant_id = #{merchantId}
         and delivery_method = #{deliveryMethod}
     </select>
+
+    <select id="queryByMerchantIdAndDeliveryMethod" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_merchant_delivery_config
+        where merchant_id = #{merchantId}
+        and delivery_method = #{deliveryMethodCode}
+    </select>
 </mapper>

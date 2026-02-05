@@ -57,6 +57,12 @@
             <artifactId>mockito-core</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.dromara</groupId>
+            <artifactId>ruoyi-huifu-payment</artifactId>
+            <version>5.5.1</version>
+            <scope>compile</scope>
+        </dependency>
         <!-- COLA components End-->
     </dependencies>
 </project>

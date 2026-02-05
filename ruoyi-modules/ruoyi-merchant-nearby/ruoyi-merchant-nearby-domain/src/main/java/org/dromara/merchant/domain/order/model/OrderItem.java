@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.dromara.common.core.utils.SnowflakeIdGenerator;
+import org.dromara.huifu.app.payment.executor.CommodityDetail;
 
 import java.math.BigDecimal;
 
@@ -57,7 +58,7 @@ public class OrderItem {
     /**
      * 商品单价
      */
-    private BigDecimal unitPrice;
+    private BigDecimal price;
 
     /**
      * 购买数量
@@ -98,4 +99,13 @@ public class OrderItem {
      * 扩展信息
      */
     private String extInfo;
+
+    public CommodityDetail toCommodityDetail() {
+        return new CommodityDetail(
+            this.skuId,
+            this.skuName,
+            this.finalAmount,
+            this.quantity
+            );
+    }
 }

@@ -1,31 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.dromara.huifu.infrastructure.mapper.HuifuFeeRateMapper">
+    <resultMap id="BaseResultMap" type="org.dromara.huifu.infrastructure.mapper.dataobject.HuifuFeeRateDO">
+        <!--@mbg.generated-->
+        <!--@Table tb_payment_huifu_fee_rate-->
+        <id column="rate_id" property="rateId"/>
+        <result column="fee_rate" property="feeRate"/>
+        <result column="type" property="type"/>
+        <result column="merchant_id" property="merchantId"/>
+    </resultMap>
 
-  <resultMap id="BaseResultMap" type="org.dromara.huifu.infrastructure.mapper.dataobject.HuifuFeeRateDO">
-    <!--@mbg.generated-->
-    <!--@Table tb_payment_huifu_fee_rate-->
-    <id column="tenant_id" property="tenantId" />
-    <result column="fee_rate" property="feeRate" />
-  </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        rate_id,
+        fee_rate,
+        type,
+        merchant_id
+    </sql>
 
-  <sql id="Base_Column_List">
-    <!--@mbg.generated-->
-      rate_id,
-      fee_rate,
-      type,
-      merchant_id
-  </sql>
+    <select id="queryByMerchantId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_payment_huifu_fee_rate
+        where merchant_id = #{merchantId}
+    </select>
 
-  <select id="queryByMerchantId" resultMap="BaseResultMap">
-      select <include refid="Base_Column_List"/>
-      from tb_payment_huifu_fee_rate
-      where merchant_id = #{merchantId}
-  </select>
-
-  <delete id="deleteByMerchantId">
-      delete
-      from tb_payment_huifu_fee_rate
-      where merchant_id = #{merchantId}
+    <delete id="deleteByMerchantId">
+        delete
+        from tb_payment_huifu_fee_rate
+        where merchant_id = #{merchantId}
     </delete>
+
+
+    <select id="queryRatePages" resultType="org.dromara.huifu.client.feerate.dto.client.RateCO">
+        select rate.merchant_id                                           as merchantId,
+               merchant.merchant_name                                     as merchantName,
+               merchant.logo                                              as merchantLogo,
+               SUM(CASE WHEN rate.type = 0 THEN rate.fee_rate ELSE 0 END) AS merchantRate,
+               SUM(CASE WHEN rate.type = 1 THEN rate.fee_rate ELSE 0 END) AS platformRate,
+               SUM(CASE WHEN rate.type = 2 THEN rate.fee_rate ELSE 0 END) AS channelRate
+        from tb_payment_huifu_fee_rate rate
+                 left join tb_merchant merchant using (merchant_id)
+        <where>
+            <if test="merchantId != null">
+                rate.merchant_id = #{merchantId}
+            </if>
+        </where>
+        group by rate.merchant_id
+        ORDER BY rate.merchant_id DESC
+    </select>
 </mapper>

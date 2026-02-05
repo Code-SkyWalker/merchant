@@ -51,7 +51,7 @@ public class RuleQuantityDiscount implements Rule {
     public BigDecimal calculate(BigDecimal unitPrice, Integer quantity) {
         if (quantity < this.quantity) return BigDecimal.ZERO;
 
-        // 购买数大于等于任选件数，返回 原价*(1-discount)（只有一件优惠）
+        // 折扣值假设是0-10之间的数值，如8表示8折, 需除以10
         BigDecimal discount = this.discount.divide(BigDecimal.TEN, 2, RoundingMode.HALF_UP);
         BigDecimal discountTotal = unitPrice.multiply(BigDecimal.ONE.subtract(discount));
         return discountTotal.compareTo(BigDecimal.ZERO) > 0 ? discountTotal : BigDecimal.ZERO;

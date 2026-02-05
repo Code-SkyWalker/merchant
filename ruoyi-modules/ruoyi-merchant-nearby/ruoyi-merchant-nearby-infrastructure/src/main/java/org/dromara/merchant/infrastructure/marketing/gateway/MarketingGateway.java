@@ -72,6 +72,7 @@ public class MarketingGateway implements IMarketingGateway {
     @Override
     public List<Marketing> queryByIds(List<Long> marketingIds) {
         if (marketingIds == null || marketingIds.isEmpty()) return List.of();
-        return this.mapper.selectByIdList(marketingIds);
+        List<Marketing> marketings = this.mapper.selectByIdList(marketingIds);
+        return marketings;
     }
 }

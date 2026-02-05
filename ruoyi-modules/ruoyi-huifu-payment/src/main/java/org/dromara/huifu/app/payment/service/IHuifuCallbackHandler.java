@@ -1,7 +1,7 @@
 package org.dromara.huifu.app.payment.service;
 
 
-import com.alibaba.fastjson.JSONObject;
+import cn.hutool.json.JSONObject;
 
 /**
  * @Description 汇付回调处理接口

@@ -6,6 +6,7 @@ import org.dromara.common.mybatis.core.mapper.BaseMapperPlus;
 import org.dromara.merchant.client.marketing.dto.data.client.CouponCO;
 import org.dromara.merchant.client.marketing.dto.data.client.CouponPageCO;
 import org.dromara.merchant.client.marketing.dto.data.command.query.CouponPageQry;
+import org.dromara.merchant.domain.marketing.model.coupon.Coupon;
 import org.dromara.merchant.infrastructure.marketing.mapper.dataobject.CouponDO;
 
 import java.util.List;
@@ -35,5 +36,5 @@ public interface CouponMapper extends BaseMapperPlus<CouponDO, CouponDO> {
      * @param couponIds 优惠券Id列表
      * @return 优惠券列表
      */
-    List<CouponDO> selectByIdList(@Param("couponIds") List<Long> couponIds);
+    List<Coupon> selectByIdList(@Param("couponIds") List<Long> couponIds);
 }

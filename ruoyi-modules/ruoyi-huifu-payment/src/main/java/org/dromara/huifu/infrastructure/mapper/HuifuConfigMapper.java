@@ -30,5 +30,5 @@ public interface HuifuConfigMapper extends BaseMapperPlus<HuifuConfigDO, HuifuCo
      * @param tenantId 租户编号
      * @return 汇付配置
      */
-    HuifuConfigDO queryByTenantId(Long tenantId);
+    HuifuConfigDO queryByTenantId(String tenantId);
 }

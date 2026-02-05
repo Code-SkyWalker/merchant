@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.math.BigDecimal;
+
 /**
  * @Description TODO
  * @Author Code Skywalker
@@ -16,8 +18,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class CommodityDetail {
 
-    private String goods_id;
+    private Long goods_id;
     private String goods_name;
-    private String price;
-    private String quantity;
+    private BigDecimal price;
+    private Integer quantity;
 }

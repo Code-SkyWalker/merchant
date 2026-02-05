@@ -26,7 +26,7 @@ public class OrderGateway implements IOrderGateway {
 
     @Override
     public Order queryById(Long orderId) {
-        return this.convertor.toEntity(mapper.selectById(orderId));
+        return mapper.queryById(orderId);
     }
 
     @Override
@@ -34,4 +34,8 @@ public class OrderGateway implements IOrderGateway {
         return mapper.deleteById(orderId) > 0;
     }
 
+    @Override
+    public Order queryOrderByPaymentOrderId(String paymentOrderId) {
+        return mapper.queryByPaymentOrderId(paymentOrderId);
+    }
 }

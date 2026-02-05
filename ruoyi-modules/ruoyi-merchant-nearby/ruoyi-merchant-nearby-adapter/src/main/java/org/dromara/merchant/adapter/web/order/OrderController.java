@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.domain.R;
 import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.common.mybatis.core.page.TableDataInfo;
+import org.dromara.merchant.app.order.IOrderService;
 import org.dromara.merchant.app.order.executor.OrderCancelExecutor;
 import org.dromara.merchant.app.order.executor.OrderCreateExecutor;
 import org.dromara.merchant.app.order.executor.OrderPayExecutor;
@@ -18,6 +19,8 @@ import org.dromara.merchant.infrastructure.order.mapper.OrderMapper;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 /**
  * @Description 订单控制器
  * @Author 订单体系设计
@@ -28,10 +31,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class OrderController {
 
-    private final OrderCreateExecutor orderCreateExecutor;
-    private final OrderPayExecutor orderPayExecutor;
-    private final OrderRefundExecutor orderRefundExecutor;
-    private final OrderCancelExecutor orderCancelExecutor;
+    private final IOrderService orderService;
 
     private final OrderMapper orderMapper;
 
@@ -40,15 +40,15 @@ public class OrderController {
      */
     @PostMapping("/create")
     public R<Long> createOrder(@Validated @RequestBody OrderCreateCmd cmd) {
-        return R.ok(orderCreateExecutor.execute(cmd));
+        return R.ok(orderService.createOrder(cmd));
     }
 
     /**
      * 支付订单
      */
     @PostMapping("/pay")
-    public R<Boolean> payOrder(@Validated @RequestBody OrderPayCmd cmd) {
-        return R.ok(orderPayExecutor.execute(cmd));
+    public R<Map<String, Object>> payOrder(@Validated @RequestBody OrderPayCmd cmd) {
+        return R.ok(orderService.payOrder(cmd));
     }
 
     /**
@@ -56,7 +56,7 @@ public class OrderController {
      */
     @PostMapping("/cancel")
     public R<Boolean> cancelOrder(@Validated @RequestBody OrderCancelCmd cmd) {
-        return R.ok(orderCancelExecutor.execute(cmd));
+        return R.ok(orderService.cancelOrder(cmd));
     }
 
     /**
@@ -64,7 +64,7 @@ public class OrderController {
      */
     @PostMapping("/apply-refund")
     public R<Boolean> applyRefund(@RequestParam Long orderId, @RequestParam String refundReason) {
-        return R.ok(orderRefundExecutor.applyRefund(orderId, refundReason));
+        return R.ok(orderService.applyRefund(orderId, refundReason));
     }
 
     /**
@@ -72,7 +72,7 @@ public class OrderController {
      */
     @PostMapping("/approve-refund")
     public R<Boolean> approveRefund(@RequestParam Long orderId, @RequestParam String refundOrderNo) {
-        return R.ok(orderRefundExecutor.approveRefund(orderId, refundOrderNo));
+        return R.ok(orderService.approveRefund(orderId, refundOrderNo));
     }
 
     /**
@@ -80,7 +80,15 @@ public class OrderController {
      */
     @PostMapping("/reject-refund")
     public R<Boolean> rejectRefund(@RequestParam Long orderId, @RequestParam String rejectReason) {
-        return R.ok(orderRefundExecutor.rejectRefund(orderId, rejectReason));
+        return R.ok(orderService.rejectRefund(orderId, rejectReason));
+    }
+
+    /**
+     * 完成订单
+     */
+    @PostMapping("/complete")
+    public R<Boolean> completeOrder(@RequestParam Long orderId) {
+        return R.ok(orderService.completeOrder(orderId));
     }
 
     /**

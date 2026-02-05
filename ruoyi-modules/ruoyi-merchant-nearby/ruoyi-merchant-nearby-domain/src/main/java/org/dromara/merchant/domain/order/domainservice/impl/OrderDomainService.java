@@ -4,10 +4,12 @@ import com.alibaba.cola.statemachine.StateMachine;
 import lombok.RequiredArgsConstructor;
 import org.dromara.merchant.domain.order.domainservice.IOrderDomainService;
 import org.dromara.merchant.domain.order.gateway.IOrderGateway;
+import org.dromara.merchant.domain.order.gateway.IOrderItemGateway;
 import org.dromara.merchant.domain.order.model.Order;
 import org.dromara.merchant.domain.order.model.OrderStatus;
 import org.dromara.merchant.domain.order.statemachine.OrderEvent;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -22,6 +24,7 @@ import java.time.LocalDateTime;
 public class OrderDomainService implements IOrderDomainService {
 
     private final IOrderGateway orderGateway;
+    private final IOrderItemGateway orderItemGateway;
     private final StateMachine<OrderStatus, OrderEvent, Order> stateMachine;
 
     /**
@@ -30,7 +33,8 @@ public class OrderDomainService implements IOrderDomainService {
      * @return 创建的订单ID
      */
     @Override
-    public Long createOrder(Order order) {
+    @Transactional(rollbackFor = Exception.class)
+    public boolean createOrder(Order order) {
         // 设置订单状态为待付款
         order.setStatus(OrderStatus.PENDING_PAYMENT);
         // 设置订单编号
@@ -40,30 +44,27 @@ public class OrderDomainService implements IOrderDomainService {
         // 设置创建时间
         order.setCreateTime(LocalDateTime.now());
         // 保存订单
-        boolean result = orderGateway.save(order);
-        return result ? order.getOrderId() : null;
+        return orderGateway.save(order) && orderItemGateway.save(order.getOrderItems());
     }
 
     /**
      * 支付订单
-     * @param orderId 订单ID
-     * @param paymentMethod 支付方式
+
+     * @param paymentTime 支付时间
      * @param paymentOrderNo 支付订单号
      * @return 是否支付成功
      */
     @Override
-    public boolean payOrder(Long orderId, String paymentMethod, String paymentOrderNo) {
-        Order order = orderGateway.queryById(orderId);
+    public boolean payOrder(String paymentTime, String paymentOrderNo) {
+        Order order = orderGateway.queryOrderByPaymentOrderId(paymentOrderNo);
         if (order == null) return false;
 
         OrderStatus result = stateMachine.fireEvent(OrderStatus.PENDING_PAYMENT, OrderEvent.PAY, order);
 
         if (result == null) return false;
 
-        order.setPaymentMethod(paymentMethod);
         order.setPaymentTime(LocalDateTime.now());
         order.setPaymentOrderNo(paymentOrderNo);
-        order.setUpdateTime(LocalDateTime.now());
 
         return orderGateway.save(order);
     }

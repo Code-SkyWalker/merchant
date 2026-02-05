@@ -111,7 +111,13 @@ public class Order extends BaseEntity {
     private BigDecimal paidAmount;
 
     /**
-     * 支付方式
+     * 支付方式：
+     * T_JSAPI: 微信公众号（pc、h5）
+     * T_MINIAPP: 微信小程序 (微信小程序、app）
+     * A_JSAPI: 支付宝JS（pc、支付宝小程序）
+     * A_NATIVE: 支付宝正扫（app，h5）
+     * U_NATIVE: 银联正扫
+     * U_JSAPI: 银联JS
      */
     private String paymentMethod;
 
@@ -169,6 +175,11 @@ public class Order extends BaseEntity {
      * 发票信息
      */
     private InvoiceInfo invoiceInfo;
+
+    /**
+     * 租户ID
+     */
+    private String tenantId;
 
     /**
      * 扩展信息

@@ -95,7 +95,7 @@ public class CalculationResult {
         order.setCouponAmount(this.couponDiscountAmount);
         order.setPointAmount(this.integralDiscountAmount);
         order.setCommAmount(this.commDiscountAmount);
-        order.setPayableAmount(this.totalAmount);
+        order.setPayableAmount(this.totalAmount.max(BigDecimal.ZERO));
     }
 
 }

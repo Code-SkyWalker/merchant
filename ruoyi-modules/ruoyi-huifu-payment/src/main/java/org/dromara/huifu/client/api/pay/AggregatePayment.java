@@ -17,9 +17,6 @@ import java.util.Map;
 @Component
 public class AggregatePayment {
 
-
-    public static final String NOTIFY_URL = "prod-api/api/payment/huifu/pay/notify";
-
     /**
      * 创建聚合支付订单
      *

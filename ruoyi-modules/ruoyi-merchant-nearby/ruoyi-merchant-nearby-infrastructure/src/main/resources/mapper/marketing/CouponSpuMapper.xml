@@ -26,12 +26,20 @@
         tb_coupon_spu.coupon_id as tb_coupon_spu_coupon_id,
         tb_coupon_spu.spu_id as tb_coupon_spu_spu_id
     </sql>
-    <resultMap id="JoinResultMap" type="org.dromara.merchant.infrastructure.marketing.mapper.dataobject.CouponSpuDO">
+    <resultMap id="JoinDOResultMap" type="org.dromara.merchant.infrastructure.marketing.mapper.dataobject.CouponSpuDO">
         <!--@mbg.generated-->
         <id column="tb_coupon_spu_id" property="id"/>
         <result column="tb_coupon_spu_coupon_id" property="couponId"/>
         <result column="tb_coupon_spu_spu_id" property="spuId"/>
     </resultMap>
+
+    <resultMap id="JoinResultMap" type="org.dromara.merchant.domain.marketing.model.coupon.CouponSpu">
+        <!--@mbg.generated-->
+        <id column="tb_coupon_spu_id" property="id"/>
+        <result column="tb_coupon_spu_coupon_id" property="couponId"/>
+        <result column="tb_coupon_spu_spu_id" property="spuId"/>
+    </resultMap>
+
 
   <select id="selectCouponIdsBySpuId" resultType="java.lang.Long">
       select coupon_id

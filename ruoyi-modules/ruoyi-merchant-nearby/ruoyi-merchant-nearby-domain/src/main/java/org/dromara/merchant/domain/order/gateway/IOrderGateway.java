@@ -30,4 +30,11 @@ public interface IOrderGateway {
      */
     boolean delete(Long orderId);
 
+    /**
+     * 根据支付订单ID查询订单
+     * @param paymentOrderId 支付订单ID
+     * @return 订单实体
+     */
+    Order queryOrderByPaymentOrderId(String paymentOrderId);
+
 }

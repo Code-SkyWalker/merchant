@@ -36,7 +36,7 @@ public class RuleMultiUnitDiscount implements Rule {
     private Way way;
 
     /**
-     * 具体优惠信息（阶梯式）
+     * 具体优惠信息
      */
     private List<Condition> discounts;
 

@@ -32,7 +32,7 @@ public interface IHuifuConfigGateway {
      * @param tenantId 租户编号
      * @return 汇付配置
      */
-    HuifuConfig queryByTenantId(Long tenantId);
+    HuifuConfig queryByTenantId(String tenantId);
 
     /**
      * 查询渠道服务商配置

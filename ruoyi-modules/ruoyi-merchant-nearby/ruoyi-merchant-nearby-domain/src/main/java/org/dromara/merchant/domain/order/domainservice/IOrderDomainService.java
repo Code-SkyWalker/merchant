@@ -14,16 +14,15 @@ public interface IOrderDomainService {
      * @param order 订单实体
      * @return 创建的订单ID
      */
-    Long createOrder(Order order);
+    boolean createOrder(Order order);
 
     /**
      * 支付订单
-     * @param orderId 订单ID
-     * @param paymentMethod 支付方式
+     * @param paymentTime 支付时间
      * @param paymentOrderNo 支付订单号
      * @return 是否支付成功
      */
-    boolean payOrder(Long orderId, String paymentMethod, String paymentOrderNo);
+    boolean payOrder(String paymentTime, String paymentOrderNo);
 
     /**
      * 取消订单

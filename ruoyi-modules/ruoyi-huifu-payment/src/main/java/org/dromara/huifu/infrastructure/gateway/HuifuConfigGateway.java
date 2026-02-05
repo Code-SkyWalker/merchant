@@ -33,7 +33,7 @@ public class HuifuConfigGateway implements IHuifuConfigGateway {
     }
 
     @Override
-    public HuifuConfig queryByTenantId(Long tenantId) {
+    public HuifuConfig queryByTenantId(String tenantId) {
         HuifuConfigDO huifuConfigDO = this.mapper.queryByTenantId(tenantId);
         return this.convertor.toEntity(huifuConfigDO);
     }

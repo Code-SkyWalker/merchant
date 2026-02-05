@@ -66,7 +66,7 @@ public class HuifuConfigService implements IHuifuConfigService {
     }
 
     @Override
-    public HuifuConfig queryByTenantId(Long tenantId) {
+    public HuifuConfig queryByTenantId(String tenantId) {
         return this.huifuConfigGateway.queryByTenantId(tenantId);
     }
 

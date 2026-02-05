@@ -29,7 +29,7 @@ public interface IHuifuConfigService {
     /**
      * 根据租户编号查询
      */
-    HuifuConfig queryByTenantId(Long tenantId);
+    HuifuConfig queryByTenantId(String tenantId);
 
     /**
      * 根据商户ID查询

@@ -4,7 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
-import org.dromara.merchant.domain.marketing.model.activity.Rule;
+import org.dromara.merchant.client.marketing.dto.data.command.Rule;
+
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -16,7 +17,7 @@ import java.sql.SQLException;
  * @Author Code Skywalker
  * @Date 2025/12/31 13:11
  */
-public class RuleTypeHandler implements TypeHandler<Rule> {
+public class RuleCOTypeHandler implements TypeHandler<Rule> {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 

@@ -1,6 +1,6 @@
 package org.dromara.huifu.app.payment.service;
 
-import com.alibaba.fastjson.JSONObject;
+import cn.hutool.json.JSONObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

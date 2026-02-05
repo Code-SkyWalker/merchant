@@ -11,7 +11,6 @@ import java.math.BigDecimal;
  * @Date 2025/12/29 11:32
  */
 @Data
-@AllArgsConstructor
 public class MarketingSpu {
 
     /**

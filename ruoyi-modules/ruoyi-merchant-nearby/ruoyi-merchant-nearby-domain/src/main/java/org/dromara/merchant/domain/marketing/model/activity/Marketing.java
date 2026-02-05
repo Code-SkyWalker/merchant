@@ -22,7 +22,6 @@ import java.util.Map;
  * @Date 2025/12/26 11:08
  */
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class Marketing implements Activity {
 

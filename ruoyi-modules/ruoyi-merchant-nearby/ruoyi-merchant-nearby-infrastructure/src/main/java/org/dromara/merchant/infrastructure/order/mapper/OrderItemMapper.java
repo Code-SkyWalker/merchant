@@ -20,6 +20,6 @@ public interface OrderItemMapper extends BaseMapperPlus<OrderItemDO, OrderItemDO
      * @param orderId 订单ID
      * @return 订单项列表
      */
-    List<OrderItemCO> queryOrderItemByOrderId(@Param("orderId") Long orderId);
+    List<OrderItemCO> queryOrderItemCOByOrderId(@Param("orderId") Long orderId);
 
 }

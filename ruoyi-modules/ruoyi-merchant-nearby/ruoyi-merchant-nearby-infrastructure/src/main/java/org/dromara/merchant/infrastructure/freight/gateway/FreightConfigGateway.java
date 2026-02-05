@@ -2,6 +2,7 @@ package org.dromara.merchant.infrastructure.freight.gateway;
 
 import lombok.RequiredArgsConstructor;
 import org.dromara.merchant.domain.freight.gateway.IFreightConfigGateway;
+import org.dromara.merchant.domain.freight.model.DeliveryMethod;
 import org.dromara.merchant.domain.freight.model.FreightConfig;
 import org.dromara.merchant.infrastructure.freight.converter.FreightConfigConvertor;
 import org.dromara.merchant.infrastructure.freight.mapper.FreightConfigMapper;
@@ -48,5 +49,11 @@ public class FreightConfigGateway implements IFreightConfigGateway {
     @Override
     public boolean deleteByMerchantId(Long merchantId) {
         return mapper.deleteByMerchantId(merchantId) > 0;
+    }
+
+    @Override
+    public FreightConfig queryByMerchantIdAndDeliveryMethod(Long merchantId, DeliveryMethod deliveryMethod) {
+        FreightConfigDO freightConfigDO = mapper.queryByMerchantIdAndDeliveryMethod(merchantId, deliveryMethod.getCode());
+        return convertor.toMerchantDeliveryConfigEntity(freightConfigDO);
     }
 }

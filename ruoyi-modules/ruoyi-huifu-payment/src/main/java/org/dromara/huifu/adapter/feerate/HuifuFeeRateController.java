@@ -2,12 +2,14 @@ package org.dromara.huifu.adapter.feerate;
 
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.domain.R;
+import org.dromara.common.mybatis.core.page.PageQuery;
+import org.dromara.common.mybatis.core.page.TableDataInfo;
 import org.dromara.huifu.app.feerate.service.IHuifuFeeRateService;
+import org.dromara.huifu.client.feerate.dto.client.RateCO;
 import org.dromara.huifu.client.feerate.dto.cmd.HuifuFeeRateCreateCmd;
 import org.dromara.huifu.client.feerate.dto.cmd.HuifuFeeRateModifyCmd;
+import org.dromara.huifu.infrastructure.mapper.HuifuFeeRateMapper;
 import org.springframework.web.bind.annotation.*;
-
-import java.math.BigDecimal;
 
 /**
  * @Description TODO
@@ -21,10 +23,12 @@ public class HuifuFeeRateController {
 
     private final IHuifuFeeRateService service;
 
+    private final HuifuFeeRateMapper mapper;
+
     /**
      * 添加分账费率
      * @param cmd 分账费率创建命令
-     * @return
+     * @return 是否添加成功
      */
     @PostMapping
     public R<Boolean> create(@RequestBody HuifuFeeRateCreateCmd cmd) {
@@ -47,23 +51,23 @@ public class HuifuFeeRateController {
 
     /**
      * 删除分账费率
-      * @param tenantId 用户子账户ID
+      * @param merchantId 用户子账户ID
      * @return 是否删除成功
      */
-    @DeleteMapping("/{tenantId}")
-    public R<Boolean> delete(@PathVariable Long tenantId) {
-        boolean deleted = service.delete(tenantId);
+    @DeleteMapping("/{merchantId}")
+    public R<Boolean> delete(@PathVariable Long merchantId) {
+        boolean deleted = service.delete(merchantId);
         return deleted ? R.ok(true) : R.fail();
     }
 
     /**
      * 查询分账费率
-      * @param tenantId 用户子账户ID
+      * @param merchantId 用户子账户ID
      * @return 分账费率
      */
-    @GetMapping("/{tenantId}")
-    public BigDecimal queryByUserSubordinate(@PathVariable String tenantId) {
-        return service.queryByMerchantId(tenantId);
+    @GetMapping("/pages")
+    public TableDataInfo<RateCO> queryByMerchantId(@RequestParam(required = false) Long merchantId, @ModelAttribute PageQuery page) {
+        return TableDataInfo.build(mapper.queryRatePages(merchantId, page.build()));
     }
 
 }

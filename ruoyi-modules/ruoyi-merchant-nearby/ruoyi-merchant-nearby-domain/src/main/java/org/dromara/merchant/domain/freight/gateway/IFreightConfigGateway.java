@@ -1,5 +1,6 @@
 package org.dromara.merchant.domain.freight.gateway;
 
+import org.dromara.merchant.domain.freight.model.DeliveryMethod;
 import org.dromara.merchant.domain.freight.model.FreightConfig;
 
 import java.util.List;
@@ -50,4 +51,13 @@ public interface IFreightConfigGateway {
      * @return 是否删除成功
      */
     boolean deleteByMerchantId(Long merchantId);
+
+    /**
+     * 根据商户ID和配送方式查询商户配送配置
+     *
+     * @param merchantId     商户ID
+     * @param deliveryMethod 配送方式
+     * @return 配送配置实体
+     */
+    FreightConfig queryByMerchantIdAndDeliveryMethod(Long merchantId, DeliveryMethod deliveryMethod);
 }

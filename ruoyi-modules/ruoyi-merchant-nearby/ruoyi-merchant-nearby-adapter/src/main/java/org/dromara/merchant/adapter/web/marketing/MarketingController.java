@@ -11,9 +11,12 @@ import org.dromara.merchant.client.marketing.dto.data.client.MarketingPageCo;
 import org.dromara.merchant.client.marketing.dto.data.command.MarketingCreateCmd;
 import org.dromara.merchant.client.marketing.dto.data.command.MarketingModifyCmd;
 import org.dromara.merchant.client.marketing.dto.data.command.query.MarketingPageQry;
+import org.dromara.merchant.domain.marketing.model.activity.Marketing;
 import org.dromara.merchant.infrastructure.marketing.converter.MarketingConvertor;
 import org.dromara.merchant.infrastructure.marketing.mapper.MarketingMapper;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 营销活动管理
@@ -77,6 +80,18 @@ public class MarketingController {
     @GetMapping("/{id}")
     public R<MarketingCO> queryById(@PathVariable Long id) {
         MarketingCO marketing = marketingMapper.queryById(id);
+        return marketing != null ? R.ok(marketing) : R.fail("查询失败");
+    }
+
+    /**
+     * 根据Id查询营销活动
+     *
+     * @param ids 营销活动Id
+     * @return 营销活动
+     */
+    @GetMapping("/marketing")
+    public R<List<Marketing>> queryByMarketingId(@RequestParam List<Long> ids) {
+        List<Marketing> marketing = marketingService.queryByIds(ids);
         return marketing != null ? R.ok(marketing) : R.fail("查询失败");
     }
 

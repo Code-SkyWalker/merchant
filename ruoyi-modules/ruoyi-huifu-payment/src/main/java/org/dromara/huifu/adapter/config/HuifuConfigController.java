@@ -59,7 +59,7 @@ public class HuifuConfigController {
      * 根据商户id查询汇付配置
      */
     @GetMapping("/query/tenant")
-    public R<HuifuConfig> queryByTenantId(@RequestParam Long tenantId) {
+    public R<HuifuConfig> queryByTenantId(@RequestParam String tenantId) {
         return R.ok(this.huifuConfigService.queryByTenantId(tenantId));
     }
 

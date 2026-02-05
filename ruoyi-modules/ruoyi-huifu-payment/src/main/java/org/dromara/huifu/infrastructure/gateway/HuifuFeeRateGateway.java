@@ -29,16 +29,15 @@ public class HuifuFeeRateGateway implements IHuifuFeeRateGateway {
     public boolean save(List<HuifuFeeRate> rates, boolean update) {
         if (rates == null || rates.isEmpty()) return false;
 
-        if (update) {
-            List<HuifuFeeRate> existRates = this.queryByMerchantId(rates.get(0).getMerchantId());
-            Map<Integer, BigDecimal> typeMap =
-                rates.stream().collect(Collectors.toMap(HuifuFeeRate::getType, HuifuFeeRate::getFeeRate));
+        if (!update) return this.mapper.insertOrUpdateBatch(convertor.toDOList(rates));
 
-            existRates.forEach(existRate -> existRate.setFeeRate(typeMap.get(existRate.getType())));
-        }
+        List<HuifuFeeRate> existRates = this.queryByMerchantId(rates.get(0).getMerchantId());
+        Map<Integer, BigDecimal> typeMap = rates.stream()
+                .collect(Collectors.toMap(HuifuFeeRate::getType, HuifuFeeRate::getFeeRate));
 
+        existRates.forEach(existRate -> existRate.setFeeRate(typeMap.get(existRate.getType())));
 
-        return this.mapper.insertOrUpdateBatch(convertor.toDOList(rates));
+        return this.mapper.insertOrUpdateBatch(convertor.toDOList(existRates));
     }
 
     @Override

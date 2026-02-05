@@ -35,6 +35,5 @@
         from tb_payment_huifu_merchant
         where tenant_id = #{tenantId}
             and type = 1    -- 平台方=1
-            and merchant_id is null
     </select>
 </mapper>

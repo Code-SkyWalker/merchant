@@ -26,13 +26,28 @@
         tb_marketing_spu.spu_id  as tb_marketing_spu_spu_id,
         tb_marketing_spu.kill_price  as tb_marketing_spu_kill_price
     </sql>
-    <resultMap id="JoinResultMap" type="org.dromara.merchant.infrastructure.marketing.mapper.dataobject.MarketingSpuDO">
+    <resultMap id="JoinDOResultMap" type="org.dromara.merchant.infrastructure.marketing.mapper.dataobject.MarketingSpuDO">
         <!--@mbg.generated-->
         <id column="tb_marketing_spu_id" property="id"/>
         <result column="tb_marketing_spu_rule_id" property="marketingId"/>
         <result column="tb_marketing_spu_spu_id" property="spuId"/>
         <result column="tb_marketing_spu_kill_price" property="killPrice"/>
     </resultMap>
+
+    <resultMap id="JoinResultMap" type="org.dromara.merchant.domain.marketing.model.activity.MarketingSpu">
+        <!--@mbg.generated-->
+        <id column="tb_marketing_spu_id" property="id"/>
+        <result column="tb_marketing_spu_rule_id" property="marketingId"/>
+        <result column="tb_marketing_spu_spu_id" property="spuId"/>
+        <result column="tb_marketing_spu_kill_price" property="killPrice"/>
+    </resultMap>
+
+    <select id="selectByMarketingId" resultMap="JoinResultMap">
+        select
+        <include refid="Join_Column_List"/>
+        from tb_marketing_spu
+        where marketing_id = #{marketingId}
+    </select>
 
     <select id="selectMarketingIdsBySpuId" resultType="java.lang.Long">
         select marketing_id

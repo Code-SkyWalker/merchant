@@ -1,10 +1,13 @@
 package org.dromara.merchant.app.order.executor;
 
 import lombok.RequiredArgsConstructor;
+import org.dromara.merchant.app.address.service.AddressService;
 import org.dromara.merchant.app.commodity.ISkuService;
 import org.dromara.merchant.app.marketing.IPricingCalculateService;
 import org.dromara.merchant.app.merchant.IMerchantService;
 import org.dromara.merchant.client.order.dto.data.command.OrderCreateCmd;
+import org.dromara.merchant.domain.address.model.Address;
+import org.dromara.merchant.domain.freight.model.DeliveryMethod;
 import org.dromara.merchant.domain.marketing.discount.CalculationResult;
 import org.dromara.merchant.domain.marketing.discount.Product;
 import org.dromara.merchant.domain.merchant.model.Merchant;
@@ -48,7 +51,10 @@ public class OrderCreateExecutor {
     // sku服务
     private final ISkuService skuService;
 
-    public Long execute(OrderCreateCmd cmd) {
+    // 地址服务
+    private final AddressService addressService;
+
+    public Order execute(OrderCreateCmd cmd) {
 
         SysUserVo user = queryUser(cmd.getUserId());
         Merchant merchant = queryMerchant(cmd.getMerchantId());
@@ -60,8 +66,17 @@ public class OrderCreateExecutor {
         order.setMerchantId(merchant.getMerchantId());
         order.setMerchantName(merchant.getMerchantName());
 
+        // 设置收货人信息
+        Address address = queryAddress(cmd.getAddressId());
+        order.setReceiverName(address.getReceiverName());
+        order.setReceiverPhone(address.getReceiverPhone());
+        order.setReceiverAddress(address.getDetailAddress());
+
+        // 设置配送方式
+        order.setDeliveryMethod(DeliveryMethod.valueOf(cmd.getDeliveryMethod()));
+
         // 设置订单类型和来源
-        order.setType(OrderType.NORMAL);
+        order.setType(OrderType.valueOf(cmd.getOrderType()));
         order.setSource(OrderSource.APP);
 
         // 设置积分和佣金抵扣金额
@@ -75,9 +90,10 @@ public class OrderCreateExecutor {
         result.updateOrder(order);
 
         // 构建订单商品
-        order.setOrderItems(this.buildOrderItems(result.getProducts()));
+        order.setOrderItems(this.buildOrderItems(result.getProducts(), order.getOrderId()));
 
-        return orderDomainService.createOrder(order);
+        boolean saved = orderDomainService.createOrder(order);
+        return saved ? order : null;
     }
 
     /**
@@ -94,13 +110,17 @@ public class OrderCreateExecutor {
         return this.merchantService.queryById(merchantId);
     }
 
+    private Address queryAddress(Long addressId) {
+        return this.addressService.queryById(addressId);
+    }
+
     /**
      * 构建订单商品
      *
      * @param resultMap 商品列表
      * @return 订单商品列表
      */
-    private List<OrderItem> buildOrderItems(Map<Product, BigDecimal> resultMap) {
+    private List<OrderItem> buildOrderItems(Map<Product, BigDecimal> resultMap, Long orderId) {
         if (resultMap == null || resultMap.isEmpty()) return Collections.emptyList();
 
         // 计算每个商品的折扣金额
@@ -122,10 +142,11 @@ public class OrderCreateExecutor {
             sku -> new OrderItem()
                 .setSpuId(sku.getSpuId())
                 .setSkuId(sku.getId())
+                .setOrderId(orderId)
                 .setSkuName(sku.getName())
                 .setSkuPic(sku.getImage())
                 .setSkuSpec(sku.getSpec())
-                .setUnitPrice(sku.getPrice())
+                .setPrice(sku.getPrice())
                 .setQuantity(quantity.get(sku.getId()))
                 .setSubtotal(finalPrices.get(sku.getId()))
                 .setDiscountAmount(totalDiscounts.get(sku.getId()))

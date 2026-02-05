@@ -1,8 +1,8 @@
 package org.dromara.merchant.app.order;
 
-import org.dromara.merchant.client.order.dto.data.command.OrderCancelCmd;
-import org.dromara.merchant.client.order.dto.data.command.OrderCreateCmd;
-import org.dromara.merchant.client.order.dto.data.command.OrderPayCmd;
+import org.dromara.merchant.client.order.dto.data.command.*;
+
+import java.util.Map;
 
 /**
  * @Description 订单应用服务接口
@@ -23,7 +23,7 @@ public interface IOrderService {
      * @param cmd 订单支付命令
      * @return 是否支付成功
      */
-    boolean payOrder(OrderPayCmd cmd);
+    Map<String, Object> payOrder(OrderPayCmd cmd);
 
     /**
      * 取消订单
@@ -55,4 +55,27 @@ public interface IOrderService {
      */
     boolean completeOrder(Long orderId);
 
+    /**
+     * 申请订单退款
+     * @param orderId 订单ID
+     * @param refundReason 退款原因
+     * @return 是否申请退款成功
+     */
+    boolean applyRefund(Long orderId, String refundReason);
+
+    /**
+     * 审批订单退款
+     * @param orderId 订单ID
+     * @param refundOrderNo 退款订单号
+     * @return 是否审批退款成功
+     */
+    boolean approveRefund(Long orderId, String refundOrderNo);
+
+    /**
+     * 拒绝订单退款
+     * @param orderId 订单ID
+     * @param rejectReason 拒绝原因
+     * @return 是否拒绝退款成功
+     */
+    boolean rejectRefund(Long orderId, String rejectReason);
 }

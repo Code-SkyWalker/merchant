@@ -50,7 +50,6 @@ public class CouponGateway implements ICouponGateway {
     @Override
     public List<Coupon> queryByIds(List<Long> couponIds) {
         if (couponIds == null || couponIds.isEmpty()) return List.of();
-        List<CouponDO> couponDOS = this.mapper.selectByIdList(couponIds);
-        return convertor.toEntityList(couponDOS);
+        return this.mapper.selectByIdList(couponIds);
     }
 }

@@ -6,6 +6,7 @@ import org.dromara.common.mybatis.core.mapper.BaseMapperPlus;
 import org.dromara.merchant.client.order.dto.data.clientobject.OrderCO;
 import org.dromara.merchant.client.order.dto.data.clientobject.OrderPageCO;
 import org.dromara.merchant.client.order.dto.data.command.query.OrderQry;
+import org.dromara.merchant.domain.order.model.Order;
 import org.dromara.merchant.infrastructure.order.mapper.dataobject.OrderDO;
 
 /**
@@ -25,4 +26,13 @@ public interface OrderMapper extends BaseMapperPlus<OrderDO, OrderDO> {
      */
     OrderCO queryOrderByOrderId(@Param("orderId") Long orderId);
 
+    /**
+     * 根据订单ID查询订单
+     */
+    Order queryById(@Param("orderId") Long orderId);
+
+    /**
+     * 根据支付订单ID查询订单
+     */
+    Order queryByPaymentOrderId(String paymentOrderId);
 }

@@ -110,7 +110,7 @@
                type="org.dromara.merchant.client.marketing.dto.data.client.CouponCO"
                extends="JoinResultMap">
         <collection property="couponSpus" ofType="org.dromara.merchant.client.marketing.dto.data.command.CouponSpu"
-                    resultMap="org.dromara.merchant.infrastructure.marketing.mapper.CouponSpuMapper.JoinResultMap"/>
+                    resultMap="org.dromara.merchant.infrastructure.marketing.mapper.CouponSpuMapper.JoinDOResultMap"/>
     </resultMap>
     <select id="selectByCouponId" resultMap="CouponCOJoinResultMap">
         select <include refid="Join_Column_List"/>,
@@ -145,7 +145,7 @@
                     resultMap="org.dromara.merchant.infrastructure.marketing.mapper.CouponSpuMapper.JoinResultMap"/>
     </resultMap>
 
-  <select id="selectByIdList" resultMap="BaseResultMap">
+  <select id="selectByIdList" resultMap="CouponDomainJoinResultMap">
       select <include refid="Join_Column_List"/>,
       <include refid="org.dromara.merchant.infrastructure.marketing.mapper.CouponSpuMapper.Join_Column_List"/>
       from tb_coupon

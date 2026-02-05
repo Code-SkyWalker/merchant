@@ -51,9 +51,9 @@ public class PriceCalculationCmd {
     private Long addressId;
 
     /**
-     * 是否在配送范围内
+     * 配送方式
      */
-    private Boolean withinRange;
+    private String deliveryMethod;
 
 
     @Data

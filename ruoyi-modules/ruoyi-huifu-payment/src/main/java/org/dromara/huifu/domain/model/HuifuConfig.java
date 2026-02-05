@@ -50,4 +50,9 @@ public class HuifuConfig {
      */
     @NotNull
     private Integer type;
+
+    /**
+     * 租户ID
+     */
+    private String tenantId;
 }

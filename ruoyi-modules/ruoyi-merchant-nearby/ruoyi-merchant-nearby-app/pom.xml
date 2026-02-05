@@ -13,6 +13,13 @@
     <name>ruoyi-merchant-nearby-app</name>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.dromara</groupId>
+            <artifactId>ruoyi-huifu-payment</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.dromara.merchant</groupId>
             <artifactId>ruoyi-merchant-nearby-client</artifactId>

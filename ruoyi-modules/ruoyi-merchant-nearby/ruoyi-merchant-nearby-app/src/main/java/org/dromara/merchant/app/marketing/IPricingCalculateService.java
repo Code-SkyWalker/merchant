@@ -17,14 +17,14 @@ public interface IPricingCalculateService {
     /**
      * 计算配送费
      *
-     * @param products   商品列表
-     * @param merchantId 商家id
-     * @param addressId  地址id
-     * @param subtotal   支付价小计
-     * @param withinRange 是否在配送范围内
+     * @param products       商品列表
+     * @param merchantId     商家id
+     * @param addressId      地址id
+     * @param subtotal       支付价小计
+     * @param deliveryMethod 配送方式
      * @return 配送费
      */
-    BigDecimal calculateExpressFee(List<Product> products, Long merchantId, Long addressId, BigDecimal subtotal, boolean withinRange);
+    BigDecimal calculateExpressFee(List<Product> products, Long merchantId, Long addressId, BigDecimal subtotal, String deliveryMethod);
 
     /**
      * 计算商品最终价格

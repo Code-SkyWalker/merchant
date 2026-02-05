@@ -36,19 +36,16 @@ public class CategoryService implements ICategoryService {
     private final CategoryMapper categoryMapper;
 
     @Override
-    @CacheEvict(cacheNames = "goods.category", key = "#cmd.merchantId")
     public boolean create(CategoryCreateCmd cmd) {
         return this.categoryCreateExe.execute(cmd);
     }
 
     @Override
-    @CacheEvict(cacheNames = "goods.category", key = "#cmd.merchantId")
     public boolean modify(CategoryModifyCmd cmd) {
         return this.categoryModifyExe.execute( cmd);
     }
 
     @Override
-    @CacheEvict(cacheNames = "goods.category", key = "#merchantId")
     public boolean delete(Integer id, Long merchantId) {
         return this.categoryDeleteExe.execute(id, merchantId);
     }
@@ -64,7 +61,6 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    @Cacheable(cacheNames = "goods.category", key = "#merchantId")
     public List<CategoryTreeCO> queryTree(Long merchantId) {
         List<CategoryTreeCO> nodes = categoryMapper.selectAll(merchantId);
         return TreeIfyUtils.treeIfy(

@@ -1,5 +1,6 @@
 package org.dromara.merchant.infrastructure.order.mapper.dataobject;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -24,7 +25,7 @@ public class OrderItemDO {
     /**
      * 订单项ID
      */
-    @TableId
+    @TableId(value = "order_item_id", type = IdType.ASSIGN_ID)
     private Long orderItemId;
 
     /**
@@ -41,11 +42,6 @@ public class OrderItemDO {
      * SKU ID
      */
     private Long skuId;
-
-    /**
-     * SPU名称
-     */
-    private String spuName;
 
     /**
      * SKU名称
