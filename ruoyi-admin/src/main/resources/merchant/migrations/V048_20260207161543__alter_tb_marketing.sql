@@ -1,0 +1,1 @@
+ALTER TABLE `merchant_nearby`.`tb_marketing` MODIFY COLUMN `type` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '活动类型：QUANTITY:x件x折, MULTIUNIT:满折满减, BULK:n元n件，SECONDKILL:秒杀' AFTER `rules`;
