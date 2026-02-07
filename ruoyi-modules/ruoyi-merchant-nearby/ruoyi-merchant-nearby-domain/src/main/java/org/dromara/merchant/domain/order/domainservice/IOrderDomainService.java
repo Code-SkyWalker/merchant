@@ -48,17 +48,9 @@ public interface IOrderDomainService {
     /**
      * 确认收货订单
      *
-     * @param orderId 订单ID
+     * @param order 订单实体
      * @return 是否确认收货成功
      */
-    boolean confirmReceipt(Long orderId);
-
-    /**
-     * 完成订单
-     *
-     * @param order 订单实体
-     * @return 是否完成订单成功
-     */
-    boolean completeOrder(Order order);
+    boolean confirmReceipt(Order order);
 
 }

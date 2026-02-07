@@ -122,15 +122,11 @@ public class OrderDomainService implements IOrderDomainService {
 
     /**
      * 确认收货订单
-     * @param orderId 订单ID
+     * @param order 订单
      * @return 是否确认收货成功
      */
     @Override
-    public boolean confirmReceipt(Long orderId) {
-        Order order = orderGateway.queryById(orderId);
-        if (order == null) {
-            return false;
-        }
+    public boolean confirmReceipt(Order order) {
 
         OrderStatus currentState = order.getStatus();
         OrderStatus result = stateMachine.fireEvent(currentState, OrderEvent.CONFIRM_RECEIPT, order);
@@ -143,16 +139,6 @@ public class OrderDomainService implements IOrderDomainService {
         return orderGateway.save(order);
     }
 
-    /**
-     * 完成订单
-     * @param order 订单
-     * @return 是否完成订单成功
-     */
-    @Override
-    public boolean completeOrder(Order order) {
-
-        return orderGateway.save(order);
-    }
 
     /**
      * 生成订单编号

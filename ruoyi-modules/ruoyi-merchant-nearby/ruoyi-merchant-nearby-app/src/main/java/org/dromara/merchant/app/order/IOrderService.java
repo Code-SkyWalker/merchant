@@ -47,14 +47,7 @@ public interface IOrderService {
      * @param orderId 订单ID
      * @return 是否确认收货成功
      */
-    boolean confirmReceipt(Long orderId);
-
-    /**
-     * 完成订单
-     * @param orderId 订单ID
-     * @return 是否完成订单成功
-     */
-    boolean completeOrder(Long orderId) throws BasePayException, IllegalAccessException;
+    boolean confirmReceipt(Long orderId) throws BasePayException, IllegalAccessException;
 
     /**
      * 申请订单退款

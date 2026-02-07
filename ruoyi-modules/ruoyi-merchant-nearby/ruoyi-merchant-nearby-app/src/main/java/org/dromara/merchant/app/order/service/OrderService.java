@@ -162,21 +162,13 @@ public class OrderService implements IOrderService, IHuifuCallbackHandler {
      */
     @Override
     @Transactional
-    public boolean confirmReceipt(Long orderId) {
-        return this.orderDomainService.confirmReceipt(orderId);
-    }
-
-    /**
-     * 订单完成, 执行延迟确认请求（订单分账）
-     *
-     * @param orderId 订单ID
-     * @return 是否完成订单成功
-     */
-    @Override
-    @Transactional
-    public boolean completeOrder(Long orderId) throws BasePayException, IllegalAccessException {
+    public boolean confirmReceipt(Long orderId) throws BasePayException, IllegalAccessException {
         Order order = this.orderGateway.queryById(orderId);
         if (order == null) return false;
+
+        boolean complete = this.orderDomainService.confirmReceipt(order);
+
+        if (!complete) return false;
 
         HuifuConfig huifuConfig = this.huifuConfigService.queryByMerchantId(order.getMerchantId());
         if (huifuConfig == null) return false;
@@ -195,8 +187,7 @@ public class OrderService implements IOrderService, IHuifuCallbackHandler {
             throw new BasePayException((String) confirmResult.get("resp_desc"));
         }
 
-        // 完成订单
-        return this.orderDomainService.completeOrder(order);
+        return complete;
     }
 
     /**

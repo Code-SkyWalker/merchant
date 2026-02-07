@@ -60,7 +60,7 @@ public class OrderController {
      * 确认收货
      */
     @PostMapping("/confirmReceipt")
-    public R<Boolean> confirmReceipt(Long orderId) {
+    public R<Boolean> confirmReceipt(Long orderId) throws BasePayException, IllegalAccessException {
         return R.ok(orderService.confirmReceipt(orderId));
     }
 
@@ -95,14 +95,6 @@ public class OrderController {
     @PostMapping("/reject-refund")
     public R<Boolean> rejectRefund(@RequestParam Long orderId, @RequestParam String rejectReason) {
         return R.ok(orderService.rejectRefund(orderId, rejectReason));
-    }
-
-    /**
-     * 完成订单
-     */
-    @PostMapping("/complete")
-    public R<Boolean> completeOrder(@RequestParam Long orderId) throws BasePayException, IllegalAccessException {
-        return R.ok(orderService.completeOrder(orderId));
     }
 
     /**
