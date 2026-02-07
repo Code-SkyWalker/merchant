@@ -40,9 +40,9 @@ public class FreightConfigController {
      * @param merchantId 配送设置ID
      * @return 配送设置
      */
-    @GetMapping(value = "/{merchantId}", params = "deliveryMethod=express")
-    public R<FreightConfigCO> create(@PathVariable Long merchantId) {
-        FreightConfigCO expressConfig = configQryExe.execute(merchantId, DeliveryMethod.EXPRESS_DELIVERY.getCode());
+    @GetMapping(value = "/{merchantId}")
+    public R<FreightConfigCO> create(@PathVariable Long merchantId, @RequestParam String deliveryMethod) {
+        FreightConfigCO expressConfig = configQryExe.execute(merchantId, DeliveryMethod.valueOf(deliveryMethod).getCode());
         return R.ok(expressConfig);
     }
 }

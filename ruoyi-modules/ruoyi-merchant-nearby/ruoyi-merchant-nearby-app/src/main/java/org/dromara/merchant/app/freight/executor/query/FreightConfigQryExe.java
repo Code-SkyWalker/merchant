@@ -28,16 +28,16 @@ public class FreightConfigQryExe {
     private final ExpressTemplateMapper expressTemplateMapper;
 
 
-    public FreightConfigCO execute(Long merchantId, String deliveryMethod) {
+    public FreightConfigCO execute(Long merchantId, DeliveryMethod deliveryMethod) {
 
         // 查询基本配置
-        FreightConfigCO co = configMapper.selectCOByMerchantId(merchantId, DeliveryMethod.EXPRESS_DELIVERY.getCode());
+        FreightConfigCO co = configMapper.selectCOByMerchantId(merchantId, deliveryMethod.getCode());
 
-        if (DeliveryMethod.EXPRESS_DELIVERY.getCode().equals(deliveryMethod)) {
+        if (DeliveryMethod.EXPRESS_DELIVERY.equals(deliveryMethod)) {
             return executeExpress(co);
         }
 
-        return null;
+        return co;
     }
 
     /**
