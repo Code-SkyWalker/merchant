@@ -1,5 +1,6 @@
 package org.dromara.merchant.app.order;
 
+import com.huifu.bspay.sdk.opps.core.exception.BasePayException;
 import org.dromara.merchant.client.order.dto.data.command.*;
 
 import java.util.Map;
@@ -30,7 +31,7 @@ public interface IOrderService {
      * @param cmd 订单取消命令
      * @return 是否取消成功
      */
-    boolean cancelOrder(OrderCancelCmd cmd);
+    boolean cancelOrder(OrderCancelCmd cmd) throws BasePayException, IllegalAccessException;
 
     /**
      * 发货订单
@@ -53,7 +54,7 @@ public interface IOrderService {
      * @param orderId 订单ID
      * @return 是否完成订单成功
      */
-    boolean completeOrder(Long orderId);
+    boolean completeOrder(Long orderId) throws BasePayException, IllegalAccessException;
 
     /**
      * 申请订单退款
@@ -66,10 +67,9 @@ public interface IOrderService {
     /**
      * 审批订单退款
      * @param orderId 订单ID
-     * @param refundOrderNo 退款订单号
      * @return 是否审批退款成功
      */
-    boolean approveRefund(Long orderId, String refundOrderNo);
+    boolean approveRefund(Long orderId) throws BasePayException, IllegalAccessException;
 
     /**
      * 拒绝订单退款

@@ -43,7 +43,7 @@ public class HuiFuPaymentService {
     private static final String DELAY_ACCT_FLAG_NO = "N";  // 不延迟分账
 
     // 支付回调访问路径
-    public static final String NOTIFY_URL = "/merchant_nearby/payment/huifu/pay/notify";
+    public static final String NOTIFY_URL = "/payment/huifu/pay/notify";
 
     @Value("${default.domain}")
     private String domain;

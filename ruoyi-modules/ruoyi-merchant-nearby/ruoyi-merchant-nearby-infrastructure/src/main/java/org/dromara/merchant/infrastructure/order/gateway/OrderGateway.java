@@ -5,6 +5,7 @@ import org.dromara.merchant.domain.order.gateway.IOrderGateway;
 import org.dromara.merchant.domain.order.model.Order;
 import org.dromara.merchant.infrastructure.order.converter.OrderConvertor;
 import org.dromara.merchant.infrastructure.order.mapper.OrderMapper;
+import org.dromara.merchant.infrastructure.order.mapper.dataobject.OrderDO;
 import org.springframework.stereotype.Component;
 
 /**
@@ -21,7 +22,8 @@ public class OrderGateway implements IOrderGateway {
 
     @Override
     public boolean save(Order order) {
-        return mapper.insertOrUpdate(this.convertor.toDo(order));
+        OrderDO aDo = this.convertor.toDo(order);
+        return mapper.insertOrUpdate(aDo);
     }
 
     @Override

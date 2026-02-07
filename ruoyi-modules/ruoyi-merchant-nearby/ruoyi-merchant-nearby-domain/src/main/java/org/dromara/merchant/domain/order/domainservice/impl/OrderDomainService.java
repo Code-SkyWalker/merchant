@@ -1,7 +1,9 @@
 package org.dromara.merchant.domain.order.domainservice.impl;
 
+import cn.hutool.json.JSONObject;
 import com.alibaba.cola.statemachine.StateMachine;
 import lombok.RequiredArgsConstructor;
+import org.dromara.common.satoken.utils.LoginHelper;
 import org.dromara.merchant.domain.order.domainservice.IOrderDomainService;
 import org.dromara.merchant.domain.order.gateway.IOrderGateway;
 import org.dromara.merchant.domain.order.gateway.IOrderItemGateway;
@@ -73,13 +75,12 @@ public class OrderDomainService implements IOrderDomainService {
 
     /**
      * 取消订单
-     * @param orderId 订单ID
+      * @param order 订单
      * @param cancelReason 取消原因
      * @return 是否取消成功
      */
     @Override
-    public boolean cancelOrder(Long orderId, String cancelReason) {
-        Order order = orderGateway.queryById(orderId);
+    public boolean cancelOrder(Order order, String cancelReason) {
         if (order == null) return false;
 
         OrderStatus currentState = order.getStatus();
@@ -88,12 +89,10 @@ public class OrderDomainService implements IOrderDomainService {
         if (result == null) return false;
 
         order.setUpdateTime(LocalDateTime.now());
+
         // 添加取消原因到扩展信息
-        if (order.getExtInfo() == null) {
-            order.setExtInfo("{\"cancelReason\":\"" + cancelReason + "\"}");
-        } else {
-            order.setExtInfo(order.getExtInfo() + ",\"cancelReason\":\"" + cancelReason + "\"}");
-        }
+        order.setExtInfo("cancelReason", cancelReason);
+
         return orderGateway.save(order);
     }
 
@@ -116,7 +115,8 @@ public class OrderDomainService implements IOrderDomainService {
 
         order.setUpdateTime(LocalDateTime.now());
         // 添加物流信息到扩展信息
-        order.setExtInfo("{\"expressCompany\":\"" + expressCompany + "\",\"expressNo\":\"" + expressNo + "\"}");
+        order.setExtInfo("expressCompany", expressCompany);
+        order.setExtInfo("expressNo", expressNo);
         return orderGateway.save(order);
     }
 
@@ -145,24 +145,12 @@ public class OrderDomainService implements IOrderDomainService {
 
     /**
      * 完成订单
-     * @param orderId 订单ID
+     * @param order 订单
      * @return 是否完成订单成功
      */
     @Override
-    public boolean completeOrder(Long orderId) {
-        Order order = orderGateway.queryById(orderId);
-        if (order == null) {
-            return false;
-        }
+    public boolean completeOrder(Order order) {
 
-        OrderStatus currentState = order.getStatus();
-        OrderStatus result = stateMachine.fireEvent(currentState, OrderEvent.COMPLETE, order);
-
-        if (result == null) {
-            return false;
-        }
-
-        order.setUpdateTime(LocalDateTime.now());
         return orderGateway.save(order);
     }
 

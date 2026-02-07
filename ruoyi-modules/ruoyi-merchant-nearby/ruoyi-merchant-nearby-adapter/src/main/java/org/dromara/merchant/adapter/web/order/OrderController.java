@@ -1,14 +1,11 @@
 package org.dromara.merchant.adapter.web.order;
 
+import com.huifu.bspay.sdk.opps.core.exception.BasePayException;
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.domain.R;
 import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.common.mybatis.core.page.TableDataInfo;
 import org.dromara.merchant.app.order.IOrderService;
-import org.dromara.merchant.app.order.executor.OrderCancelExecutor;
-import org.dromara.merchant.app.order.executor.OrderCreateExecutor;
-import org.dromara.merchant.app.order.executor.OrderPayExecutor;
-import org.dromara.merchant.app.order.executor.OrderRefundExecutor;
 import org.dromara.merchant.client.order.dto.data.clientobject.OrderCO;
 import org.dromara.merchant.client.order.dto.data.clientobject.OrderPageCO;
 import org.dromara.merchant.client.order.dto.data.command.OrderCancelCmd;
@@ -52,10 +49,27 @@ public class OrderController {
     }
 
     /**
+     * 订单发货
+     */
+    @PostMapping("/deliver")
+    public R<Boolean> deliverOrder(Long orderId, String expressCompany, String expressNo) {
+        return R.ok(orderService.deliverOrder(orderId, expressCompany, expressNo));
+    }
+
+    /**
+     * 确认收货
+     */
+    @PostMapping("/confirmReceipt")
+    public R<Boolean> confirmReceipt(Long orderId) {
+        return R.ok(orderService.confirmReceipt(orderId));
+    }
+
+
+    /**
      * 取消订单
      */
     @PostMapping("/cancel")
-    public R<Boolean> cancelOrder(@Validated @RequestBody OrderCancelCmd cmd) {
+    public R<Boolean> cancelOrder(@Validated @RequestBody OrderCancelCmd cmd) throws BasePayException, IllegalAccessException {
         return R.ok(orderService.cancelOrder(cmd));
     }
 
@@ -71,8 +85,8 @@ public class OrderController {
      * 同意退款
      */
     @PostMapping("/approve-refund")
-    public R<Boolean> approveRefund(@RequestParam Long orderId, @RequestParam String refundOrderNo) {
-        return R.ok(orderService.approveRefund(orderId, refundOrderNo));
+    public R<Boolean> approveRefund(@RequestParam Long orderId) throws BasePayException, IllegalAccessException {
+        return R.ok(orderService.approveRefund(orderId));
     }
 
     /**
@@ -87,7 +101,7 @@ public class OrderController {
      * 完成订单
      */
     @PostMapping("/complete")
-    public R<Boolean> completeOrder(@RequestParam Long orderId) {
+    public R<Boolean> completeOrder(@RequestParam Long orderId) throws BasePayException, IllegalAccessException {
         return R.ok(orderService.completeOrder(orderId));
     }
 

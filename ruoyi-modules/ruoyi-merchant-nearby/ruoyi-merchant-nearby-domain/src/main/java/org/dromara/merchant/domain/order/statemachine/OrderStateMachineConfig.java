@@ -4,6 +4,7 @@ import com.alibaba.cola.statemachine.Action;
 import com.alibaba.cola.statemachine.StateMachine;
 import com.alibaba.cola.statemachine.builder.StateMachineBuilder;
 import com.alibaba.cola.statemachine.builder.StateMachineBuilderFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.dromara.merchant.domain.order.model.Order;
 import org.dromara.merchant.domain.order.model.OrderStatus;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
  * @Author 订单体系改进
  * @Date 2026-01-05
  */
+@Slf4j
 @Component
 public class OrderStateMachineConfig {
 
@@ -23,6 +25,11 @@ public class OrderStateMachineConfig {
     @Bean
     public StateMachine<OrderStatus, OrderEvent, Order> buildMachine() {
         StateMachineBuilder<OrderStatus, OrderEvent, Order> builder = StateMachineBuilderFactory.create();
+
+        builder.setFailCallback((s, e, c) -> {
+            log.error("状态机执行失败 -------- 订单Id：{}，当前订单状态：{}，正在触发的事件：{}", c.getOrderId(), c.getStatus(), e);
+            throw new IllegalStateException("当前订单状态为：" + c.getStatus().getDesc() + "，" + e.getDesc() + "事件无法触发，请检查订单状态");
+        });
 
         // 待付款 -> 待发货 (支付事件)
         builder.externalTransition()
@@ -45,7 +52,7 @@ public class OrderStateMachineConfig {
                 .from(OrderStatus.PENDING_DELIVERY)
                 .to(OrderStatus.PENDING_RECEIPT)
                 .on(OrderEvent.DELIVER)
-                .when(order -> order.getStatus() == OrderStatus.PENDING_DELIVERY)
+                .when(order -> order.getStatus().equals(OrderStatus.PENDING_DELIVERY))
                 .perform(doAction());
 
         // 待发货 -> 已取消 (取消事件)

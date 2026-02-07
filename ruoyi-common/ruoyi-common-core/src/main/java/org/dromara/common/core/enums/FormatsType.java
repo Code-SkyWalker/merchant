@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.dromara.common.core.utils.StringUtils;
 
+import java.time.format.DateTimeFormatter;
+
 /*
  * 日期格式
  * "yyyy"：4位数的年份，例如：2023年表示为"2023"。
@@ -142,5 +144,9 @@ public enum FormatsType {
             }
         }
         throw new RuntimeException("'FormatsType' not found By " + str);
+    }
+
+    public static DateTimeFormatter dateTimeFormatter(FormatsType type) {
+        return DateTimeFormatter.ofPattern(type.getTimeFormat());
     }
 }

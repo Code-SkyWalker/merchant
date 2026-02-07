@@ -6,7 +6,6 @@ import com.huifu.bspay.sdk.opps.core.exception.BasePayException;
 import com.huifu.bspay.sdk.opps.core.request.V2TradePaymentScanpayCloseRequest;
 import com.huifu.bspay.sdk.opps.core.request.V2TradePaymentScanpayClosequeryRequest;
 import com.huifu.bspay.sdk.opps.core.request.V3TradePaymentScanpayQueryRequest;
-import com.huifu.bspay.sdk.opps.core.request.V3TradePaymentScanpayRefundRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -137,15 +138,43 @@ public class AggregatePaymentController {
     /**
      * 交易退款
      *
-     * @param request 退款请求
+     * @param huifuId        汇付ID
+     * @param org_req_seq_id 原请求ID
+     * @param org_req_date   原请求日期
      * @return 退款结果
      */
     @PostMapping("/refund")
-    public R<Map<String, Object>> refundPaymentOrder(@RequestBody V3TradePaymentScanpayRefundRequest request) throws BasePayException, IllegalAccessException {
-        Map<String, Object> refund = aggregatePayment.refund(request);
+    public R<Map<String, Object>> refundPaymentOrder(Long huifuId, String org_req_seq_id, LocalDateTime org_req_date, BigDecimal refundAmt) throws BasePayException, IllegalAccessException {
+        Map<String, Object> refund = aggregatePayment.refund(huifuId, org_req_seq_id, org_req_date, refundAmt);
         // TODO: 处理退款结果，例如记录日志、更新数据库等
 
         return R.ok(refund);
     }
+
+    /**
+     * 延时交易确认
+     *
+     * @param huifuId        汇付ID
+     * @param org_req_seq_id 原请求ID
+     * @param org_req_date   原请求日期
+     * @return 延时交易确认结果
+     */
+    @PostMapping("/delaytrans")
+    public R<Map<String, Object>> delayTransConfirm(Long huifuId, String org_req_seq_id, LocalDateTime org_req_date) throws BasePayException, IllegalAccessException {
+        return R.ok(aggregatePayment.delayTransConfirm(huifuId, org_req_seq_id, org_req_date));
+    }
+
+    /**
+     * 延迟交易确认退款
+     *
+     * @param huifuId        商户号
+     * @param org_req_seq_id 指交易确认请求流水号
+     * @param org_req_date   指交易确认请求日期
+     */
+    @PostMapping("/delaytrans/refund")
+    public R<Map<String, Object>> delayTransConfirmRefund(Long huifuId, String org_req_seq_id, LocalDateTime org_req_date) throws BasePayException, IllegalAccessException {
+        return R.ok(aggregatePayment.delayTransConfirmRefund(huifuId, org_req_seq_id, org_req_date));
+    }
+
 
 }

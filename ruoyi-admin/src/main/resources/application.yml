@@ -297,4 +297,4 @@ default:
   domain: https://merchant.dingyutx.com
 huifu:
   import:
-    url: https://merchant.dingyutx.com/huifu/import    -- 伪链接
+    url: https://paas.huifu.com/mer_register/?grantsId=67ce80b59df3f8f0392e4ce2&encrypt_msg=u8H357gAKeKIJG5bBMMdFfLOwRGvP4Nz1sMxvkCeFroI8OUy2WXfSzqtW76w%2FbtVYRj2MQUPKbshSuhsxPPI9Th%2FZ9Bc04FAToLQepstxFz6Zg9BQLhKPh8s4NDc3X6ulzvnKNq2MJQhzUlTVs%2BCcA%3D%3D&version=1.0.0&presetType=T2&templateId=2912

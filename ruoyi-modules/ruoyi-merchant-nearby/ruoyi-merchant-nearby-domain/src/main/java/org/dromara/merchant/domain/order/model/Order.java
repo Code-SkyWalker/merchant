@@ -1,5 +1,6 @@
 package org.dromara.merchant.domain.order.model;
 
+import cn.hutool.json.JSONObject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -8,6 +9,7 @@ import lombok.experimental.Accessors;
 import org.dromara.common.core.utils.SnowflakeIdGenerator;
 import org.dromara.common.mybatis.core.domain.BaseEntity;
 import org.dromara.merchant.domain.freight.model.DeliveryMethod;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -132,6 +134,16 @@ public class Order extends BaseEntity {
     private String paymentOrderNo;
 
     /**
+     * 分账确认确认请求流水号
+     */
+    private String splitConfirmNo;
+
+    /**
+     * 分账时间
+     */
+    private LocalDateTime splitTime;
+
+    /**
      * 退款订单号
      */
     private String refundOrderNo;
@@ -140,6 +152,11 @@ public class Order extends BaseEntity {
      * 退款时间
      */
     private LocalDateTime refundTime;
+
+    /**
+     * 累计退款金额
+     */
+    private BigDecimal refundAmount;
 
     /**
      * 收货人姓名
@@ -190,6 +207,16 @@ public class Order extends BaseEntity {
      * 版本号，用于乐观锁
      */
     private Integer version = 0;
+
+
+
+    public void setExtInfo(String key, String value) {
+        JSONObject extInfo;
+        if (StringUtils.hasText(this.extInfo)) extInfo = new JSONObject(this.extInfo);
+        else extInfo = new JSONObject();
+        extInfo.set(key, value);
+        this.extInfo = extInfo.toString();
+    }
 
 
 }

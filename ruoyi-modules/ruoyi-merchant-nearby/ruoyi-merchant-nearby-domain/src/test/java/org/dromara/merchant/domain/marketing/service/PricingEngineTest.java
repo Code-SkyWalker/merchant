@@ -102,8 +102,8 @@ class PricingEngineTest {
         marketing.setType(MarketingType.MULTIUNIT);
         marketing.setMarketingSpus(new ArrayList<>(
             Arrays.asList(
-                new MarketingSpu(1L, 1L, 1L, BigDecimal.ZERO, false),
-                new MarketingSpu(1L, 2L, 1L, BigDecimal.ZERO, false)
+                new MarketingSpu().setMarketingId(1L).setSpuId(1L).setKillPrice(BigDecimal.ZERO).setDeleted(false),
+                new MarketingSpu().setMarketingId(1L).setSpuId(2L).setKillPrice(BigDecimal.ZERO).setDeleted(false)
             )
         ));
 
@@ -173,8 +173,8 @@ class PricingEngineTest {
         marketing.setType(MarketingType.MULTIUNIT);
         marketing.setMarketingSpus(new ArrayList<>(
             Arrays.asList(
-                new MarketingSpu(1L, 1L, 1L, BigDecimal.ZERO, false),
-                new MarketingSpu(1L, 1L, 2L, BigDecimal.ZERO, false)
+                new MarketingSpu().setMarketingId(1L).setSpuId(1L).setKillPrice(BigDecimal.ZERO).setDeleted(false),
+                new MarketingSpu().setMarketingId(1L).setSpuId(2L).setKillPrice(BigDecimal.ZERO).setDeleted(false)
             )
         ));
         // 设置规则 - 创建一个满100减15的规则
@@ -281,8 +281,8 @@ class PricingEngineTest {
         marketing1.setReceiveEnd(LocalDateTime.now().plusDays(1));
         marketing1.setType(MarketingType.MULTIUNIT);
         marketing1.setMarketingSpus(Arrays.asList(
-            new MarketingSpu(1L, 1L, 1L, BigDecimal.ZERO, false),
-            new MarketingSpu(1L, 1L, 2L, BigDecimal.ZERO, false)
+            new MarketingSpu().setMarketingId(1L).setSpuId(1L).setKillPrice(BigDecimal.ZERO).setDeleted(false),
+            new MarketingSpu().setMarketingId(1L).setSpuId(2L).setKillPrice(BigDecimal.ZERO).setDeleted(false)
         ));
 
         RuleMultiUnitDiscount rule1 = new RuleMultiUnitDiscount();
@@ -318,8 +318,8 @@ class PricingEngineTest {
         marketing2.setReceiveEnd(LocalDateTime.now().plusDays(1));
         marketing2.setType(MarketingType.MULTIUNIT);
         marketing2.setMarketingSpus(Arrays.asList(
-            new MarketingSpu(1L, 1L, 1L, BigDecimal.ZERO, false),
-            new MarketingSpu(1L, 1L, 2L, BigDecimal.ZERO, false)
+            new MarketingSpu().setMarketingId(1L).setSpuId(1L).setKillPrice(BigDecimal.ZERO).setDeleted(false),
+            new MarketingSpu().setMarketingId(1L).setSpuId(2L).setKillPrice(BigDecimal.ZERO).setDeleted(false)
         ));
 
         RuleMultiUnitDiscount rule2 = new RuleMultiUnitDiscount();
@@ -382,8 +382,8 @@ class PricingEngineTest {
         marketing.setReceiveEnd(LocalDateTime.now().plusDays(1));
         marketing.setType(MarketingType.MULTIUNIT);
         marketing.setMarketingSpus(Arrays.asList(
-            new MarketingSpu(1L, 1L, 1L, BigDecimal.ZERO, false),
-            new MarketingSpu(1L, 2L, 1L, BigDecimal.ZERO, false)
+            new MarketingSpu().setMarketingId(1L).setSpuId(1L).setKillPrice(BigDecimal.ZERO).setDeleted(false),
+            new MarketingSpu().setMarketingId(1L).setSpuId(2L).setKillPrice(BigDecimal.ZERO).setDeleted(false)
         ));
 
         RuleMultiUnitDiscount rule = new RuleMultiUnitDiscount();
@@ -527,9 +527,9 @@ class PricingEngineTest {
         marketing.setReceiveEnd(LocalDateTime.now().plusDays(1));
         marketing.setType(MarketingType.MULTIUNIT);
         marketing.setMarketingSpus(Arrays.asList(
-            new MarketingSpu(1L, 1L, 1L, BigDecimal.ZERO, false),
-            new MarketingSpu(1L, 1L, 2L, BigDecimal.ZERO, false),
-            new MarketingSpu(1L, 1L, 3L, BigDecimal.ZERO, false)
+            new MarketingSpu().setMarketingId(1L).setSpuId(1L).setKillPrice(BigDecimal.ZERO).setDeleted(false),
+            new MarketingSpu().setMarketingId(1L).setSpuId(2L).setKillPrice(BigDecimal.ZERO).setDeleted(false),
+            new MarketingSpu().setMarketingId(1L).setSpuId(3L).setKillPrice(BigDecimal.ZERO).setDeleted(false)
         ));
 
         RuleMultiUnitDiscount rule = new RuleMultiUnitDiscount();
@@ -653,9 +653,9 @@ class PricingEngineTest {
         multiUnitMarketing.setReceiveEnd(LocalDateTime.now().plusDays(1));
         multiUnitMarketing.setType(MarketingType.MULTIUNIT);
         multiUnitMarketing.setMarketingSpus(Arrays.asList(
-            new MarketingSpu(1L, 1L, 1L, BigDecimal.ZERO, false),
-            new MarketingSpu(1L, 1L, 2L, BigDecimal.ZERO, false),
-            new MarketingSpu(1L, 1L, 3L, BigDecimal.ZERO, false)
+            new MarketingSpu().setMarketingId(1L).setSpuId(1L).setKillPrice(BigDecimal.ZERO).setDeleted(false),
+            new MarketingSpu().setMarketingId(1L).setSpuId(2L).setKillPrice(BigDecimal.ZERO).setDeleted(false),
+            new MarketingSpu().setMarketingId(1L).setSpuId(3L).setKillPrice(BigDecimal.ZERO).setDeleted(false)
         ));
 
         RuleMultiUnitDiscount multiUnitRule = new RuleMultiUnitDiscount();
@@ -691,9 +691,9 @@ class PricingEngineTest {
         bulkMarketing.setReceiveEnd(LocalDateTime.now().plusDays(1));
         bulkMarketing.setType(MarketingType.BULK);
         bulkMarketing.setMarketingSpus(Arrays.asList(
-            new MarketingSpu(1L, 1L, 1L, BigDecimal.ZERO, false),
-            new MarketingSpu(1L, 1L, 2L, BigDecimal.ZERO, false),
-            new MarketingSpu(1L, 1L, 3L, BigDecimal.ZERO, false)
+            new MarketingSpu().setMarketingId(1L).setSpuId(1L).setKillPrice(BigDecimal.ZERO).setDeleted(false),
+            new MarketingSpu().setMarketingId(1L).setSpuId(2L).setKillPrice(BigDecimal.ZERO).setDeleted(false),
+            new MarketingSpu().setMarketingId(1L).setSpuId(3L).setKillPrice(BigDecimal.ZERO).setDeleted(false)
         ));
 
         RuleBulkDiscount bulkRule = new RuleBulkDiscount();
@@ -708,9 +708,9 @@ class PricingEngineTest {
         quantityMarketing.setReceiveEnd(LocalDateTime.now().plusDays(1));
         quantityMarketing.setType(MarketingType.QUANTITY);
         quantityMarketing.setMarketingSpus(Arrays.asList(
-            new MarketingSpu(1L, 1L, 1L, BigDecimal.ZERO, false),
-            new MarketingSpu(1L, 1L, 2L, BigDecimal.ZERO, false),
-            new MarketingSpu(1L, 1L, 3L, BigDecimal.ZERO, false)
+            new MarketingSpu().setMarketingId(1L).setSpuId(1L).setKillPrice(BigDecimal.ZERO).setDeleted(false),
+            new MarketingSpu().setMarketingId(1L).setSpuId(2L).setKillPrice(BigDecimal.ZERO).setDeleted(false),
+            new MarketingSpu().setMarketingId(1L).setSpuId(3L).setKillPrice(BigDecimal.ZERO).setDeleted(false)
         ));
 
         RuleQuantityDiscount quantityRule = new RuleQuantityDiscount();

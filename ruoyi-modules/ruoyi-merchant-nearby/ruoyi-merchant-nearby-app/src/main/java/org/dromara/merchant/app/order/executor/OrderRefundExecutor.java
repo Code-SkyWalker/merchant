@@ -46,7 +46,6 @@ public class OrderRefundExecutor {
             return false;
         }
 
-
         OrderStatus currentState = order.getStatus();
         OrderStatus result = getStateMachine().fireEvent(currentState, OrderEvent.APPLY_REFUND, order);
 
@@ -54,17 +53,8 @@ public class OrderRefundExecutor {
             return false;
         }
 
-        order.setRefundTime(LocalDateTime.now());
-        order.setUpdateTime(LocalDateTime.now());
         // 添加退款原因到扩展信息
-        JSONObject extInfo;
-        if (order.getExtInfo() == null) {
-            extInfo = new JSONObject();
-        } else {
-            extInfo = new JSONObject(order.getExtInfo());
-        }
-        extInfo.set("refundReason", refundReason);
-        order.setExtInfo(extInfo.toString());
+        order.setExtInfo("refundReason", refundReason);
 
         return orderGateway.save(order);
     }
@@ -72,10 +62,9 @@ public class OrderRefundExecutor {
     /**
      * 同意退款
      * @param orderId 订单ID
-     * @param refundOrderNo 退款订单号
      * @return 是否同意成功
      */
-    public Boolean approveRefund(Long orderId, String refundOrderNo) {
+    public Boolean approveRefund(Long orderId) {
         Order order = orderGateway.queryById(orderId);
         if (order == null) {
             return false;
@@ -88,9 +77,7 @@ public class OrderRefundExecutor {
             return false;
         }
 
-        order.setRefundOrderNo(refundOrderNo);
         order.setRefundTime(LocalDateTime.now());
-        order.setUpdateTime(LocalDateTime.now());
 
         return orderGateway.save(order);
     }
@@ -114,16 +101,8 @@ public class OrderRefundExecutor {
             return false;
         }
 
-        order.setUpdateTime(LocalDateTime.now());
         // 添加拒绝原因到扩展信息
-        JSONObject extInfo;
-        if (order.getExtInfo() == null) {
-            extInfo = new JSONObject();
-        } else {
-            extInfo = new JSONObject(order.getExtInfo());
-        }
-        extInfo.set("rejectReason", rejectReason);
-        order.setExtInfo(extInfo.toString());
+        order.setExtInfo("rejectReason", rejectReason);
 
         return orderGateway.save(order);
     }

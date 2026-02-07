@@ -127,9 +127,24 @@ public class OrderDO extends TenantEntity {
     private String refundOrderNo;
 
     /**
+     * 分账确认请求流水号
+     */
+    private String splitConfirmNo;
+
+    /**
+     * 分账时间
+     */
+    private LocalDateTime splitTime;
+
+    /**
      * 退款时间
      */
     private LocalDateTime refundTime;
+
+    /**
+     * 累计退款金额
+     */
+    private BigDecimal refundAmount;
 
     /**
      * 收货人姓名

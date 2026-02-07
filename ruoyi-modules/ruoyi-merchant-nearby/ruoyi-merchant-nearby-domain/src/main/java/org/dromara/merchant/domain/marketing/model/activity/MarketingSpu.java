@@ -2,6 +2,7 @@ package org.dromara.merchant.domain.marketing.model.activity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 
@@ -11,6 +12,7 @@ import java.math.BigDecimal;
  * @Date 2025/12/29 11:32
  */
 @Data
+@Accessors(chain = true)
 public class MarketingSpu {
 
     /**

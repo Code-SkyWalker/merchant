@@ -1,17 +1,23 @@
 package org.dromara.merchant.app.order.service;
 
 import cn.hutool.json.JSONObject;
+import com.huifu.bspay.sdk.opps.core.exception.BasePayException;
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.satoken.utils.LoginHelper;
-import org.dromara.huifu.app.payment.executor.CommodityDetail;
+import org.dromara.huifu.app.config.service.IHuifuConfigService;
 import org.dromara.huifu.app.payment.executor.HuiFuPaymentRequest;
 import org.dromara.huifu.app.payment.service.HuiFuPaymentService;
 import org.dromara.huifu.app.payment.service.IHuifuCallbackHandler;
+import org.dromara.huifu.client.api.pay.AggregatePayment;
+import org.dromara.huifu.domain.model.HuifuConfig;
 import org.dromara.merchant.app.order.IOrderService;
 import org.dromara.merchant.app.order.executor.OrderCreateExecutor;
 import org.dromara.merchant.app.order.executor.OrderPayExecutor;
 import org.dromara.merchant.app.order.executor.OrderRefundExecutor;
-import org.dromara.merchant.client.order.dto.data.command.*;
+import org.dromara.merchant.client.order.dto.data.command.OrderCancelCmd;
+import org.dromara.merchant.client.order.dto.data.command.OrderCreateCmd;
+import org.dromara.merchant.client.order.dto.data.command.OrderPayCmd;
+import org.dromara.merchant.client.order.dto.data.command.PaymentSucceedCallbackCmd;
 import org.dromara.merchant.domain.order.domainservice.IOrderDomainService;
 import org.dromara.merchant.domain.order.gateway.IOrderGateway;
 import org.dromara.merchant.domain.order.model.Order;
@@ -19,13 +25,9 @@ import org.dromara.merchant.domain.order.model.OrderItem;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-
-import static org.dromara.common.core.enums.FormatsType.YYYYMMDDHHMMSS;
 
 /**
  * @Description 订单应用服务实现
@@ -43,6 +45,10 @@ public class OrderService implements IOrderService, IHuifuCallbackHandler {
     private final IOrderDomainService orderDomainService;
 
     private final HuiFuPaymentService huiFuPaymentService;
+
+    private final IHuifuConfigService huifuConfigService;
+
+    private final AggregatePayment aggregatePayment;
 
     private final IOrderGateway orderGateway;
 
@@ -71,24 +77,13 @@ public class OrderService implements IOrderService, IHuifuCallbackHandler {
 
         Order order = this.orderGateway.queryById(cmd.getOrderId());
 
-        Map<String, Object> paymentInfo = huiFuPaymentService.createOrder(
-            new HuiFuPaymentRequest(
-                LoginHelper.getTenantId(),
-                order.getMerchantId(),
-                cmd.getPaymentMethod(),
-                order.getPayableAmount().toString(),
-                order.getOrderId().toString(),
-                cmd.getSub_appid(),
-                cmd.getSub_openid(),
-                order.getOrderItems().stream().map(OrderItem::toCommodityDetail).toList()
-            )
-        );
+        Map<String, Object> paymentInfo = huiFuPaymentService.createOrder(new HuiFuPaymentRequest(LoginHelper.getTenantId(), order.getMerchantId(), cmd.getPaymentMethod(), order.getPayableAmount().toString(), order.getOrderId().toString(), cmd.getSub_appid(), cmd.getSub_openid(), order.getOrderItems().stream().map(OrderItem::toCommodityDetail).toList()));
 
         if (!cmd.getPaymentMethod().equals(order.getPaymentMethod())) {
             order.setPaymentMethod(cmd.getPaymentMethod());
         }
 
-        order.setPaymentOrderNo((String) paymentInfo.get("party_order_id"));
+        order.setPaymentOrderNo((String) paymentInfo.get("req_seq_id")); // 保存交易流水号，数据库字段是payment_order_no
         this.orderGateway.save(order);
 
         return paymentInfo;
@@ -101,7 +96,7 @@ public class OrderService implements IOrderService, IHuifuCallbackHandler {
      */
     @Override
     public void paymentCallBack(JSONObject paymentCallback) {
-        String payOrderId = (String) paymentCallback.get("party_order_id");
+        String payOrderId = (String) paymentCallback.get("req_seq_id");
         String transStat = (String) paymentCallback.get("trans_stat");
         String transAmt = (String) paymentCallback.get("trans_amt");
 
@@ -118,8 +113,31 @@ public class OrderService implements IOrderService, IHuifuCallbackHandler {
      */
     @Override
     @Transactional
-    public boolean cancelOrder(OrderCancelCmd cmd) {
-        return orderDomainService.cancelOrder(cmd.getOrderId(), cmd.getCancelReason());
+    public boolean cancelOrder(OrderCancelCmd cmd) throws BasePayException, IllegalAccessException {
+        Order order = this.orderGateway.queryById(cmd.getOrderId());
+        if (order == null) return false;
+
+        boolean refundSucceed = orderDomainService.cancelOrder(order, cmd.getCancelReason());
+
+        if (!refundSucceed) return false;
+
+        // 待发货退款，直接调用聚合支付的退款接口
+        HuifuConfig huifuConfig = this.huifuConfigService.queryByMerchantId(order.getMerchantId());
+        if (huifuConfig == null) return false;
+
+        // 调用聚合支付的延迟确认接口
+        Map<String, Object> confirmResult = this.aggregatePayment.refund(
+            huifuConfig.getHuifuId(), order.getPaymentOrderNo(), order.getPaymentTime(), order.getPayableAmount());
+
+        if (confirmResult == null) return false;
+
+        // 判断确认结果
+        if (confirmResult.get("trans_stat").equals("S")) {
+            order.setRefundOrderNo((String) confirmResult.get("req_seq_id"));
+        } else {
+            throw new BasePayException((String) confirmResult.get("resp_desc"));
+        }
+        return true;
     }
 
     /**
@@ -149,15 +167,36 @@ public class OrderService implements IOrderService, IHuifuCallbackHandler {
     }
 
     /**
-     * 订单完成
+     * 订单完成, 执行延迟确认请求（订单分账）
      *
      * @param orderId 订单ID
      * @return 是否完成订单成功
      */
     @Override
     @Transactional
-    public boolean completeOrder(Long orderId) {
-        return this.orderDomainService.completeOrder(orderId);
+    public boolean completeOrder(Long orderId) throws BasePayException, IllegalAccessException {
+        Order order = this.orderGateway.queryById(orderId);
+        if (order == null) return false;
+
+        HuifuConfig huifuConfig = this.huifuConfigService.queryByMerchantId(order.getMerchantId());
+        if (huifuConfig == null) return false;
+
+        // 调用聚合支付的延迟确认接口
+        Map<String, Object> confirmResult = this.aggregatePayment.delayTransConfirm(
+            huifuConfig.getHuifuId(), order.getPaymentOrderNo(), order.getPaymentTime());
+
+        if (confirmResult == null) return false;
+
+        // 判断确认结果
+        if (confirmResult.get("trans_stat").equals("S")) {
+            order.setSplitConfirmNo((String) confirmResult.get("req_seq_id"));
+            order.setSplitTime(LocalDateTime.now());
+        } else {
+            throw new BasePayException((String) confirmResult.get("resp_desc"));
+        }
+
+        // 完成订单
+        return this.orderDomainService.completeOrder(order);
     }
 
     /**
@@ -176,14 +215,46 @@ public class OrderService implements IOrderService, IHuifuCallbackHandler {
     /**
      * 审批订单退款
      *
-     * @param orderId       订单ID
-     * @param refundOrderNo 退款订单号
+     * @param orderId 订单ID
      * @return 是否审批退款成功
      */
     @Override
     @Transactional
-    public boolean approveRefund(Long orderId, String refundOrderNo) {
-        return this.orderRefundExecutor.approveRefund(orderId, refundOrderNo);
+    public boolean approveRefund(Long orderId) throws BasePayException, IllegalAccessException {
+        Order order = this.orderGateway.queryById(orderId);
+        if (order == null) return false;
+
+
+        HuifuConfig huifuConfig = this.huifuConfigService.queryByMerchantId(order.getMerchantId());
+        if (huifuConfig == null) return false;
+
+        if (order.getSplitConfirmNo() != null) {
+            // 调用聚合支付的延迟分账退款确认接口
+            Map<String, Object> confirmResult = this.aggregatePayment.delayTransConfirmRefund(
+                huifuConfig.getHuifuId(), order.getSplitConfirmNo(), order.getSplitTime());
+            if (confirmResult == null) return false;
+
+            if (confirmResult.get("trans_stat").equals("F")) {
+                throw new BasePayException((String) confirmResult.get("resp_desc"));
+            }
+        }
+
+        // 调用聚合支付的退款接口
+        Map<String, Object> confirmResult = this.aggregatePayment.refund(
+            huifuConfig.getHuifuId(), order.getPaymentOrderNo(), order.getPaymentTime(), order.getPayableAmount());
+
+        if (confirmResult == null) return false;
+
+        // 判断确认结果
+        if (confirmResult.get("trans_stat").equals("S")) {
+            order.setRefundOrderNo((String) confirmResult.get("org_hf_seq_id"));
+            order.setRefundTime(LocalDateTime.now());
+            order.setRefundAmount(new BigDecimal((String) confirmResult.get("ord_amt")));
+        } else {
+            throw new BasePayException((String) confirmResult.get("resp_desc"));
+        }
+
+        return this.orderRefundExecutor.approveRefund(orderId);
     }
 
     /**
