@@ -46,6 +46,7 @@ public class FreightConfigQryExe {
      * @param co 基本配置
      */
     private FreightConfigCO executeExpress(FreightConfigCO co) {
+        if (co == null) return null;
         var configExpressCO = new FreightConfigExpressCO();
         BeanUtil.copyProperties(co, configExpressCO);
 
