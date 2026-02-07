@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.merchant.app.freight.IExpressTemplateService;
+import org.dromara.merchant.app.freight.IFreightConfigService;
 import org.dromara.merchant.app.freight.executor.*;
 import org.dromara.merchant.app.freight.executor.query.ExpressTemplatePageQryExecutor;
 import org.dromara.merchant.client.freight.dto.data.clientobject.ExpressTemplateCO;
@@ -11,7 +12,9 @@ import org.dromara.merchant.client.freight.dto.data.command.ExpressTemplateCreat
 import org.dromara.merchant.client.freight.dto.data.command.ExpressTemplateModifyCmd;
 import org.dromara.merchant.client.freight.dto.data.command.query.ExpressTemplatePageQry;
 import org.dromara.merchant.domain.freight.gateway.IExpressAreaGateway;
+import org.dromara.merchant.domain.freight.gateway.IFreightConfigGateway;
 import org.dromara.merchant.domain.freight.model.ExpressArea;
+import org.dromara.merchant.domain.freight.model.FreightConfig;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,12 +40,19 @@ public class ExpressTemplateService implements IExpressTemplateService {
 
     private final IExpressAreaGateway expressAreaGateway;
 
+    private final IFreightConfigGateway freightConfigGateway;
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Long create(ExpressTemplateCreateCmd cmd) {
 
         // 创建商户运费模板
         Long createdTemplateId = createExecutor.execute(cmd);
+
+        // 修改商户运费模板关联的配送模板ID
+        FreightConfig config = this.freightConfigGateway.findById(cmd.getConfigId());
+        config.setRelationId(String.valueOf(createdTemplateId));
+        this.freightConfigGateway.save(config);
 
         // 创建商户配送区域
         areaCreateExecutor.execute(cmd.getAreas(), createdTemplateId);

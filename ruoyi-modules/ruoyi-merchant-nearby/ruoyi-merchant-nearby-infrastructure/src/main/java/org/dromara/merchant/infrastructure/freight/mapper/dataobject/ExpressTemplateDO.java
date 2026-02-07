@@ -64,11 +64,6 @@ public class ExpressTemplateDO extends TenantEntity {
     private BigDecimal freeShippingAmount;
 
     /**
-     * 包邮条件件数
-     */
-    private Integer freeShippingQuantity;
-
-    /**
      * 模板状态 (ACTIVE:启用, DISABLED:禁用)
      */
     private String status;

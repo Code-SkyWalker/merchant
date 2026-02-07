@@ -14,6 +14,11 @@ import java.util.List;
 public class ExpressTemplateCreateCmd {
 
     /**
+     * 配送配置ID
+     */
+    private Long configId;
+
+    /**
      * 商户ID
      */
     private Long merchantId;

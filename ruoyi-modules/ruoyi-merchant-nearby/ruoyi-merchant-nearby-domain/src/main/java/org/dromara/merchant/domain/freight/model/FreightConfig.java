@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.dromara.common.core.utils.SnowflakeIdGenerator;
 import org.dromara.common.tenant.core.TenantEntity;
+import org.springframework.util.StringUtils;
 
 /**
  * @Description 商户配送配置实体
@@ -50,4 +51,11 @@ public class FreightConfig extends TenantEntity {
      */
     private DeliveryConfig deliveryConfig;
 
+
+    public void setRelationId(String relationId) {
+        if (StringUtils.hasText(this.relationId)) {
+            this.relationId = this.relationId + "," + relationId;
+        }
+        else this.relationId = relationId;
+    }
 }
