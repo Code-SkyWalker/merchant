@@ -106,8 +106,8 @@
         FROM tb_spu spu
         <if test="qry.priceRange != null and qry.priceRange.size() == 2">
             INNER JOIN (
-                SELECT spu_id 
-                FROM tb_sku 
+                SELECT spu_id
+                FROM tb_sku
                 WHERE price BETWEEN #{qry.priceRange[0]} AND #{qry.priceRange[1]}
                 GROUP BY spu_id
             ) sku_filter ON spu.id = sku_filter.spu_id
@@ -133,7 +133,7 @@
             </if>
             And spu.is_delete = 0
         </where>
-        ORDER BY spu.create_time DESC, spu.id ASC
+        ORDER BY spu.sale_num, spu.create_time DESC, spu.id
     </select>
 
 

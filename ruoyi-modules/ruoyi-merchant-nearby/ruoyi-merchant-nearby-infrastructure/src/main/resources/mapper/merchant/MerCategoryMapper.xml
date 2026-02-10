@@ -148,4 +148,15 @@
             </choose>
         </where>
     </select>
+
+    <select id="selectByParentId" resultType="org.dromara.merchant.client.merchant.dto.data.clientobject.MerCategoryCO">
+        select
+            category_id,
+            category_name,
+            category_image,
+            category_sort
+        from tb_shop_category
+        where parent_id = #{parentId}
+        order by category_sort desc
+    </select>
 </mapper>

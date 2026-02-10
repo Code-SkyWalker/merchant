@@ -69,7 +69,6 @@ public class SysTenantServiceImpl implements ISysTenantService {
     /**
      * 基于租户ID查询租户
      */
-    @Cacheable(cacheNames = CacheNames.SYS_TENANT, key = "#tenantId")
     @Override
     public SysTenantVo queryByTenantId(String tenantId) {
         return baseMapper.selectVoOne(new LambdaQueryWrapper<SysTenant>().eq(SysTenant::getTenantId, tenantId));
@@ -127,7 +126,7 @@ public class SysTenantServiceImpl implements ISysTenantService {
             });
 
         // 如果传入的租户编号已存在，则生成新的租户编号
-        if (tenantIds.contains(bo.getTenantId())) {
+        if (tenantIds.contains(bo.getTenantId()) || StringUtils.isBlank(bo.getTenantId())) {
             String tenantId = generateTenantId(tenantIds);
             add.setTenantId(tenantId);
         }

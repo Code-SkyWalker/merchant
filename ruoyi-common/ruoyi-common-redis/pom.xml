@@ -43,6 +43,20 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
 
+        <!-- 测试依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+        <!-- JUnit 4 依赖 -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
 <!--        &lt;!&ndash; redis序列化替代方案 比json快无数的跨语言二进制序列化 &ndash;&gt;-->
 <!--        <dependency>-->
 <!--            <groupId>org.apache.fury</groupId>-->

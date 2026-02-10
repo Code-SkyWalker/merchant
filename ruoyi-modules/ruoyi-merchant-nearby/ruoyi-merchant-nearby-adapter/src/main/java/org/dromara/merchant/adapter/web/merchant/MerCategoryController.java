@@ -10,7 +10,10 @@ import org.dromara.merchant.client.merchant.dto.data.clientobject.MerCategoryCO;
 import org.dromara.merchant.client.merchant.dto.data.command.MerCategoryCreateCmd;
 import org.dromara.merchant.client.merchant.dto.data.command.MerCategoryModifyCmd;
 import org.dromara.merchant.client.merchant.dto.data.command.query.MerCategoryPageQry;
+import org.dromara.merchant.infrastructure.merchant.mapper.MerCategoryMapper;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -25,6 +28,19 @@ import org.springframework.web.bind.annotation.*;
 public class MerCategoryController {
 
     private final IMerCategoryService categoryService;
+
+    private final MerCategoryMapper merCategoryMapper;
+
+    /**
+     * 前台分类查询
+     *
+     * @return 分类列表
+     */
+    @GetMapping("/frontend/page")
+    public TableDataInfo<MerCategoryCO> frontend(@RequestParam Long parentId) {
+        List<MerCategoryCO> categoryCOs = merCategoryMapper.selectByParentId(parentId);
+        return TableDataInfo.build(categoryCOs);
+    }
 
     /**
      * 后台分类条件分页查询

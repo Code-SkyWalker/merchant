@@ -98,4 +98,86 @@
         from tb_merchant
         where create_by = #{userId}
     </select>
+
+    <select id="selectAllValidMerchants" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_merchant
+        where status = 'ACTIVE'
+        and certified = 1
+        and precise_location is not null
+        and precise_location != ''
+    </select>
+
+    <select id="queryByIdsPages" resultType="org.dromara.merchant.client.merchant.dto.data.clientobject.MerchantCO">
+        select tb_merchant.merchant_id,
+               tb_merchant.merchant_code,
+               tb_merchant.merchant_name,
+               tb_merchant.merchant_type,
+               tb_merchant.precise_location,
+               tb_merchant.address,
+               tb_merchant.outer_picture,
+               tb_merchant.inner_picture,
+               tb_merchant.logo,
+               tb_merchant.description,
+               tb_merchant.status
+        from tb_merchant
+        <if test="categoryId != null">
+            left join tb_merchant_category using (merchant_id)
+        </if>
+        <where>
+            tb_merchant.merchant_id in
+            <foreach item="item" index="index" collection="nearbyMerchants" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            <if test="categoryId != null">
+                and tb_merchant_category.category_id = #{categoryId}
+            </if>
+            and tb_merchant.status = 'ACTIVE'
+            and tb_merchant.certified = 1
+        </where>
+    </select>
+
+    <select id="queryPagesFrontend" resultType="org.dromara.merchant.client.merchant.dto.data.clientobject.MerchantCO">
+        select merchant_id,
+               merchant_code,
+               merchant_name,
+               merchant_type,
+               precise_location,
+               address,
+               outer_picture,
+               inner_picture,
+               logo,
+               description,
+               status
+        from tb_merchant
+        <where>
+            <if test="merchantName != null and merchantName != ''">
+                and merchant_name like concat('%', #{merchantName}, '%')
+            </if>
+            and status = 'ACTIVE'
+            and certified = 1
+        </where>
+    </select>
+
+    <select id="queryByCategoryIdPages" resultType="org.dromara.merchant.client.merchant.dto.data.clientobject.MerchantCO">
+        select tb_merchant.merchant_id,
+               tb_merchant.merchant_code,
+               tb_merchant.merchant_name,
+               tb_merchant.merchant_type,
+               tb_merchant.precise_location,
+               tb_merchant.address,
+               tb_merchant.outer_picture,
+               tb_merchant.inner_picture,
+               tb_merchant.logo,
+               tb_merchant.description,
+               tb_merchant.status
+        from tb_merchant
+                 left join tb_merchant_category using (merchant_id)
+        <where>
+            tb_merchant_category.category_id = #{categoryId}
+            and tb_merchant.status = 'ACTIVE'
+            and tb_merchant.certified = 1
+        </where>
+    </select>
 </mapper>

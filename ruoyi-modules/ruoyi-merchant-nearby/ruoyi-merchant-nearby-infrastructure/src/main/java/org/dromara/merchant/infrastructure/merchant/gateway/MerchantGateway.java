@@ -8,6 +8,8 @@ import org.dromara.merchant.infrastructure.merchant.mapper.MerchantMapper;
 import org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantDO;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * @Description 商户网关实现
  * @Author Code Skywalker
@@ -49,6 +51,15 @@ public class MerchantGateway implements IMerchantGateway {
      */
     public boolean deleteById(Long merchantId) {
         return mapper.deleteById(merchantId) > 0;
+    }
+
+    /**
+     * 查询所有有效商户
+     *
+     * @return 商户实体列表
+     */
+    public List<Merchant> selectAllValidMerchants() {
+        return convertor.toEntityList(mapper.selectAllValidMerchants());
     }
 
 }

@@ -2,6 +2,8 @@ package org.dromara.merchant.domain.merchant.gateway;
 
 import org.dromara.merchant.domain.merchant.model.Merchant;
 
+import java.util.List;
+
 /**
  * @Description 商家网关接口
  * @Author Code Skywalker
@@ -32,5 +34,12 @@ public interface IMerchantGateway {
      * @return 是否删除成功
      */
     boolean deleteById(Long merchantId);
+
+    /**
+     * 查询所有有效商户
+     *
+     * @return 商户实体列表
+     */
+    List<Merchant> selectAllValidMerchants();
 
 }

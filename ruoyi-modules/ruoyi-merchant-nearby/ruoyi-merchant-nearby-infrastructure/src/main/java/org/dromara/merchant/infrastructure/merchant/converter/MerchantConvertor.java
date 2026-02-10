@@ -10,6 +10,8 @@ import org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantDO
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 
+import java.util.List;
+
 /**
  * @Description 商户转换器
  * @Author Code Skywalker
@@ -73,4 +75,12 @@ public interface MerchantConvertor {
      * @return MerchantCO
      */
     MerchantCO toMerchantCO(MerchantDO merchantDO);
+
+    /**
+     * MerchantDO列表转Merchant实体列表
+     *
+     * @param merchantDOS MerchantDO列表
+     * @return Merchant实体列表
+     */
+    List<Merchant> toEntityList(List<MerchantDO> merchantDOS);
 }

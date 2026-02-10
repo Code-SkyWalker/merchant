@@ -24,12 +24,14 @@ public class InternalLoginBody extends LoginBody {
 
     /**
      * 用户类型
+     * SYS_USER:后台系统用户
+     * APP_USER:移动客户端用户
      */
     @NotNull(message = "用户类型不能为空", groups = {AddGroup.class})
     private UserType userType;
 
     /**
-     * 联系人
+     * 联系人姓名
      */
     @NotBlank(message = "联系人不能为空", groups = {AddGroup.class})
     private String contactUserName;
