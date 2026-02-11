@@ -155,4 +155,12 @@
         #{id}
       </foreach>
   </select>
+
+  <select id="queryCouponBySpuId" resultMap="JoinResultMap">
+      select <include refid="Join_Column_List"/>
+      from tb_coupon
+      left join tb_coupon_spu on tb_coupon.id = tb_coupon_spu.coupon_id
+      where tb_coupon_spu.spu_id = #{spuId}
+      and current_timestamp between tb_coupon.service_begin and tb_coupon.service_end
+    </select>
 </mapper>

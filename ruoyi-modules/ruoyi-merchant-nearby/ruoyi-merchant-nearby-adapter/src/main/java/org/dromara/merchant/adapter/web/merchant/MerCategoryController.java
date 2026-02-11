@@ -32,8 +32,9 @@ public class MerCategoryController {
     private final MerCategoryMapper merCategoryMapper;
 
     /**
-     * 前台分类查询
+     * 前端查询-分类查询
      *
+     * @param parentId 父级ID 0表示一级分类
      * @return 分类列表
      */
     @GetMapping("/frontend/page")

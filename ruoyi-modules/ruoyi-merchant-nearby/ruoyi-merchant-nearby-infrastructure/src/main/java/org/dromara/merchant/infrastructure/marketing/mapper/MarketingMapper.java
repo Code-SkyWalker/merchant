@@ -46,4 +46,12 @@ public interface MarketingMapper extends BaseMapperPlus<MarketingDO, MarketingDO
      * @return 营销活动
      */
     List<Marketing> selectByIdList(@Param("marketingIds") Collection<Long> marketingIds);
+
+    /**
+     * 根据SpuId查询营销活动
+     *
+     * @param spuId SpuId
+     * @return 营销活动
+     */
+    List<MarketingCO> queryMarketingsBySpuId(@Param("spuId") Long spuId);
 }

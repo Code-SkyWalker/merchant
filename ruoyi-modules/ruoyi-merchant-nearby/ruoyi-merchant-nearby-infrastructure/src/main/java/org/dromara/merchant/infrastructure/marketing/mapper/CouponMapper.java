@@ -38,4 +38,12 @@ public interface CouponMapper extends BaseMapperPlus<CouponDO, CouponDO> {
      * @return 优惠券列表
      */
     List<Coupon> selectByIdList(@Param("couponIds") Collection<Long> couponIds);
+
+    /**
+     * 根据商品Id查询优惠券
+     *
+     * @param spuId 商品Id
+     * @return 优惠券列表
+     */
+    List<CouponCO> queryCouponBySpuId(@Param("spuId") Long spuId);
 }

@@ -93,27 +93,27 @@ public class MerchantController {
     }
 
     /**
-     * 分类
+     * 前端查询-分类
      *
      * @param categoryId 分类ID
      * @param page       分页参数
      * @return 商家列表
      */
-    @GetMapping("/front/{categoryId}/pages")
+    @GetMapping("/frontend/{categoryId}/pages")
     public TableDataInfo<MerchantCO> queryByCategoryIdPages(@PathVariable Long categoryId, @ModelAttribute PageQuery page) {
         Page<MerchantCO> merchantCOs = this.merchantMapper.queryByCategoryIdPages(page.build(), categoryId);
         return TableDataInfo.build(merchantCOs);
     }
 
     /**
-     * 本地
+     * 前端查询-本地
      *
      * @param longitude 经度
      * @param latitude  纬度
      * @param radius    搜索半径公里
      * @return 附近商家列表
      */
-    @GetMapping("/front/nearby")
+    @GetMapping("/frontend/nearby")
     public TableDataInfo<MerchantCO> queryNearby(@RequestParam Double longitude, @RequestParam Double latitude,
                                                  @RequestParam(required = false, defaultValue = "5") Double radius, @ModelAttribute PageQuery page,
                                                  @RequestParam(required = false) Long categoryId) {
@@ -127,7 +127,7 @@ public class MerchantController {
     }
 
     /**
-     * 购物
+     * 前端查询-购物
      *
      * @param merchantName 商家名称
      * @return 附近商家列表

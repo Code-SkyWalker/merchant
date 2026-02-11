@@ -33,7 +33,17 @@ public class MarketingController {
 
     private final MarketingMapper marketingMapper;
 
-    private final MarketingConvertor marketingConvertor;
+    /**
+     * 前端查询 - 根据spuId查询营销活动
+     *
+     * @param spuId spuId
+     * @return 营销活动
+     */
+    @GetMapping("/frontend/{spuId}")
+    public R<List<MarketingCO>> queryBySpuId(@PathVariable Long spuId) {
+        List<MarketingCO> marketings = marketingMapper.queryMarketingsBySpuId(spuId);
+        return marketings != null ? R.ok(marketings) : R.fail("查询失败");
+    }
 
     /**
      * 创建营销活动

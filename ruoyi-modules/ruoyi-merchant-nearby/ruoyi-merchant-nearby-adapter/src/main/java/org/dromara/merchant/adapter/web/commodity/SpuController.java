@@ -80,7 +80,7 @@ public class SpuController {
     }
 
     /**
-     * 查询商品分页
+     * 前端可用 - 查询商品分页
      * @param qry 查询参数
      * @param page 分页参数
      * @return 商品分页

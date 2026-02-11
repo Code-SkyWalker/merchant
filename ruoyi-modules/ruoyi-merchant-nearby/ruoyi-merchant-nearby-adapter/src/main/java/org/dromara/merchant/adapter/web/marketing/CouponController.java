@@ -14,6 +14,8 @@ import org.dromara.merchant.infrastructure.marketing.mapper.CouponMapper;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 优惠券控制器
  * @Author Code Skywalker
@@ -27,6 +29,16 @@ public class CouponController {
 
     private final ICouponService couponService;
     private final CouponMapper couponMapper;
+
+    /**
+     * 前端查询 - 根据商品ID查询优惠券
+     * @param spuId 商品ID
+     * @return 优惠券列表
+     */
+    @GetMapping("/frontend/{spuId}")
+    public R<List<CouponCO>> queryCouponsBySpuId(@PathVariable final Long spuId) {
+        return R.ok(this.couponMapper.queryCouponBySpuId(spuId));
+    }
 
     /**
      * 添加优惠券

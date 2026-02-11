@@ -128,4 +128,13 @@
                  join tb_marketing_spu on tb_marketing.id = tb_marketing_spu.marketing_id
         where tb_marketing.id = #{id}
     </select>
+
+    <select id="queryMarketingsBySpuId" resultMap="MarketingCOResultMap">
+        select
+        <include refid="MarketingJoin_Column_List"/>
+        from tb_marketing
+        join tb_marketing_spu on tb_marketing.id = tb_marketing_spu.marketing_id
+        where tb_marketing_spu.spu_id = #{spuId}
+            and current_timestamp between tb_marketing.receive_begin and tb_marketing.receive_end
+    </select>
 </mapper>

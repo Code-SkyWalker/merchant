@@ -201,4 +201,5 @@
         from tb_spu join tb_sku on tb_spu.id = tb_sku.spu_id
         where tb_spu.id = #{id}
     </select>
+
 </mapper>
