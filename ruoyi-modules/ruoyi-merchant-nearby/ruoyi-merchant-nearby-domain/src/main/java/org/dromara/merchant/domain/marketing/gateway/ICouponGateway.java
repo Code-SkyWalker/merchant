@@ -2,6 +2,7 @@ package org.dromara.merchant.domain.marketing.gateway;
 
 import org.dromara.merchant.domain.marketing.model.coupon.Coupon;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -41,5 +42,5 @@ public interface ICouponGateway {
      * @param couponIds 优惠券Id列表
      * @return 优惠券列表
      */
-    List<Coupon> queryByIds(List<Long> couponIds);
+    List<Coupon> queryByIds(Collection<Long> couponIds);
 }

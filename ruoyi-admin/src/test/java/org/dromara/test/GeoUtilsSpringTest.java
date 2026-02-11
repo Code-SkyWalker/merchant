@@ -115,7 +115,7 @@ public class GeoUtilsSpringTest {
         GeoUtils.addLocation(GEO_KEY, 120.1551, 30.2741, "杭州");
 
         java.util.Map<String, Double> nearbyWithDistance = GeoUtils.searchNearbyWithDistance(
-            GEO_KEY, 116.404, 39.915, 1000, GeoUnit.KILOMETERS, "北京");
+            GEO_KEY, 116.404, 39.915, 1000, GeoUnit.KILOMETERS);
 
         assertNotNull("带距离信息的结果不应该为null", nearbyWithDistance);
         assertFalse("结果不应该为空", nearbyWithDistance.isEmpty());
@@ -145,7 +145,7 @@ public class GeoUtilsSpringTest {
         GeoUtils.addLocation(GEO_KEY, 118.7969, 32.0603, "南京");
 
         List<NearbyLocation<String>> sortedNearby = GeoUtils.getNearbySorted(
-            GEO_KEY, 116.404, 39.915, 1000, GeoUnit.KILOMETERS, 5, "北京");
+            GEO_KEY, 116.404, 39.915, 1000, GeoUnit.KILOMETERS, 5);
 
         assertNotNull("排序结果不应该为null", sortedNearby);
         assertFalse("结果不应该为空", sortedNearby.isEmpty());

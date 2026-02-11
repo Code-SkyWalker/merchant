@@ -2,6 +2,7 @@ package org.dromara.merchant.domain.merchant.gateway;
 
 import org.dromara.merchant.domain.merchant.model.Merchant;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -40,6 +41,14 @@ public interface IMerchantGateway {
      *
      * @return 商户实体列表
      */
-    List<Merchant> selectAllValidMerchants();
+    List<Merchant> queryAllValidMerchants();
+
+    /**
+     * 根据商户ID列表查询商户
+     *
+     * @param merchantIds 商户ID列表
+     * @return 商户实体列表
+     */
+    List<Merchant> queryMerchantsByMerchantIds(Collection<Long> merchantIds);
 
 }

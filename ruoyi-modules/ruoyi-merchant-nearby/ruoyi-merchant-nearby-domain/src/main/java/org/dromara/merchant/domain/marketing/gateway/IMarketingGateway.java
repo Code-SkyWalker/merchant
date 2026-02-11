@@ -2,6 +2,8 @@ package org.dromara.merchant.domain.marketing.gateway;
 
 import org.dromara.merchant.domain.marketing.model.activity.Marketing;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -49,5 +51,5 @@ public interface IMarketingGateway {
      * @param marketingIds 营销活动ID列表
      * @return 营销活动列表
      */
-    List<Marketing> queryByIds(List<Long> marketingIds);
+    List<Marketing> queryByIds(Collection<Long> marketingIds);
 }

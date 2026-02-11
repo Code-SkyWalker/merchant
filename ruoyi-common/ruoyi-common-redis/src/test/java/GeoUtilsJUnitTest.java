@@ -135,7 +135,7 @@ public class GeoUtilsJUnitTest {
         GeoUtils.addLocation(GEO_KEY, 118.7969, 32.0603, "南京");
 
         List<NearbyLocation<String>> sortedNearby = GeoUtils.getNearbySorted(
-            GEO_KEY, 116.404, 39.915, 1000, GeoUnit.KILOMETERS, 5, "北京");
+            GEO_KEY, 116.404, 39.915, 1000, GeoUnit.KILOMETERS, 5);
 
         assertNotNull("排序结果不应该为null", sortedNearby);
         assertFalse("结果不应该为空", sortedNearby.isEmpty());

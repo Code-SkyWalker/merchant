@@ -8,6 +8,7 @@ import org.dromara.merchant.infrastructure.merchant.mapper.MerchantMapper;
 import org.dromara.merchant.infrastructure.merchant.mapper.dataobject.MerchantDO;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -58,8 +59,18 @@ public class MerchantGateway implements IMerchantGateway {
      *
      * @return 商户实体列表
      */
-    public List<Merchant> selectAllValidMerchants() {
+    public List<Merchant> queryAllValidMerchants() {
         return convertor.toEntityList(mapper.selectAllValidMerchants());
     }
 
+    /**
+     * 根据商户ID列表查询商户
+     *
+     * @param merchantIds 商户ID列表
+     * @return 商户实体列表
+     */
+    @Override
+    public List<Merchant> queryMerchantsByMerchantIds(Collection<Long> merchantIds) {
+        return convertor.toEntityList(this.mapper.selectByIds(merchantIds));
+    }
 }

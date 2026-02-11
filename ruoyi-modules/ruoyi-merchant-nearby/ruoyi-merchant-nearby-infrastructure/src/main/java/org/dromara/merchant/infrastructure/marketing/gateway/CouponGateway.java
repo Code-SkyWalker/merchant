@@ -9,6 +9,7 @@ import org.dromara.merchant.infrastructure.marketing.mapper.dataobject.CouponDO;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -48,7 +49,7 @@ public class CouponGateway implements ICouponGateway {
      * @return 优惠券列表
      */
     @Override
-    public List<Coupon> queryByIds(List<Long> couponIds) {
+    public List<Coupon> queryByIds(Collection<Long> couponIds) {
         if (couponIds == null || couponIds.isEmpty()) return List.of();
         return this.mapper.selectByIdList(couponIds);
     }

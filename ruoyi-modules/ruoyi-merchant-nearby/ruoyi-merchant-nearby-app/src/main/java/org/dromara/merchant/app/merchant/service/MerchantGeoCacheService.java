@@ -44,7 +44,7 @@ public class MerchantGeoCacheService {
         log.info("开始预热商家地理位置缓存...");
 
         // 查询所有有效商家（活跃且已认证，且有地理位置信息）
-        List<Merchant> merchantList = merchantGateway.selectAllValidMerchants();
+        List<Merchant> merchantList = merchantGateway.queryAllValidMerchants();
 
         if (merchantList.isEmpty()) {
             log.info("没有有效商家需要预热");

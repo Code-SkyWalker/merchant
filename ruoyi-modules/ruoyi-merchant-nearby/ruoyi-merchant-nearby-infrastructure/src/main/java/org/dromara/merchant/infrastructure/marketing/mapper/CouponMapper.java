@@ -9,6 +9,7 @@ import org.dromara.merchant.client.marketing.dto.data.command.query.CouponPageQr
 import org.dromara.merchant.domain.marketing.model.coupon.Coupon;
 import org.dromara.merchant.infrastructure.marketing.mapper.dataobject.CouponDO;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface CouponMapper extends BaseMapperPlus<CouponDO, CouponDO> {
@@ -36,5 +37,5 @@ public interface CouponMapper extends BaseMapperPlus<CouponDO, CouponDO> {
      * @param couponIds 优惠券Id列表
      * @return 优惠券列表
      */
-    List<Coupon> selectByIdList(@Param("couponIds") List<Long> couponIds);
+    List<Coupon> selectByIdList(@Param("couponIds") Collection<Long> couponIds);
 }

@@ -9,6 +9,7 @@ import org.dromara.merchant.client.marketing.dto.data.command.query.MarketingPag
 import org.dromara.merchant.domain.marketing.model.activity.Marketing;
 import org.dromara.merchant.infrastructure.marketing.mapper.dataobject.MarketingDO;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface MarketingMapper extends BaseMapperPlus<MarketingDO, MarketingDO> {
@@ -44,5 +45,5 @@ public interface MarketingMapper extends BaseMapperPlus<MarketingDO, MarketingDO
      * @param marketingIds 营销活动Id列表
      * @return 营销活动
      */
-    List<Marketing> selectByIdList(@Param("marketingIds") List<Long> marketingIds);
+    List<Marketing> selectByIdList(@Param("marketingIds") Collection<Long> marketingIds);
 }

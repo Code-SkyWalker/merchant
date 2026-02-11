@@ -8,6 +8,7 @@ import org.dromara.merchant.infrastructure.marketing.mapper.MarketingMapper;
 import org.dromara.merchant.infrastructure.marketing.mapper.dataobject.MarketingDO;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -70,7 +71,7 @@ public class MarketingGateway implements IMarketingGateway {
      * @return 营销活动列表
      */
     @Override
-    public List<Marketing> queryByIds(List<Long> marketingIds) {
+    public List<Marketing> queryByIds(Collection<Long> marketingIds) {
         if (marketingIds == null || marketingIds.isEmpty()) return List.of();
         List<Marketing> marketings = this.mapper.selectByIdList(marketingIds);
         return marketings;

@@ -36,22 +36,22 @@ public class PriceCalculationCmd {
     private List<Long> marketings;
 
     /**
-     * 积分抵扣金额
+     * 积分抵扣金额(购物车不传)
      */
     private BigDecimal integralDiscountAmount;
 
     /**
-     * 佣金抵扣金额
+     * 佣金抵扣金额(购物车不传)
      */
     private BigDecimal commDiscountAmount;
 
     /**
-     * 用户地址id
+     * 用户地址id(购物车不传)
      */
     private Long addressId;
 
     /**
-     * 配送方式
+     * 配送方式(购物车不传)
      */
     private String deliveryMethod;
 
