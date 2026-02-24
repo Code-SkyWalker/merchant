@@ -5,6 +5,7 @@ import cn.hutool.crypto.digest.BCrypt;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.dromara.common.core.constant.Constants;
 import org.dromara.common.core.constant.SystemConstants;
 import org.dromara.common.core.constant.TenantConstants;
 import org.dromara.common.core.domain.model.InternalLoginBody;
@@ -25,6 +26,12 @@ import org.dromara.system.domain.vo.SysUserVo;
 import org.dromara.system.mapper.SysUserMapper;
 import org.dromara.system.service.ISysTenantService;
 import org.dromara.system.service.ISysUserService;
+import org.dromara.system.domain.SysDept;
+import org.dromara.system.domain.SysRole;
+import org.dromara.system.domain.SysUserRole;
+import org.dromara.system.mapper.SysDeptMapper;
+import org.dromara.system.mapper.SysRoleMapper;
+import org.dromara.system.mapper.SysUserRoleMapper;
 import org.dromara.web.domain.vo.LoginVo;
 import org.dromara.web.service.IAuthStrategy;
 import org.dromara.web.service.SysLoginService;
@@ -46,6 +53,9 @@ public class InternalAuthStrategy implements IAuthStrategy {
     private final ISysTenantService tenantService;
     private final ISysUserService userService;
     private final SysLoginService loginService;
+    private final SysDeptMapper deptMapper;
+    private final SysRoleMapper roleMapper;
+    private final SysUserRoleMapper userRoleMapper;
 
     @Override
     public LoginVo login(String body, SysClientVo client) {
@@ -69,10 +79,10 @@ public class InternalAuthStrategy implements IAuthStrategy {
         // 租户存在，检查用户是否存在
         SysUserVo user = TenantHelper.dynamic(tenantId, () -> userMapper.selectVoOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUserName, username)));
 
-        // 如果用户不存在，则创建普通用户
+        // 如果用户不存在，则创建用户
         if (ObjectUtil.isNull(user)) {
             createUser(loginBody, tenantId);
-            // 使用创建的普通用户登录
+            // 使用创建的用户登录
             return login(client, tenantId, username);
         }
 
@@ -118,9 +128,8 @@ public class InternalAuthStrategy implements IAuthStrategy {
         tenantBo.setPassword(loginBody.getPassword());
 
         // 根据登录用户类型设置租户套餐
-        if (loginUserType == 1) tenantBo.setPackageId(2001925927655182338L);        // 租户管理员
-        else if (loginUserType == 2) tenantBo.setPackageId(2017113387925131265L);   // 商户管理员
-        else tenantBo.setPackageId(2017146296534978561L);                           // 普通用户
+        tenantBo.setPackageId(getPackageId(loginBody));
+
         tenantService.insertByBo(tenantBo);
     }
 
@@ -131,14 +140,66 @@ public class InternalAuthStrategy implements IAuthStrategy {
      * @param tenantId  租户ID
      */
     private void createUser(InternalLoginBody loginBody, String tenantId) {
-        SysUserBo userBo = new SysUserBo();
-        userBo.setUserName(loginBody.getUsername());
-        userBo.setNickName(loginBody.getUsername());
-        userBo.setPassword(BCrypt.hashpw(loginBody.getPassword()));
-        userBo.setUserType(loginBody.getUserType().getUserType());
+        long packageId = getPackageId(loginBody);
+        createUserWithPackagePermissions(tenantId, loginBody.getUsername(), loginBody.getPassword(),
+            packageId, loginBody.getCompanyName());
+    }
 
-        // 在对应的租户下创建用户
-        TenantHelper.dynamic(tenantId, () -> userService.registerUser(userBo, tenantId));
+    private static long getPackageId(InternalLoginBody loginBody) {
+        long packageId;
+        if (loginBody.getLoginUserType() == 1) packageId = 2001925927655182338L;        // 租户管理员
+        else if (loginBody.getLoginUserType() == 2) packageId = 2017113387925131265L;   // 商户管理员
+        else packageId = 2017146296534978561L;                           // 普通用户
+        return packageId;
+    }
+
+    /**
+     * 根据租户套餐创建具有相应权限的用户
+     *
+     * @param tenantId   租户ID
+     * @param username   用户名
+     * @param password   密码
+     * @param packageId  套餐ID
+     * @param companyName 公司名称
+     */
+    private void createUserWithPackagePermissions(String tenantId, String username, String password, Long packageId, String companyName) {
+        TenantHelper.dynamic(tenantId, () -> {
+            // 创建部门
+            SysDept dept = new SysDept();
+            dept.setTenantId(tenantId);
+            dept.setDeptName(companyName);
+            dept.setParentId(Constants.TOP_PARENT_ID);
+            dept.setAncestors(Constants.TOP_PARENT_ID.toString());
+            deptMapper.insert(dept);
+            Long deptId = dept.getDeptId();
+
+            // 根据套餐创建角色和权限
+            Long roleId = tenantService.createTenantRole(tenantId, packageId);
+
+            // 创建用户
+            SysUser user = new SysUser();
+            user.setTenantId(tenantId);
+            user.setUserName(username);
+            user.setNickName(username);
+            user.setPassword(BCrypt.hashpw(password));
+            user.setDeptId(deptId);
+            userMapper.insert(user);
+            Long userId = user.getUserId();
+
+            // 设置用户为部门负责人
+            SysDept updateDept = new SysDept();
+            updateDept.setLeader(userId);
+            updateDept.setDeptId(deptId);
+            deptMapper.updateById(updateDept);
+
+            // 用户和角色关联
+            SysUserRole userRole = new SysUserRole();
+            userRole.setUserId(userId);
+            userRole.setRoleId(roleId);
+            userRoleMapper.insert(userRole);
+
+            return null;
+        });
     }
 
     /**
