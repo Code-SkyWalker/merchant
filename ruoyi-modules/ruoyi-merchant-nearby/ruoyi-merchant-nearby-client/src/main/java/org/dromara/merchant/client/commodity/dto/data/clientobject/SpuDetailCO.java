@@ -19,6 +19,11 @@ public class SpuDetailCO {
     private Long id;
 
     /**
+     * 商户Id
+     */
+    private Long merchantId;
+
+    /**
      * 货号
      */
     private String sn;
