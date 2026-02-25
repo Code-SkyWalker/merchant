@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.dromara.common.core.utils.SnowflakeIdGenerator;
 import org.dromara.common.mybatis.core.domain.BaseEntity;
+import org.dromara.common.satoken.utils.LoginHelper;
 
 /**
  * 用户地址实体类
@@ -22,7 +23,7 @@ public class Address extends BaseEntity {
     /**
      * 用户ID
      */
-    private Long userId;
+    private Long userId = LoginHelper.getUserId();
 
     /**
      * 收货人姓名
