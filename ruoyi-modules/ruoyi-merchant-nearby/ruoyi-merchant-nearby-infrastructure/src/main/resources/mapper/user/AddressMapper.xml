@@ -41,13 +41,13 @@
     </sql>
 
     <update id="setDefault" parameterType="map">
-        UPDATE user_address
+        UPDATE tb_user_address
         SET is_default = CASE
         WHEN is_default = 1 THEN 0 -- 原默认记录设为 0
         WHEN address_id = #{id} THEN 1 -- 新记录设为 1
         ELSE is_default -- 其他保持不变
         END
-        WHERE (is_default = 1 OR address_id = #{addressId}) -- 仅更新相关行
+        WHERE (is_default = 1 OR address_id = #{id}) -- 仅更新相关行
         AND user_id = #{userId}
     </update>
 
