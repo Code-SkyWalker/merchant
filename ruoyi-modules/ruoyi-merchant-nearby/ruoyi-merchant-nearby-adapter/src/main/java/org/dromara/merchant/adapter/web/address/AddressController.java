@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.domain.R;
 import org.dromara.common.mybatis.core.page.PageQuery;
 import org.dromara.common.mybatis.core.page.TableDataInfo;
+import org.dromara.common.satoken.utils.LoginHelper;
 import org.dromara.merchant.app.address.IAddressService;
 import org.dromara.merchant.client.address.dto.data.clientobject.AddressCO;
 import org.dromara.merchant.client.address.dto.data.clientobject.AddressPageCO;
@@ -30,9 +31,9 @@ public class AddressController {
     /**
      * 分页查询用户地址
      */
-    @GetMapping("/page/{userId}")
-    public TableDataInfo<AddressPageCO> page(@PathVariable Long userId, @ModelAttribute PageQuery page) {
-        return TableDataInfo.build(addressMapper.queryAddressCOPages(userId, page.build()));
+    @GetMapping("/page")
+    public TableDataInfo<AddressPageCO> page(@ModelAttribute PageQuery page) {
+        return TableDataInfo.build(addressMapper.queryAddressCOPages(LoginHelper.getUserId(), page.build()));
     }
 
     /**
