@@ -89,4 +89,13 @@ public interface ISysTenantService {
      * 同步租户参数配置
      */
     void syncTenantConfig();
+
+    /**
+     * 根据租户菜单创建租户角色
+     *
+     * @param tenantId  租户编号
+     * @param packageId 租户套餐id
+     * @return 角色id
+     */
+    Long createTenantRole(String tenantId, Long packageId);
 }

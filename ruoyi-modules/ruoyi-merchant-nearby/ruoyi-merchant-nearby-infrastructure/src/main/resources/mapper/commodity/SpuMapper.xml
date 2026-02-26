@@ -140,6 +140,7 @@
     <sql id="Join_Column_List">
         <!--@mbg.generated-->
         tb_spu.id              as tb_spu_id,
+        tb_spu.merchant_id     as tb_spu_merchant_id,
         tb_spu.sn              as tb_spu_sn,
         tb_spu.name            as tb_spu_name,
         tb_spu.caption         as tb_spu_caption,
@@ -166,6 +167,7 @@
     <resultMap id="JoinResultMap" type="org.dromara.merchant.client.commodity.dto.data.clientobject.SpuDetailCO">
         <!--@mbg.generated-->
         <id column="tb_spu_id" property="id"/>
+        <result column="tb_spu_merchant_id" property="merchantId" />
         <result column="tb_spu_sn" property="sn"/>
         <result column="tb_spu_name" property="name"/>
         <result column="tb_spu_caption" property="caption"/>
@@ -198,7 +200,8 @@
     <select id="selectDetailById" resultMap="SpuAndSkusResult">
         select <include refid="Join_Column_List"/>,
         <include refid="org.dromara.merchant.infrastructure.commodity.mapper.SkuMapper.Join_Column_List"/>
-        from tb_spu join tb_sku on tb_spu.id = tb_sku.spu_id
+        from tb_spu
+        join tb_sku on tb_spu.id = tb_sku.spu_id
         where tb_spu.id = #{id}
     </select>
 

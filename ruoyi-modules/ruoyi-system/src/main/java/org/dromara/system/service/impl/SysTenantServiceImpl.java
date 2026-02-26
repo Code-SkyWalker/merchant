@@ -246,7 +246,7 @@ public class SysTenantServiceImpl implements ISysTenantService {
      * @param packageId 租户套餐id
      * @return 角色id
      */
-    private Long createTenantRole(String tenantId, Long packageId) {
+    public Long createTenantRole(String tenantId, Long packageId) {
         // 获取租户套餐
         SysTenantPackage tenantPackage = tenantPackageMapper.selectById(packageId);
         if (ObjectUtil.isNull(tenantPackage)) {

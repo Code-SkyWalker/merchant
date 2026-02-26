@@ -240,6 +240,8 @@ springdoc:
       packages-to-scan: org.dromara.merchant.adapter.web.order
     - group: 商城-购物车模块
       packages-to-scan: org.dromara.merchant.adapter.web.cert
+    - group: 商城-地址模块
+      packages-to-scan: org.dromara.merchant.adapter.web.address
     - group: 汇付支付配置模块
       packages-to-scan: org.dromara.huifu
     - group: 快递100配置模块
