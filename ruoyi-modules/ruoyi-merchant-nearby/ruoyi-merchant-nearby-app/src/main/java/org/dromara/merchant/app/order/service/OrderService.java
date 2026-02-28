@@ -22,6 +22,7 @@ import org.dromara.merchant.domain.order.domainservice.IOrderDomainService;
 import org.dromara.merchant.domain.order.gateway.IOrderGateway;
 import org.dromara.merchant.domain.order.model.Order;
 import org.dromara.merchant.domain.order.model.OrderItem;
+import org.dromara.merchant.domain.order.model.OrderStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -117,9 +118,15 @@ public class OrderService implements IOrderService, IHuifuCallbackHandler {
         Order order = this.orderGateway.queryById(cmd.getOrderId());
         if (order == null) return false;
 
+        OrderStatus currentOrderStatus = order.getStatus();
+
         boolean refundSucceed = orderDomainService.cancelOrder(order, cmd.getCancelReason());
 
+        // 退款失败，返回失败
         if (!refundSucceed) return false;
+
+        // 待支付订单取消，直接返回成功
+        if (currentOrderStatus.equals(OrderStatus.PENDING_PAYMENT)) return true;
 
         // 待发货退款，直接调用聚合支付的退款接口
         HuifuConfig huifuConfig = this.huifuConfigService.queryByMerchantId(order.getMerchantId());

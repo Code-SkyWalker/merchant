@@ -56,7 +56,7 @@ public class MerCategoryService implements IMerCategoryService {
     @Override
     public Page<MerCategoryCO> queryPage(MerCategoryPageQry qry, PageQuery query) {
         Page<MerCategoryCO> categoryCOs = this.pageQryExecutor.execute(qry, query);
-        if (categoryCOs.getRecords().isEmpty()) {
+        if (qry.getParentId().equals(0L) && categoryCOs.getRecords().isEmpty()) {
             this.writeDefaultCategory();
             categoryCOs = this.pageQryExecutor.execute(qry, query);
         }

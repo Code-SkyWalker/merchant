@@ -166,27 +166,43 @@
                 <when test="qry.userId != null">
                     `user_id` = #{qry.userId}
                 </when>
+            </choose>
+            <choose>
                 <when test="qry.username != null">
                     and `user_name` = #{qry.username}
                 </when>
+            </choose>
+            <choose>
                 <when test="qry.merchantId != null">
                     and `merchant_id` = #{qry.merchantId}
                 </when>
+            </choose>
+            <choose>
                 <when test="qry.status != null">
                     and `status` = #{qry.status}
                 </when>
+            </choose>
+            <choose>
                 <when test="qry.type != null">
                     and `type` = #{qry.type}
                 </when>
+            </choose>
+            <choose>
                 <when test="qry.source != null">
                     and `source` = #{qry.source}
                 </when>
+            </choose>
+            <choose>
                 <when test="qry.orderStartTime != null and qry.orderEndTime != null">
                     and create_time between #{qry.orderStartTime} and #{qry.orderEndTime}
                 </when>
+            </choose>
+            <choose>
                 <when test="qry.payStartTime != null and qry.payEndTime != null">
                     and payment_time between #{qry.payStartTime} and #{qry.payEndTime}
                 </when>
+            </choose>
+            <choose>
                 <when test="qry.keyword != null and qry.keyword.trim() != ''">
                     and (merchant_name like concat('%', #{qry.keyword}, '%') or
                          receiver_name = concat('%', #{qry.keyword}, '%'))
