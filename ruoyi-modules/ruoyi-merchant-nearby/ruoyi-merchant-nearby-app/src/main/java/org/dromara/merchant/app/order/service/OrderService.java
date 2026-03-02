@@ -130,7 +130,7 @@ public class OrderService implements IOrderService, IHuifuCallbackHandler {
 
         // 待发货退款，直接调用聚合支付的退款接口
         HuifuConfig huifuConfig = this.huifuConfigService.queryByMerchantId(order.getMerchantId());
-        if (huifuConfig == null) return false;
+        if (huifuConfig == null) throw new BasePayException("商户支付未配置");
 
         // 调用聚合支付的延迟确认接口
         Map<String, Object> confirmResult = this.aggregatePayment.refund(
