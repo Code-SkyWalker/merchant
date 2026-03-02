@@ -37,6 +37,14 @@ public interface IMerchantGateway {
     boolean deleteById(Long merchantId);
 
     /**
+     * 根据用户ID查询商户
+     *
+     * @param userId 用户ID
+     * @return 商户实体
+     */
+    Merchant queryByUserId(Long userId);
+
+    /**
      * 查询所有有效商户
      *
      * @return 商户实体列表

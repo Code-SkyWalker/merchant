@@ -67,7 +67,7 @@ public class CertCartItem {
      * 减少数量
      */
     public void decreaseQuantity() {
-        if (this.quantity <= 0) {
+        if (this.quantity >= 2) {
             this.quantity -= 1;
         }
     }

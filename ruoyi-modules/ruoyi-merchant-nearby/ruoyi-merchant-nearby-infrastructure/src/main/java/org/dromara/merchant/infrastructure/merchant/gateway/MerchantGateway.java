@@ -54,6 +54,11 @@ public class MerchantGateway implements IMerchantGateway {
         return mapper.deleteById(merchantId) > 0;
     }
 
+    @Override
+    public Merchant queryByUserId(Long userId) {
+        return mapper.selectByUserId(userId);
+    }
+
     /**
      * 查询所有有效商户
      *

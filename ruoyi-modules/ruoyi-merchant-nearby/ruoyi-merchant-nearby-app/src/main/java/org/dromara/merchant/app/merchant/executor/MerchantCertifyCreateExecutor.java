@@ -1,11 +1,14 @@
 package org.dromara.merchant.app.merchant.executor;
 
 import lombok.RequiredArgsConstructor;
+import org.dromara.common.core.exception.ServiceException;
 import org.dromara.common.core.utils.SnowflakeIdGenerator;
+import org.dromara.common.satoken.utils.LoginHelper;
 import org.dromara.merchant.client.merchant.dto.data.command.MerchantCertifyCreateCmd;
 import org.dromara.merchant.domain.merchant.gateway.IMerchantCategoryGateway;
 import org.dromara.merchant.domain.merchant.gateway.IMerchantCertifyGateway;
 import org.dromara.merchant.domain.merchant.gateway.IMerchantGateway;
+import org.dromara.merchant.domain.merchant.model.Merchant;
 import org.dromara.merchant.domain.merchant.model.MerchantCertify;
 import org.dromara.merchant.infrastructure.merchant.converter.MerchantCertifyConvertor;
 import org.dromara.merchant.infrastructure.merchant.converter.MerchantConvertor;
@@ -36,6 +39,11 @@ public class MerchantCertifyCreateExecutor {
 
         // 如果是新增商户申请，则先保存商户
         if (certify.getCertifiedType() == 0) {
+
+            // 查询该用户是否已存在商户
+            Merchant existingMerchant = this.merchantGateway.queryByUserId(LoginHelper.getUserId());
+            if (existingMerchant != null) throw new ServiceException("商户已存在, 请勿重复申请");
+
             // 保存商户分类
             this.merchantCategoryGateway.save(certify.getMerchantId(), cmd.getCategoryIds());
 
