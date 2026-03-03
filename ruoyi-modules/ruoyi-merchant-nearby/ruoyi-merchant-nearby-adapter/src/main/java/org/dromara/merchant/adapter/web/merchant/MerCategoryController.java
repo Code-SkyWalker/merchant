@@ -38,8 +38,10 @@ public class MerCategoryController {
      * @return 分类列表
      */
     @GetMapping("/frontend/page")
-    public TableDataInfo<MerCategoryCO> frontend(@RequestParam Long parentId) {
-        List<MerCategoryCO> categoryCOs = merCategoryMapper.selectByParentId(parentId);
+    public TableDataInfo<MerCategoryCO> frontend(@RequestParam Long parentId, @ModelAttribute PageQuery query) {
+        MerCategoryPageQry qry = new MerCategoryPageQry();
+        qry.setParentId(parentId);
+        Page<MerCategoryCO> categoryCOs = this.categoryService.queryPage(qry, query);
         return TableDataInfo.build(categoryCOs);
     }
 

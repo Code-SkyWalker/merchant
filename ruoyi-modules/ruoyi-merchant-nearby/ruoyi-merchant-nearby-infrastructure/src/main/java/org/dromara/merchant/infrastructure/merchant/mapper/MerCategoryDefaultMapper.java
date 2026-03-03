@@ -19,5 +19,19 @@ public interface MerCategoryDefaultMapper {
 
     int deleteByTenantId(@Param("tenantId") String tenantId);
 
+    /**
+     * 复制默认分类数据到租户分类表（第一步：插入数据）
+     * @param category 包含租户信息和创建人信息的对象
+     * @return 插入的记录数
+     */
     int writeDefault(@Param("category") CategoryDO category);
+
+    /**
+     * 更新 parent_id 为新的 ID（第二步：更新关系）
+     * @param tenantId 租户 ID
+     * @param createBy 创建人 ID
+     * @return 更新的记录数
+     */
+    int updateParentIdsAfterInsert(@Param("tenantId") String tenantId, 
+                                   @Param("createBy") Long createBy);
 }

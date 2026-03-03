@@ -1,5 +1,6 @@
 package org.dromara.merchant.client.merchant.dto.data.clientobject;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -47,5 +48,6 @@ public class MerCategoryCO {
     /**
      * 租户编号
      */
+    @JsonIgnore
     private String tenantId;
 }

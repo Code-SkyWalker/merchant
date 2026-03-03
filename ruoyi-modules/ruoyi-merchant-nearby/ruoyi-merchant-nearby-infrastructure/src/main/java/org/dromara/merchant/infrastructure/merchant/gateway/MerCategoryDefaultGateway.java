@@ -52,7 +52,7 @@ public class MerCategoryDefaultGateway implements IMerCategoryDefaultGateway {
 
     @Override
     public boolean writeDefault() {
-        // 创建一个带自动填充字段的 CategoryDefaultDO 对象
+        // 创建一个带自动填充字段的 CategoryDO 对象
         Long userId = LoginHelper.getUserId();
         CategoryDO categoryDO = new CategoryDO();
         categoryDO.setTenantId(LoginHelper.getTenantId());
@@ -60,6 +60,18 @@ public class MerCategoryDefaultGateway implements IMerCategoryDefaultGateway {
         categoryDO.setUpdateBy(userId);
         categoryDO.setCreateDept(LoginHelper.getDeptId());
 
-        return this.categoryMapper.writeDefault(categoryDO) > 0;
+        // 第一步：插入数据（parent_id 暂时保持原值）
+        int insertCount = this.categoryMapper.writeDefault(categoryDO);
+        
+        if (insertCount > 0) {
+            // 第二步：更新 parent_id 为新的 ID
+            this.categoryMapper.updateParentIdsAfterInsert(
+                categoryDO.getTenantId(), 
+                categoryDO.getCreateBy()
+            );
+            return true;
+        }
+        
+        return false;
     }
 }

@@ -112,18 +112,46 @@
         </where>
     </select>
 
+    <!-- 复制默认分类数据到租户分类表，并维护父子关系（两次 SELECT 方案） -->
     <insert id="writeDefault">
-        insert into tb_shop_category
+        -- 第一步：插入所有数据，parent_id 暂时保持原值
+        INSERT INTO tb_shop_category
         (parent_id, category_image, category_name, category_sort, `state`,
-        tenant_id, create_dept, create_by, update_by)
-        select
-        parent_id, category_image, category_name, category_sort, `state`,
-        #{category.tenantId},
-        #{category.createDept},
-        #{category.createBy},
-        #{category.updateBy}
-        from tb_shop_category_default
+         tenant_id, create_dept, create_by, update_by)
+        SELECT 
+            d.parent_id,
+            d.category_image,
+            d.category_name,
+            d.category_sort,
+            d.`state`,
+            #{category.tenantId},
+            #{category.createDept},
+            #{category.createBy},
+            #{category.updateBy}
+        FROM tb_shop_category_default d
+        ORDER BY d.category_id
     </insert>
+    
+    <!-- 第二步：更新 parent_id 为新的 ID -->
+    <update id="updateParentIdsAfterInsert">
+        UPDATE tb_shop_category c
+        INNER JOIN (
+            SELECT 
+                old_cat.category_id AS old_parent_id,
+                new_cat.category_id AS new_parent_id
+            FROM tb_shop_category_default old_cat
+            INNER JOIN tb_shop_category new_cat 
+                ON old_cat.category_name = new_cat.category_name
+                AND old_cat.category_image &lt;=&gt; new_cat.category_image
+            WHERE new_cat.tenant_id = #{tenantId}
+              AND new_cat.create_by = #{createBy}
+              AND new_cat.create_time &gt;= DATE_SUB(NOW(), INTERVAL 5 MINUTE)
+        ) mapping ON c.parent_id = mapping.old_parent_id
+        SET c.parent_id = mapping.new_parent_id
+        WHERE c.tenant_id = #{tenantId}
+          AND c.parent_id != 0
+          AND c.parent_id IS NOT NULL
+    </update>
 
     <delete id="deleteByTenantId">
         delete from tb_shop_category

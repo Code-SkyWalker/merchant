@@ -143,10 +143,11 @@
                     and state = #{qry.state}
                 </when>
                 <when test="qry.parentId != null">
-                    and parent_id = #{qry.state}
+                    and parent_id = #{qry.parentId}
                 </when>
             </choose>
         </where>
+        order by category_sort desc, category_id
     </select>
 
     <select id="selectByParentId" resultType="org.dromara.merchant.client.merchant.dto.data.clientobject.MerCategoryCO">
